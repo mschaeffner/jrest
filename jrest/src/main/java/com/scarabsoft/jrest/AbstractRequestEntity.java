@@ -1,8 +1,11 @@
 package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.converter.Converter;
-import com.scarabsoft.jrest.interceptor.*;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
+import com.scarabsoft.jrest.interceptor.ParamEntity;
+import com.scarabsoft.jrest.interceptor.RequestInterceptor;
+import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
+import com.scarabsoft.jrest.interceptor.ResponseEntity;
 import com.scarabsoft.jrest.interceptor.domain.RequestEntity;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -10,6 +13,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.message.BasicHeader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,29 +21,30 @@ import java.util.Collection;
 
 abstract class AbstractRequestEntity implements RequestEntity {
 
-    protected final Converter<?> converter;
-    protected final Collection<HeaderEntity> headerEntities;
+    protected final Collection<Header> headers;
     protected final Collection<ParamEntity> requestParameterEntities;
     protected final RequestConfig requestConfig;
     protected final HttpClient httpClient;
     protected final ExceptionConverter<?> exceptionConverter;
+    private final Converter<?> converter;
     private final Class<?> responseClazz;
     protected String url;
-    protected InputStream inputStream;
-    protected int httpStatusCode;
-    protected Object cachedResult;
-    private RuntimeException exception;
-    private Header[] responseHeader;
-
     private Class<? extends Collection> collectionClazz;
 
+    //Response
+    private int httpStatusCode;
+    private InputStream inputStream;
+    private Header[] responseHeader;
+    private Object cachedResult;
+    private RuntimeException exception;
+
     public AbstractRequestEntity(String baseUrl, Converter<?> converter, ExceptionConverter<?> exceptionConverter,
-                                 Collection<HeaderEntity> headerEntities, Collection<ParamEntity> requestParameterEntities,
-                                 RequestConfig requestConfig, HttpClient httpClient, Class<?> responseClazz,Class<? extends Collection> collectionClazz) {
+                                 Collection<Header> headers, Collection<ParamEntity> requestParameterEntities,
+                                 RequestConfig requestConfig, HttpClient httpClient, Class<?> responseClazz, Class<? extends Collection> collectionClazz) {
         this.url = baseUrl;
         this.converter = converter;
         this.exceptionConverter = exceptionConverter;
-        this.headerEntities = headerEntities;
+        this.headers = headers;
         this.requestParameterEntities = requestParameterEntities;
         this.requestConfig = requestConfig;
         this.httpClient = httpClient;
@@ -69,9 +74,10 @@ abstract class AbstractRequestEntity implements RequestEntity {
         return cachedResult;
     }
 
+
     @Override
-    public void addHeader(HeaderEntity header) {
-        headerEntities.add(header);
+    public void addHeader(String name, String value) {
+        headers.add(new BasicHeader(name, value));
     }
 
     public RuntimeException getException() {
@@ -86,8 +92,8 @@ abstract class AbstractRequestEntity implements RequestEntity {
             interceptor.intercept(this);
         }
 
-        for (HeaderEntity headerEnitity : headerEntities) {
-            request.addHeader(headerEnitity.getKey(), headerEnitity.getValue());
+        for (Header header : headers) {
+            request.addHeader(header);
         }
 
         if (requestConfig != null) {

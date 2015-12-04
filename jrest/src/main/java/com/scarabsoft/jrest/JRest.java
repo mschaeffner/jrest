@@ -8,9 +8,9 @@ import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.LazyConverterFactory;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.converter.exception.LazyExceptionConverterFactory;
-import com.scarabsoft.jrest.interceptor.HeaderEntity;
 import com.scarabsoft.jrest.interceptor.RequestInterceptor;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
+import org.apache.http.Header;
 import org.apache.http.client.config.RequestConfig;
 
 import java.lang.reflect.Proxy;
@@ -59,7 +59,7 @@ public final class JRest {
                 exceptionConverterFactory = new LazyExceptionConverterFactory();
             }
 
-            final Collection<HeaderEntity> headerEntities = AnnotationUtil.getHeaderEntities(clazz.getAnnotation(Headers.class));
+            final Collection<Header> headerEntities = AnnotationUtil.getHeaderEntities(clazz.getAnnotation(Headers.class));
 
             final RequestInterceptorChain chain = RequestInterceptorChainBuilder.create(requestInterceptorChain,
                     clazz.getAnnotation(Interceptors.class), clazz.getAnnotation(Interceptor.class));

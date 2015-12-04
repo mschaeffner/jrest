@@ -4,9 +4,9 @@ import com.scarabsoft.jrest.annotation.Interceptor;
 import com.scarabsoft.jrest.annotation.Interceptors;
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
-import com.scarabsoft.jrest.interceptor.HeaderEntity;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
 import com.scarabsoft.jrest.interceptor.ResponseEntity;
+import org.apache.http.Header;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClientBuilder;
 
@@ -21,20 +21,20 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
     private final ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory;
     private final RequestInterceptorChain interceptorChain;
     private final RequestConfig requestConfig;
-    private final Collection<HeaderEntity> headerEntities;
+    private final Collection<Header> headers;
 
     public JRestInvocationHandler(String baseUrl, //
                                   Converter.ConverterFactory converterFactory, //
                                   ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory, //
                                   RequestInterceptorChain interceptorChain, //
                                   RequestConfig requestConfig, //
-                                  Collection<HeaderEntity> headerEntities) {
+                                  Collection<Header> headers) {
         this.baseUrl = baseUrl;
         this.converterFactory = converterFactory;
         this.exceptionConverterFactory = exceptionConverterFactory;
         this.interceptorChain = interceptorChain;
         this.requestConfig = requestConfig;
-        this.headerEntities = headerEntities;
+        this.headers = headers;
     }
 
     // TODO request entities should not get interceptions out of annotation -->
@@ -86,7 +86,7 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
                 converterFactory.get(returnClazz),
                 exceptionConverterFactory.get(),
                 requestConfig,
-                headerEntities, collectionClazz);
+                headers, collectionClazz);
         final AbstractRequestEntity request = builder.build(method, args, HttpClientBuilder.create().build());
         request.execute(RequestInterceptorChainBuilder.create(
                 interceptorChain,

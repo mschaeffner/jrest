@@ -3,8 +3,8 @@ package com.scarabsoft.jrest;
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.BodyEntity;
-import com.scarabsoft.jrest.interceptor.HeaderEntity;
 import com.scarabsoft.jrest.interceptor.ParamEntity;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
@@ -26,14 +26,14 @@ class PostRequestEntity extends AbstractRequestEntity {
     public PostRequestEntity(String baseUrl,
                              Converter<?> converter,
                              ExceptionConverter<?> exceptionConverter,
-                             Collection<HeaderEntity> headerEntities,
+                             Collection<Header> header,
                              Collection<ParamEntity> requestParameterEntities,
                              BodyEntity bodyEntity,
                              RequestConfig requestConfig,
                              HttpClient httpClient,
                              Class<?> responseClazz,
                              Class<? extends Collection> collectionClazz) {
-        super(baseUrl, converter, exceptionConverter, headerEntities, requestParameterEntities, requestConfig,
+        super(baseUrl, converter, exceptionConverter, header, requestParameterEntities, requestConfig,
                 httpClient, responseClazz, collectionClazz);
         this.bodyEntity = bodyEntity;
     }

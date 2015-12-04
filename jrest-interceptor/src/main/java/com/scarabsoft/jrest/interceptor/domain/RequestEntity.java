@@ -1,6 +1,5 @@
 package com.scarabsoft.jrest.interceptor.domain;
 
-import com.scarabsoft.jrest.interceptor.HeaderEntity;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
 import com.scarabsoft.jrest.interceptor.ResponseEntity;
 
@@ -12,8 +11,8 @@ public interface RequestEntity {
 
     void execute(RequestInterceptorChain chain);
 
-    void addHeader(HeaderEntity header);
-
     ResponseEntity<Object> getResponse() throws IOException;
+
+    void addHeader(String name, String value);
 
 }

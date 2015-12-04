@@ -6,8 +6,8 @@ import com.scarabsoft.jrest.annotation.Put;
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.BodyEntity;
-import com.scarabsoft.jrest.interceptor.HeaderEntity;
 import com.scarabsoft.jrest.interceptor.ParamEntity;
+import org.apache.http.Header;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 
@@ -21,20 +21,20 @@ class RequestBuilder {
     private final Converter<?> converter;
     private final ExceptionConverter<?> exceptionConverter;
     private final RequestConfig requestConfig;
-    private final Collection<HeaderEntity> headerEntities;
+    private final Collection<Header> headers;
     private final Class<? extends Collection> collectionClazz;
 
     public RequestBuilder(String baseUrl,
                           Converter<?> converter,
                           ExceptionConverter<?> exceptionConverter,
                           RequestConfig requestConfig,
-                          Collection<HeaderEntity> headerEntities,
+                          Collection<Header> headers,
                           Class<? extends Collection> collectionClazz) {
         this.baseUrl = baseUrl;
         this.converter = converter;
         this.exceptionConverter = exceptionConverter;
         this.requestConfig = requestConfig;
-        this.headerEntities = headerEntities;
+        this.headers = headers;
         this.collectionClazz = collectionClazz;
     }
 
@@ -42,8 +42,8 @@ class RequestBuilder {
         final AbstractMethodHandler methodHandler = resolveMethodHandler(method);
         final String url = methodHandler.getUrl(baseUrl, method, parameters);
         final Collection<ParamEntity> requestParameterEntities = methodHandler.getParameterEntities(method, parameters);
-        final Collection<HeaderEntity> headerEntities = methodHandler.getHeaderEntities(method, parameters);
-        headerEntities.addAll(this.headerEntities);
+        final Collection<Header> headers = methodHandler.getHeaderEntities(method, parameters);
+        headers.addAll(this.headers);
 
         BodyEntity body = null;
         try {
@@ -63,7 +63,7 @@ class RequestBuilder {
                     url,
                     converter,
                     exceptionConverter,
-                    headerEntities,
+                    headers,
                     requestParameterEntities,
                     requestConfig,
                     httpClient,
@@ -76,7 +76,7 @@ class RequestBuilder {
                     url,
                     converter,
                     exceptionConverter,
-                    headerEntities,
+                    headers,
                     requestParameterEntities,
                     body,
                     requestConfig,
@@ -90,7 +90,7 @@ class RequestBuilder {
                     url,
                     converter,
                     exceptionConverter,
-                    headerEntities,
+                    headers,
                     requestParameterEntities,
                     body,
                     requestConfig,

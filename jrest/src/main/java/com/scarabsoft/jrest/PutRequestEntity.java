@@ -3,8 +3,8 @@ package com.scarabsoft.jrest;
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.BodyEntity;
-import com.scarabsoft.jrest.interceptor.HeaderEntity;
 import com.scarabsoft.jrest.interceptor.ParamEntity;
+import org.apache.http.Header;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPut;
@@ -18,14 +18,14 @@ class PutRequestEntity extends PostRequestEntity {
     public PutRequestEntity(String baseUrl,
                             Converter<?> converter,
                             ExceptionConverter<?> exceptionConverter,
-                            Collection<HeaderEntity> headerEntities,
+                            Collection<Header> headers,
                             Collection<ParamEntity> requestParameterEntities,
                             BodyEntity bodyEntity,
                             RequestConfig requestConfig,
                             HttpClient httpClient,
                             Class<?> responseClazz,
                             Class<? extends Collection> collectionClazz) {
-        super(baseUrl, converter, exceptionConverter, headerEntities, requestParameterEntities, bodyEntity,
+        super(baseUrl, converter, exceptionConverter, headers, requestParameterEntities, bodyEntity,
                 requestConfig, httpClient, responseClazz, collectionClazz);
     }
 
