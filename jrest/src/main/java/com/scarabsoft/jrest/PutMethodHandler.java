@@ -1,10 +1,10 @@
-package com.scarabsoft.jrest.methodhandler;
-
-import java.lang.reflect.Method;
+package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.annotation.Put;
 
-public class PutMethodHandler extends AbstractMethodHandler {
+import java.lang.reflect.Method;
+
+class PutMethodHandler extends AbstractMethodHandler {
 
 	@Override
 	protected String getUrl(Method method) {

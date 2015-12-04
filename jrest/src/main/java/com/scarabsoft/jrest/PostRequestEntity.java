@@ -1,4 +1,4 @@
-package com.scarabsoft.jrest.request;
+package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 
-public class PostRequestEntity extends AbstractRequestEntity {
+class PostRequestEntity extends AbstractRequestEntity {
 
     protected final BodyEntity bodyEntity;
 

@@ -1,4 +1,4 @@
-package com.scarabsoft.jrest.request;
+package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.interceptor.*;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
-public abstract class AbstractRequestEntity implements RequestEntity {
+abstract class AbstractRequestEntity implements RequestEntity {
 
     protected final Converter<?> converter;
     protected final Collection<HeaderEntity> headerEntities;

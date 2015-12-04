@@ -1,17 +1,17 @@
-package com.scarabsoft.jrest.util;
+package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.annotation.Interceptors;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorFactory;
 import com.scarabsoft.jrest.annotation.Interceptor;
 
-public class RequestInterceptorChainBuilder {
+class RequestInterceptorChainBuilder {
 
 	private RequestInterceptorChainBuilder(){
 		throw new RuntimeException("use static methods");
 	}
 
-	public static RequestInterceptorChain create(RequestInterceptorChain exisitingChain, Interceptors interceptors,
+    static RequestInterceptorChain create(RequestInterceptorChain exisitingChain, Interceptors interceptors,
                                                  Interceptor interceptor) throws InstantiationException, IllegalAccessException {
 		final RequestInterceptorChain result = exisitingChain.deepClone();
 		if (interceptors != null) {

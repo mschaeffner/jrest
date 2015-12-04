@@ -8,14 +8,6 @@ import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.BodyEntity;
 import com.scarabsoft.jrest.interceptor.HeaderEntity;
 import com.scarabsoft.jrest.interceptor.ParamEntity;
-import com.scarabsoft.jrest.methodhandler.GetMethodHandler;
-import com.scarabsoft.jrest.methodhandler.MethodHandler;
-import com.scarabsoft.jrest.methodhandler.PostMethodHandler;
-import com.scarabsoft.jrest.methodhandler.PutMethodHandler;
-import com.scarabsoft.jrest.request.AbstractRequestEntity;
-import com.scarabsoft.jrest.request.GetRequestEntity;
-import com.scarabsoft.jrest.request.PostRequestEntity;
-import com.scarabsoft.jrest.request.PutRequestEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 
@@ -23,7 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 
-public class RequestBuilder {
+class RequestBuilder {
 
     private final String baseUrl;
     private final Converter<?> converter;

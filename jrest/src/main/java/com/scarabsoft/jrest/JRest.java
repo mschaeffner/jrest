@@ -9,8 +9,6 @@ import com.scarabsoft.jrest.converter.exception.ExceptionConverterFactory;
 import com.scarabsoft.jrest.converter.exception.LazyExceptionConverterFactory;
 import com.scarabsoft.jrest.interceptor.HeaderEntity;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
-import com.scarabsoft.jrest.util.AnnotationUtil;
-import com.scarabsoft.jrest.util.RequestInterceptorChainBuilder;
 import com.scarabsoft.jrest.annotation.Headers;
 import com.scarabsoft.jrest.interceptor.RequestInterceptor;
 import org.apache.http.client.config.RequestConfig;

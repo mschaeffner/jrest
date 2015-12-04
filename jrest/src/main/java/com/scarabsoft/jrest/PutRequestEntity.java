@@ -1,4 +1,4 @@
-package com.scarabsoft.jrest.request;
+package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
@@ -13,7 +13,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 
-public class PutRequestEntity extends PostRequestEntity {
+class PutRequestEntity extends PostRequestEntity {
 
     public PutRequestEntity(String baseUrl,
                             Converter<?> converter,

@@ -7,8 +7,6 @@ import com.scarabsoft.jrest.converter.exception.ExceptionConverterFactory;
 import com.scarabsoft.jrest.interceptor.HeaderEntity;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
 import com.scarabsoft.jrest.interceptor.ResponseEntity;
-import com.scarabsoft.jrest.request.AbstractRequestEntity;
-import com.scarabsoft.jrest.util.RequestInterceptorChainBuilder;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClientBuilder;
 

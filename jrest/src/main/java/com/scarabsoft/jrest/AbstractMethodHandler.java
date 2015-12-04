@@ -1,10 +1,9 @@
-package com.scarabsoft.jrest.methodhandler;
+package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.annotation.*;
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.interceptor.BodyEntity;
 import com.scarabsoft.jrest.interceptor.HeaderEntity;
-import com.scarabsoft.jrest.util.AnnotationUtil;
 import com.scarabsoft.jrest.interceptor.ParamEntity;
 
 import java.io.UnsupportedEncodingException;
@@ -13,7 +12,7 @@ import java.lang.reflect.Parameter;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public abstract class AbstractMethodHandler implements MethodHandler {
+abstract class AbstractMethodHandler implements MethodHandler {
 
 	protected abstract String getUrl(Method method);
 

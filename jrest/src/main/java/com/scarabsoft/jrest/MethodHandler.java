@@ -1,15 +1,15 @@
-package com.scarabsoft.jrest.methodhandler;
-
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
-import java.util.Collection;
+package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.interceptor.BodyEntity;
 import com.scarabsoft.jrest.interceptor.HeaderEntity;
 import com.scarabsoft.jrest.interceptor.ParamEntity;
 
-public interface MethodHandler {
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
+import java.util.Collection;
+
+interface MethodHandler {
 
 	String getUrl(String baseUrl, Method method, Object[] parameter);
 

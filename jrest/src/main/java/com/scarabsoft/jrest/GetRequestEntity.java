@@ -1,4 +1,4 @@
-package com.scarabsoft.jrest.request;
+package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
@@ -11,7 +11,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 
 import java.util.Collection;
 
-public class GetRequestEntity extends AbstractRequestEntity {
+class GetRequestEntity extends AbstractRequestEntity {
 
     public GetRequestEntity(String baseUrl,
                             Converter<?> converter,
