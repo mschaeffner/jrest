@@ -34,7 +34,7 @@ abstract class AbstractMethodHandler implements MethodHandler {
 		return resultUrl;
 	}
 
-	protected String replaceUrl(final String url, final String name, final String value) {
+	private String replaceUrl(final String url, final String name, final String value) {
 		return url.replace("{" + name + "}", value);
 	}
 

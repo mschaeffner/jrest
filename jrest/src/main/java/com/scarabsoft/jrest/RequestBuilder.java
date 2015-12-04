@@ -22,8 +22,7 @@ class RequestBuilder {
     private final ExceptionConverter<?> exceptionConverter;
     private final RequestConfig requestConfig;
     private final Collection<HeaderEntity> headerEntities;
-
-    private Class<? extends Collection> collectionClazz;
+    private final Class<? extends Collection> collectionClazz;
 
     public RequestBuilder(String baseUrl,
                           Converter<?> converter,
