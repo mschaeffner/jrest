@@ -1,6 +1,9 @@
 package com.scibee.freya;
 
-import com.scibee.freya.annotation.*;
+import com.scibee.freya.annotation.Headers;
+import com.scibee.freya.annotation.Interceptor;
+import com.scibee.freya.annotation.Interceptors;
+import com.scibee.freya.annotation.Mapping;
 import com.scibee.freya.converter.Converter;
 import com.scibee.freya.converter.LazyConverterFactory;
 import com.scibee.freya.converter.exception.ExceptionConverterFactory;
@@ -8,12 +11,12 @@ import com.scibee.freya.converter.exception.LazyExceptionConverterFactory;
 import com.scibee.freya.interceptor.HeaderEntity;
 import com.scibee.freya.interceptor.RequestInterceptor;
 import com.scibee.freya.interceptor.RequestInterceptorChain;
+import com.scibee.freya.util.AnnotationUtil;
 import com.scibee.freya.util.RequestInterceptorChainBuilder;
 import org.apache.http.client.config.RequestConfig;
 
 import java.lang.reflect.Proxy;
 import java.util.Collection;
-import java.util.LinkedList;
 
 public final class Freya {
 
@@ -58,20 +61,7 @@ public final class Freya {
                 exceptionConverterFactory = new LazyExceptionConverterFactory();
             }
 
-            final Collection<HeaderEntity> headerEntities = new LinkedList<HeaderEntity>();
-            final Headers headers = clazz.getAnnotation(Headers.class);
-            if (headers != null) {
-                if (headers.headers() != null) {
-                    for (int i = 0; i < headers.headers().length; i++) {
-                        final Header header = headers.headers()[i];
-                        //TODO remove if statement below
-                        if (header.value().equals("")) {
-                            throw new RuntimeException(header.key() + " needs a value");
-                        }
-                        headerEntities.add(new HeaderEntity(header.key(), header.value()));
-                    }
-                }
-            }
+            final Collection<HeaderEntity> headerEntities = AnnotationUtil.getHeaderEntities(clazz.getAnnotation(Headers.class));
 
             final RequestInterceptorChain chain = RequestInterceptorChainBuilder.create(requestInterceptorChain,
                     clazz.getAnnotation(Interceptors.class), clazz.getAnnotation(Interceptor.class));

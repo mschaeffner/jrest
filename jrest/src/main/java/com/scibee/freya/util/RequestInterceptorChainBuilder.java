@@ -7,6 +7,10 @@ import com.scibee.freya.interceptor.RequestInterceptorFactory;
 
 public class RequestInterceptorChainBuilder {
 
+	private RequestInterceptorChainBuilder(){
+		throw new RuntimeException("use static methods");
+	}
+
 	public static RequestInterceptorChain create(RequestInterceptorChain exisitingChain, Interceptors interceptors,
 			Interceptor interceptor) throws InstantiationException, IllegalAccessException {
 		final RequestInterceptorChain result = exisitingChain.deepClone();

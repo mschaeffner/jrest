@@ -1,21 +1,17 @@
 package com.scibee.freya.methodhandler;
 
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-
-import com.scibee.freya.annotation.Body;
-import com.scibee.freya.annotation.Header;
-import com.scibee.freya.annotation.Headers;
-import com.scibee.freya.annotation.Param;
-import com.scibee.freya.annotation.Path;
+import com.scibee.freya.annotation.*;
 import com.scibee.freya.converter.Converter;
 import com.scibee.freya.interceptor.BodyEntity;
 import com.scibee.freya.interceptor.HeaderEntity;
 import com.scibee.freya.interceptor.ParamEntity;
+import com.scibee.freya.util.AnnotationUtil;
+
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.Collection;
+import java.util.LinkedList;
 
 public abstract class AbstractMethodHandler implements MethodHandler {
 
@@ -39,7 +35,7 @@ public abstract class AbstractMethodHandler implements MethodHandler {
 		return resultUrl;
 	}
 
-	private String replaceUrl(final String url, final String name, final String value) {
+	protected String replaceUrl(final String url, final String name, final String value) {
 		return url.replace("{" + name + "}", value);
 	}
 
@@ -63,19 +59,7 @@ public abstract class AbstractMethodHandler implements MethodHandler {
 
 	@Override
 	public Collection<HeaderEntity> getHeaderEntities(Method method, Object[] parameters) {
-		final Collection<HeaderEntity> result = new ArrayList<HeaderEntity>();
-		final Headers headers = method.getAnnotation(Headers.class);
-		if (headers != null) {
-			if (headers.headers() != null) {
-				for (int i = 0; i < headers.headers().length; i++) {
-					final Header header = headers.headers()[i];
-					if (header.value().equals("")) {
-						throw new RuntimeException("header " + header.key() + " needs a value");
-					}
-					result.add(new HeaderEntity(header.key(), header.value()));
-				}
-			}
-		}
+		final Collection<HeaderEntity> result = AnnotationUtil.getHeaderEntities(method.getAnnotation(Headers.class));
 
 		final Parameter[] methodParameters = method.getParameters();
 		for (int i = 0; i < methodParameters.length; i++) {
