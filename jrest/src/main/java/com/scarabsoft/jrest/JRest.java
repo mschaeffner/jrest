@@ -1,16 +1,16 @@
 package com.scarabsoft.jrest;
 
+import com.scarabsoft.jrest.annotation.Headers;
 import com.scarabsoft.jrest.annotation.Interceptor;
 import com.scarabsoft.jrest.annotation.Interceptors;
 import com.scarabsoft.jrest.annotation.Mapping;
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.LazyConverterFactory;
-import com.scarabsoft.jrest.converter.exception.ExceptionConverterFactory;
+import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.converter.exception.LazyExceptionConverterFactory;
 import com.scarabsoft.jrest.interceptor.HeaderEntity;
-import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
-import com.scarabsoft.jrest.annotation.Headers;
 import com.scarabsoft.jrest.interceptor.RequestInterceptor;
+import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
 import org.apache.http.client.config.RequestConfig;
 
 import java.lang.reflect.Proxy;
@@ -20,7 +20,7 @@ public final class JRest {
 
     private String baseUrl;
     private Converter.ConverterFactory converterFactory;
-    private ExceptionConverterFactory exceptionFactory;
+    private ExceptionConverter.ExceptionConverterFactory exceptionFactory;
     private RequestConfig requestConfig;
     private RequestInterceptorChain requestInterceptorChain = new RequestInterceptorChain();
 
@@ -29,7 +29,7 @@ public final class JRest {
 
     private void assertIsInterface(Class<?> clazz) {
         if (!clazz.isInterface()) {
-            throw new RuntimeException("JRest can only used with interfaces");
+            throw new RuntimeException("JRest can only be used with interfaces");
         }
     }
 
@@ -38,7 +38,7 @@ public final class JRest {
         assertIsInterface(clazz);
         try {
             String baseUrl = (this.baseUrl != null) ? this.baseUrl : "";
-            ExceptionConverterFactory exceptionConverterFactory = this.exceptionFactory;
+            ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory = this.exceptionFactory;
             Converter.ConverterFactory factory = this.converterFactory;
             final Mapping requestMapping = clazz.getAnnotation(Mapping.class);
             if (requestMapping != null) {
@@ -97,7 +97,7 @@ public final class JRest {
             return this;
         }
 
-        public Builder exceptionFactory(ExceptionConverterFactory exceptionFactory) {
+        public Builder exceptionFactory(ExceptionConverter.ExceptionConverterFactory exceptionFactory) {
             buildResult.exceptionFactory = exceptionFactory;
             return this;
         }

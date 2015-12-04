@@ -3,7 +3,7 @@ package com.scarabsoft.jrest;
 import com.scarabsoft.jrest.annotation.Interceptor;
 import com.scarabsoft.jrest.annotation.Interceptors;
 import com.scarabsoft.jrest.converter.Converter;
-import com.scarabsoft.jrest.converter.exception.ExceptionConverterFactory;
+import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.HeaderEntity;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
 import com.scarabsoft.jrest.interceptor.ResponseEntity;
@@ -18,14 +18,14 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
 
     private final String baseUrl;
     private final Converter.ConverterFactory converterFactory;
-    private final ExceptionConverterFactory exceptionConverterFactory;
+    private final ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory;
     private final RequestInterceptorChain interceptorChain;
     private final RequestConfig requestConfig;
     private final Collection<HeaderEntity> headerEntities;
 
     public JRestInvocationHandler(String baseUrl, //
                                   Converter.ConverterFactory converterFactory, //
-                                  ExceptionConverterFactory exceptionConverterFactory, //
+                                  ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory, //
                                   RequestInterceptorChain interceptorChain, //
                                   RequestConfig requestConfig, //
                                   Collection<HeaderEntity> headerEntities) {
