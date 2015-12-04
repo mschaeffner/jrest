@@ -1,10 +1,7 @@
 package com.scarabsoft.jrest.test;
 
 import com.scarabsoft.jrest.JRest;
-import com.scarabsoft.jrest.annotation.Get;
-import com.scarabsoft.jrest.annotation.Mapping;
-import com.scarabsoft.jrest.annotation.Post;
-import com.scarabsoft.jrest.annotation.Put;
+import com.scarabsoft.jrest.annotation.*;
 import com.scarabsoft.jrest.converter.GsonConverterFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +15,20 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class VoidConverterTest {
+
+    @Test
+    public void voidTest() {
+        final JRest jrest = new JRest.Builder().build();
+        VoidInterface app = jrest.create(VoidInterface.class);
+        app.GET();
+        app.VGET();
+        app.POST();
+        app.VPOST();
+        app.PUT();
+        app.VPUT();
+        app.vDELETE();
+        app.DELETE();
+    }
 
     @Mapping(url = "http://localhost:1337/v1/simple/ip", converterFactory = GsonConverterFactory.class)
     interface VoidInterface {
@@ -40,18 +51,12 @@ public class VoidConverterTest {
         @Put
         Void VPUT();
 
-    }
+        @Delete
+        void DELETE();
 
-    @Test
-    public void voidTest() {
-        final JRest jrest = new JRest.Builder().build();
-        VoidInterface app = jrest.create(VoidInterface.class);
-        app.GET();
-        app.VGET();
-        app.POST();
-        app.VPOST();
-        app.PUT();
-        app.VPUT();
+        @Delete
+        Void vDELETE();
+
     }
 
 
