@@ -1,15 +1,13 @@
 package com.scarabsoft.jrest.test;
 
-import com.scarabsoft.jrest.converter.GsonConverterFactory;
 import com.scarabsoft.jrest.JRest;
-import com.scarabsoft.jrest.annotation.Get;
-import com.scarabsoft.jrest.annotation.Mapping;
-import com.scarabsoft.jrest.annotation.Post;
-import com.scarabsoft.jrest.annotation.Put;
+import com.scarabsoft.jrest.annotation.*;
+import com.scarabsoft.jrest.converter.GsonConverterFactory;
 import com.scarabsoft.jrest.interceptor.ResponseEntity;
 import com.scarabsoft.jrest.test.domain.IP;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
@@ -25,6 +23,14 @@ import java.util.*;
 @IntegrationTest("server.port:1337")
 public class ResponseEntityCollectionTest {
 
+    private ApplicationWithConverterFactory app;
+
+    @Before
+    public void before() {
+        final JRest jrest = new JRest.Builder().build();
+        app = jrest.create(ApplicationWithConverterFactory.class);
+    }
+
     private void test(List<IP> ips) {
         Assert.assertThat(ips.get(0).getIp(), Matchers.is("127.0.0.1"));
         Assert.assertThat(ips.size(), Matchers.is(3));
@@ -32,24 +38,21 @@ public class ResponseEntityCollectionTest {
 
     @Test
     public void GETConverterInApplicationTest() {
-        final JRest jrest = new JRest.Builder().build();
-        final ApplicationWithConverterFactory app = jrest.create(ApplicationWithConverterFactory.class);
         test(new ArrayList<>(app.GET().getObject()));
     }
 
     @Test
     public void POSTConverterInApplicationTest() {
-        final JRest jrest = new JRest.Builder().build();
-        final ApplicationWithConverterFactory app =
-                jrest.create(ApplicationWithConverterFactory.class);
         test(new ArrayList<>(app.POST().getObject()));
     }
 
     @Test
+    public void DELETEConverterInApplicationTest() {
+        test(new ArrayList<>(app.DELETE().getObject()));
+    }
+
+    @Test
     public void PUTConverterInApplicationTest() {
-        final JRest jrest = new JRest.Builder().build();
-        final ApplicationWithConverterFactory app =
-                jrest.create(ApplicationWithConverterFactory.class);
         List<IP> list = new ArrayList<>(app.PUT().getObject());
         Collections.sort(list, (o1, o2) -> o1.getIp().compareTo(o2.getIp()));
         test(list);
@@ -66,6 +69,9 @@ public class ResponseEntityCollectionTest {
 
         @Put
         ResponseEntity<Set<IP>> PUT();
+
+        @Delete
+        ResponseEntity<Collection<IP>> DELETE();
 
     }
 

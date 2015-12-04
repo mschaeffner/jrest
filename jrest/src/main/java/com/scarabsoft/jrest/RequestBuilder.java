@@ -1,5 +1,6 @@
 package com.scarabsoft.jrest;
 
+import com.scarabsoft.jrest.annotation.Delete;
 import com.scarabsoft.jrest.annotation.Get;
 import com.scarabsoft.jrest.annotation.Post;
 import com.scarabsoft.jrest.annotation.Put;
@@ -98,8 +99,19 @@ class RequestBuilder {
                     method.getReturnType(),
                     collectionClazz);
 
+        } else if (method.getAnnotation(Delete.class) != null) {
+            result = new DeleteRequestEntity(
+                    url,
+                    converter,
+                    exceptionConverter,
+                    headers,
+                    requestParameterEntities,
+                    requestConfig,
+                    httpClient,
+                    method.getReturnType(),
+                    collectionClazz);
         } else {
-            throw new RuntimeException("could not build request");
+            throw new RuntimeException("could not build " + method.getName() + " request");
         }
         return result;
     }
@@ -114,7 +126,12 @@ class RequestBuilder {
         if (method.getAnnotation(Put.class) != null) {
             return new PutMethodHandler();
         }
-        throw new RuntimeException("not method handler found");
+
+        if (method.getAnnotation(Delete.class) != null) {
+            return new DeleteMethodHandler();
+        }
+
+        throw new RuntimeException("no method handler found");
     }
 
 }

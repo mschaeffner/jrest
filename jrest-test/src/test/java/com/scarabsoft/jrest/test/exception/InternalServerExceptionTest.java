@@ -1,14 +1,13 @@
 package com.scarabsoft.jrest.test.exception;
 
 import com.scarabsoft.jrest.JRest;
-import com.scarabsoft.jrest.annotation.Get;
-import com.scarabsoft.jrest.annotation.Mapping;
+import com.scarabsoft.jrest.annotation.*;
 import com.scarabsoft.jrest.converter.StringConverterFactory;
 import com.scarabsoft.jrest.test.JRestTestApplication;
-import com.scarabsoft.jrest.test.converter.SimpleExceptionConverterFactory;
 import com.scarabsoft.jrest.test.converter.SpringDefaultExceptionConverterFactory;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
@@ -22,23 +21,88 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @IntegrationTest("server.port:1337")
 public class InternalServerExceptionTest {
 
-    @Test
-    public void internalServerExceptionTest() {
+    private ExceptionAppViaInterface internal;
+    private ExceptionAppViaNested nested;
+
+    @Before
+    public void before() {
         final JRest jrest = new JRest.Builder().build();
-        final ExceptionAppViaInterface app = jrest.create(ExceptionAppViaInterface.class);
+        internal = jrest.create(ExceptionAppViaInterface.class);
+
+        final JRest jrest2 = new JRest.Builder().exceptionFactory(new SpringDefaultExceptionConverterFactory()).build();
+        nested = jrest2.create(ExceptionAppViaNested.class);
+    }
+
+    @Test
+    public void GETinternalServerExceptionTest() {
         try {
-            app.getException();
+            internal.GET();
+        } catch (SpringDefaultException e) {
+            assertion(e);
+        }
+    }
+
+
+    @Test
+    public void POSTinternalServerExceptionTest() {
+        try {
+            internal.POST();
         } catch (SpringDefaultException e) {
             assertion(e);
         }
     }
 
     @Test
-    public void internalServerNestedExceptionTest() {
-        final JRest jrest = new JRest.Builder().exceptionFactory(new SimpleExceptionConverterFactory()).build();
-        final ExceptionAppViaInterface app = jrest.create(ExceptionAppViaInterface.class);
+    public void PUTinternalServerExceptionTest() {
         try {
-            app.getException();
+            internal.PUT();
+        } catch (SpringDefaultException e) {
+            assertion(e);
+        }
+    }
+
+    @Test
+    public void DELETEinternalServerExceptionTest() {
+        try {
+            internal.DELETE();
+        } catch (SpringDefaultException e) {
+            assertion(e);
+        }
+    }
+
+
+    @Test
+    public void GETNestedServerExceptionTest() {
+        try {
+            nested.GET();
+        } catch (SpringDefaultException e) {
+            assertion(e);
+        }
+    }
+
+
+    @Test
+    public void POSTNestedServerExceptionTest() {
+        try {
+            nested.POST();
+        } catch (SpringDefaultException e) {
+            assertion(e);
+        }
+    }
+
+    @Test
+    public void PUTNestedServerExceptionTest() {
+        try {
+            nested.PUT();
+        } catch (SpringDefaultException e) {
+            assertion(e);
+        }
+    }
+
+    @Test
+    public void DELETENestedServerExceptionTest() {
+        try {
+            nested.DELETE();
         } catch (SpringDefaultException e) {
             assertion(e);
         }
@@ -52,28 +116,36 @@ public class InternalServerExceptionTest {
         Assert.assertThat(e.getMessage(), Matchers.is("test"));
     }
 
-    @Test
-    public void internalServerExceptionjrestTest() {
-        final JRest jrest = new JRest.Builder().exceptionFactory(new SimpleExceptionConverterFactory()).build();
-        final ExceptionAppViajrest app = jrest.create(ExceptionAppViajrest.class);
-        try {
-            app.getException();
-        } catch (SimpleException e) {
-            Assert.assertThat(e.getPath(), Matchers.is("/v1/error/500"));
-            Assert.assertThat(e.getMessage(), Matchers.is("test"));
-        }
-    }
 
     @Mapping(url = "http://localhost:1337/v1/error/500", converterFactory = StringConverterFactory.class, exceptionFactory = SpringDefaultExceptionConverterFactory.class)
     interface ExceptionAppViaInterface {
         @Get
-        String getException();
+        void GET();
+
+        @Post
+        void POST();
+
+        @Put
+        void PUT();
+
+        @Delete
+        void DELETE();
+
     }
 
     @Mapping(url = "http://localhost:1337/v1/error/500", converterFactory = StringConverterFactory.class)
-    interface ExceptionAppViajrest {
+    interface ExceptionAppViaNested {
         @Get
-        String getException();
+        void GET();
+
+        @Post
+        void POST();
+
+        @Put
+        void PUT();
+
+        @Delete
+        void DELETE();
     }
 
 }

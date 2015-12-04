@@ -3,7 +3,6 @@ package com.scarabsoft.jrest.test;
 import com.scarabsoft.jrest.JRest;
 import com.scarabsoft.jrest.annotation.Get;
 import com.scarabsoft.jrest.annotation.Mapping;
-import com.scarabsoft.jrest.annotation.Put;
 import com.scarabsoft.jrest.test.domain.IP;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,11 +35,6 @@ public class NoInterfaceConstructionTest {
     class SimpleApplication {
         @Get
         IP GET() {
-            return null;
-        }
-
-        @Put
-        IP PUT() {
             return null;
         }
     }

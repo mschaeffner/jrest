@@ -1,10 +1,7 @@
 package com.scarabsoft.jrest.test;
 
 import com.scarabsoft.jrest.JRest;
-import com.scarabsoft.jrest.annotation.Get;
-import com.scarabsoft.jrest.annotation.Mapping;
-import com.scarabsoft.jrest.annotation.Post;
-import com.scarabsoft.jrest.annotation.Put;
+import com.scarabsoft.jrest.annotation.*;
 import com.scarabsoft.jrest.converter.GsonConverterFactory;
 import com.scarabsoft.jrest.test.domain.IP;
 import org.hamcrest.Matchers;
@@ -22,68 +19,88 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @IntegrationTest("server.port:1337")
 public class ConverterTests {
 
-    @Test(expected = RuntimeException.class)
-    public void GETmissingConverterTest() {
-        final JRest jrest = new JRest.Builder().build();
-        final SimpleApplication app = jrest.create(SimpleApplication.class);
-        app.GET();
-    }
-
     @Test
-    public void GETConverterInjrestTest() {
-        final JRest jrest = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
-        final SimpleApplication app = jrest.create(SimpleApplication.class);
+    public void GETConverterJRestTest() {
+        final JRest jrest2 = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
+        final ApplicationWithConverterFactory app = jrest2.create(ApplicationWithConverterFactory.class);
         assertion(app.GET());
     }
 
     @Test
-    public void GETConverterInApplicationTest() {
-        final JRest jrest = new JRest.Builder().build();
-        final ApplicationWithConverterFactory app = jrest.create(ApplicationWithConverterFactory.class);
+    public void POSTConverterJRestTest() {
+        final JRest jrest2 = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
+        final ApplicationWithConverterFactory app = jrest2.create(ApplicationWithConverterFactory.class);
+        assertion(app.POST());
+    }
+
+    @Test
+    public void PUTTConverterJRestTest() {
+        final JRest jrest2 = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
+        final ApplicationWithConverterFactory app = jrest2.create(ApplicationWithConverterFactory.class);
+        assertion(app.PUT());
+    }
+
+    @Test
+    public void DELETEConverterJRestTest() {
+        final JRest jrest2 = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
+        final ApplicationWithConverterFactory app = jrest2.create(ApplicationWithConverterFactory.class);
+        assertion(app.DELETE());
+    }
+
+    @Test
+    public void GETConverterInterfaceTest() {
+        final JRest jrest2 = new JRest.Builder().build();
+        final ApplicationWithConverterFactory app = jrest2.create(ApplicationWithConverterFactory.class);
         assertion(app.GET());
+    }
+
+    @Test
+    public void POSTConverterInterfaceTest() {
+        final JRest jrest2 = new JRest.Builder().build();
+        final ApplicationWithConverterFactory app = jrest2.create(ApplicationWithConverterFactory.class);
+        assertion(app.POST());
+    }
+
+    @Test
+    public void PUTConverterInterfaceTest() {
+        final JRest jrest2 = new JRest.Builder().build();
+        final ApplicationWithConverterFactory app = jrest2.create(ApplicationWithConverterFactory.class);
+        assertion(app.PUT());
+    }
+
+    @Test
+    public void DELETEConverterInterfaceTest() {
+        final JRest jrest2 = new JRest.Builder().build();
+        final ApplicationWithConverterFactory app = jrest2.create(ApplicationWithConverterFactory.class);
+        assertion(app.DELETE());
     }
 
     @Test(expected = RuntimeException.class)
     public void POSTmissingConverterTest() {
         final JRest jrest = new JRest.Builder().build();
-        final SimpleApplication app = jrest.create(SimpleApplication.class);
-        app.POST();
+        final SimpleApplication missingApp = jrest.create(SimpleApplication.class);
+        missingApp.POST();
     }
 
-    @Test
-    public void POSTConverterInjrestTest() {
-        final JRest jrest = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
-        final SimpleApplication app = jrest.create(SimpleApplication.class);
-        assertion(app.POST());
-    }
-
-    @Test
-    public void POSTConverterInApplicationTest() {
+    @Test(expected = RuntimeException.class)
+    public void GETmissingConverterTest() {
         final JRest jrest = new JRest.Builder().build();
-        final ApplicationWithConverterFactory app = jrest.create(ApplicationWithConverterFactory.class);
-        assertion(app.POST());
+        final SimpleApplication missingApp = jrest.create(SimpleApplication.class);
+        missingApp.GET();
     }
 
     @Test(expected = RuntimeException.class)
     public void PUTmissingConverterTest() {
         final JRest jrest = new JRest.Builder().build();
-        final SimpleApplication app = jrest.create(SimpleApplication.class);
-        app.PUT();
+        final SimpleApplication missingApp = jrest.create(SimpleApplication.class);
+        missingApp.PUT();
     }
 
-    @Test
-    public void PUTConverterInjrestTest() {
-        final JRest jrest = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
-        final SimpleApplication app = jrest.create(SimpleApplication.class);
-        assertion(app.PUT());
-    }
-
-    @Test
-    public void PUTConverterInApplicationTest() {
+    @Test(expected = RuntimeException.class)
+    public void DELETEmissingConverterTest() {
         final JRest jrest = new JRest.Builder().build();
-        final ApplicationWithConverterFactory app = jrest.create(ApplicationWithConverterFactory.class);
-        assertion(app.PUT());
-
+        final SimpleApplication missingApp = jrest.create(SimpleApplication.class);
+        missingApp.DELETE();
     }
 
     private void assertion(IP ip) {
@@ -101,6 +118,9 @@ public class ConverterTests {
 
         @Put
         IP PUT();
+
+        @Delete
+        IP DELETE();
     }
 
     @Mapping(url = "http://localhost:1337/v1/simple/ip", converterFactory = GsonConverterFactory.class)
@@ -113,6 +133,9 @@ public class ConverterTests {
 
         @Put
         IP PUT();
+
+        @Delete
+        IP DELETE();
 
     }
 }

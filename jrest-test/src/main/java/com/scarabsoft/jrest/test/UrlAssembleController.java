@@ -8,18 +8,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/url")
 public class UrlAssembleController {
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String GET() {
-		return "HelloWorld";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String GET() {
+        return "HelloWorld";
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String POST() {
-		return "HelloWorld";
-	}
+    @RequestMapping(method = RequestMethod.POST)
+    public String POST() {
+        return "HelloWorld";
+    }
 
-	@RequestMapping(method = RequestMethod.PUT)
-	public String PUT() {
-		return "HelloWorld";
-	}
+    @RequestMapping(method = RequestMethod.PUT)
+    public String PUT() {
+        return "HelloWorld";
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    public String DELETE() {
+        return "HelloWorld";
+    }
 }

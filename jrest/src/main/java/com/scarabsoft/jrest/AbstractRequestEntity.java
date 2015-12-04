@@ -60,6 +60,10 @@ abstract class AbstractRequestEntity implements RequestEntity {
 
     @Override
     public Object getResult() throws IOException {
+        if (converter == null) {
+            return null;
+        }
+
         if (exception != null) {
             throw exception;
         }

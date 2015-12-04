@@ -1,9 +1,12 @@
 package com.scarabsoft.jrest.test;
 
-import com.scarabsoft.jrest.annotation.Put;
+import com.scarabsoft.jrest.JRest;
+import com.scarabsoft.jrest.annotation.*;
 import com.scarabsoft.jrest.converter.GsonConverterFactory;
+import com.scarabsoft.jrest.test.domain.UserGroup;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
@@ -11,79 +14,75 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.scarabsoft.jrest.JRest;
-import com.scarabsoft.jrest.annotation.Get;
-import com.scarabsoft.jrest.annotation.Post;
-import com.scarabsoft.jrest.annotation.Path;
-import com.scarabsoft.jrest.annotation.Mapping;
-import com.scarabsoft.jrest.test.domain.UserGroup;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class PathVariableTest {
 
-	@Mapping(url = "http://localhost:1337/v1", converterFactory = GsonConverterFactory.class)
-	static interface Application {
+    private Application app;
 
-		@Get(url = "/path/{userId}/{groupId}")
-		UserGroup GET(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
+    @Before
+    public void before() {
+        final JRest jrest = new JRest.Builder().build();
+        app = jrest.create(Application.class);
+    }
 
-		@Get(url = "/path/4/5")
-		UserGroup GETWithout();
+    @Test
+    public void GETTest() {
+        assertion(app.GET(1, 2), app.GETWithout());
+    }
 
-		@Post(url = "/path/{userId}/{groupId}")
-		UserGroup POST(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
+    @Test
+    public void POSTTest() {
+        assertion(app.POST(1, 2), app.POSTWithout());
+    }
 
-		@Post(url = "/path/4/5")
-		UserGroup POSTWithout();
+    @Test
+    public void PUTTest() {
+        assertion(app.PUT(1, 2), app.PUTWithout());
+    }
 
-		@Put(url = "/path/{userId}/{groupId}")
-		UserGroup PUT(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
+    @Test
+    public void DELETETest() {
+        assertion(app.DELETE(1, 2), app.DELETEWithout());
+    }
 
-		@Put(url = "/path/4/5")
-		UserGroup PUTWithout();
+    private void assertion(UserGroup ug1, UserGroup ug2) {
+        Assert.assertThat(ug1.getUserId(), Matchers.is(1));
+        Assert.assertThat(ug1.getGroupId(), Matchers.is(2));
 
-	}
+        Assert.assertThat(ug2.getUserId(), Matchers.is(4));
+        Assert.assertThat(ug2.getGroupId(), Matchers.is(5));
+    }
 
-	@Test
-	public void GETtest() {
-		JRest jrest = new JRest.Builder().build();
-		Application app = jrest.create(Application.class);
-		UserGroup obj = app.GET(1, 2);
-		Assert.assertThat(obj.getUserId(), Matchers.is(1));
-		Assert.assertThat(obj.getGroupId(), Matchers.is(2));
+    @Mapping(url = "http://localhost:1337/v1", converterFactory = GsonConverterFactory.class)
+    static interface Application {
 
-		obj = app.GETWithout();
-		Assert.assertThat(obj.getUserId(), Matchers.is(4));
-		Assert.assertThat(obj.getGroupId(), Matchers.is(5));
-	}
+        @Get(url = "/path/{userId}/{groupId}")
+        UserGroup GET(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
 
-	@Test
-	public void POSTtest() {
-		JRest jrest = new JRest.Builder().build();
-		Application app = jrest.create(Application.class);
-		UserGroup obj = app.POST(1, 2);
-		Assert.assertThat(obj.getUserId(), Matchers.is(1));
-		Assert.assertThat(obj.getGroupId(), Matchers.is(2));
+        @Get(url = "/path/4/5")
+        UserGroup GETWithout();
 
-		obj = app.POSTWithout();
-		Assert.assertThat(obj.getUserId(), Matchers.is(4));
-		Assert.assertThat(obj.getGroupId(), Matchers.is(5));
-	}
+        @Post(url = "/path/{userId}/{groupId}")
+        UserGroup POST(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
 
-	@Test
-	public void PUTtest() {
-		JRest jrest = new JRest.Builder().build();
-		Application app = jrest.create(Application.class);
-		UserGroup obj = app.PUT(1, 2);
-		Assert.assertThat(obj.getUserId(), Matchers.is(1));
-		Assert.assertThat(obj.getGroupId(), Matchers.is(2));
+        @Post(url = "/path/4/5")
+        UserGroup POSTWithout();
 
-		obj = app.PUTWithout();
-		Assert.assertThat(obj.getUserId(), Matchers.is(4));
-		Assert.assertThat(obj.getGroupId(), Matchers.is(5));
-	}
+        @Put(url = "/path/{userId}/{groupId}")
+        UserGroup PUT(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
+
+        @Put(url = "/path/4/5")
+        UserGroup PUTWithout();
+
+        @Delete(url = "/path/{userId}/{groupId}")
+        UserGroup DELETE(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
+
+        @Delete(url = "/path/4/5")
+        UserGroup DELETEWithout();
+
+    }
 
 }
