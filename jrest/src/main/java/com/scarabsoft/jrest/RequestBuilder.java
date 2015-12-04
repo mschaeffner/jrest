@@ -39,7 +39,7 @@ class RequestBuilder {
     }
 
     public AbstractRequestEntity build(Method method, Object[] parameters, HttpClient httpClient) {
-        final MethodHandler methodHandler = resolveMethodHandler(method);
+        final AbstractMethodHandler methodHandler = resolveMethodHandler(method);
         final String url = methodHandler.getUrl(baseUrl, method, parameters);
         final Collection<ParamEntity> requestParameterEntities = methodHandler.getParameterEntities(method, parameters);
         final Collection<HeaderEntity> headerEntities = methodHandler.getHeaderEntities(method, parameters);
@@ -104,7 +104,7 @@ class RequestBuilder {
         return result;
     }
 
-    private MethodHandler resolveMethodHandler(Method method) {
+    private AbstractMethodHandler resolveMethodHandler(Method method) {
         if (method.getAnnotation(Get.class) != null) {
             return new GetMethodHandler();
         }

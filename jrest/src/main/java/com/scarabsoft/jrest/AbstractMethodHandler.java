@@ -12,11 +12,10 @@ import java.lang.reflect.Parameter;
 import java.util.Collection;
 import java.util.LinkedList;
 
-abstract class AbstractMethodHandler implements MethodHandler {
+abstract class AbstractMethodHandler {
 
 	protected abstract String getUrl(Method method);
 
-	@Override
 	public String getUrl(String baseUrl, Method method, Object[] parameters) {
 		String resultUrl = baseUrl + getUrl(method);
 		final Parameter[] methodParameters = method.getParameters();
@@ -38,7 +37,6 @@ abstract class AbstractMethodHandler implements MethodHandler {
 		return url.replace("{" + name + "}", value);
 	}
 
-	@Override
 	public Collection<ParamEntity> getParameterEntities(Method method, Object[] parameters) {
 		final Collection<ParamEntity> result = new LinkedList<ParamEntity>();
 		final Parameter[] methodParameters = method.getParameters();
@@ -56,7 +54,6 @@ abstract class AbstractMethodHandler implements MethodHandler {
 		return result;
 	}
 
-	@Override
 	public Collection<HeaderEntity> getHeaderEntities(Method method, Object[] parameters) {
 		final Collection<HeaderEntity> result = AnnotationUtil.getHeaderEntities(method.getAnnotation(Headers.class));
 
@@ -75,7 +72,6 @@ abstract class AbstractMethodHandler implements MethodHandler {
 		return result;
 	}
 
-	@Override
 	public BodyEntity getBodyEntity(Converter.BodyConverter converter, Method method, Object[] parameters)
 			throws UnsupportedEncodingException {
 		for (int i = 0; i < method.getParameters().length; i++) {

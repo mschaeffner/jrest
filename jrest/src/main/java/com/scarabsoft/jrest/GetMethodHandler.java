@@ -1,14 +1,14 @@
 package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.annotation.Body;
+import com.scarabsoft.jrest.annotation.Get;
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.interceptor.BodyEntity;
-import com.scarabsoft.jrest.annotation.Get;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
-class GetMethodHandler extends AbstractMethodHandler implements MethodHandler {
+class GetMethodHandler extends AbstractMethodHandler {
 
     @Override
     protected String getUrl(Method method) {
