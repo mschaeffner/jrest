@@ -12,7 +12,6 @@ import com.scarabsoft.jrest.util.RequestInterceptorChainBuilder;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
@@ -52,59 +51,48 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
 
         if (method.getReturnType().equals(ResponseEntity.class)) {
             ParameterizedType genericType = (ParameterizedType) method.getGenericReturnType();
-
             if (genericType.getActualTypeArguments()[0] instanceof ParameterizedType) {
                 ParameterizedType collectionType = (ParameterizedType) genericType.getActualTypeArguments()[0];
                 if (collectionType.getRawType().equals(Collection.class)) {
                     returnClazz = (Class<?>) collectionType.getActualTypeArguments()[0];
-                    isCollection = true;
                     collectionClazz = LinkedList.class;
                 } else if (collectionType.getRawType().equals(List.class)) {
                     returnClazz = (Class<?>) collectionType.getActualTypeArguments()[0];
-                    isCollection = true;
                     collectionClazz = LinkedList.class;
                 } else if (collectionType.getRawType().equals(Set.class)) {
                     returnClazz = (Class<?>) collectionType.getActualTypeArguments()[0];
-                    isCollection = true;
                     collectionClazz = HashSet.class;
                 } else {
                     returnClazz = (Class<?>) genericType.getActualTypeArguments()[0];
-                    isCollection = false;
                 }
             } else {
                 returnClazz = (Class<?>) genericType.getActualTypeArguments()[0];
-                isCollection = false;
             }
         } else if (method.getReturnType().isAssignableFrom(Collection.class)) {
             final ParameterizedType genericType = (ParameterizedType) method.getGenericReturnType();
             returnClazz = (Class<?>) genericType.getActualTypeArguments()[0];
-            isCollection = true;
             collectionClazz = LinkedList.class;
-
         } else if (method.getReturnType().isAssignableFrom(List.class)) {
             final ParameterizedType genericType = (ParameterizedType) method.getGenericReturnType();
             returnClazz = (Class<?>) genericType.getActualTypeArguments()[0];
-            isCollection = true;
             collectionClazz = LinkedList.class;
         } else if (method.getReturnType().isAssignableFrom(Set.class)) {
             final ParameterizedType genericType = (ParameterizedType) method.getGenericReturnType();
             returnClazz = (Class<?>) genericType.getActualTypeArguments()[0];
-            isCollection = true;
             collectionClazz = HashSet.class;
         } else {
             returnClazz = method.getReturnType();
-            isCollection = false;
         }
 
-        final RequestBuilder builder = new RequestBuilder(baseUrl, //
-                converterFactory.get(returnClazz), //
-                exceptionConverterFactory.get(), //
-                requestConfig, //
-                headerEntities, isCollection, collectionClazz);
+        final RequestBuilder builder = new RequestBuilder(baseUrl,
+                converterFactory.get(returnClazz),
+                exceptionConverterFactory.get(),
+                requestConfig,
+                headerEntities, collectionClazz);
         final AbstractRequestEntity request = builder.build(method, args, HttpClientBuilder.create().build());
-        request.execute(RequestInterceptorChainBuilder.create(//
-                interceptorChain, //
-                method.getAnnotation(Interceptors.class), //
+        request.execute(RequestInterceptorChainBuilder.create(
+                interceptorChain,
+                method.getAnnotation(Interceptors.class),
                 method.getAnnotation(Interceptor.class)));
         if (request.getResponseClazz().equals(ResponseEntity.class)) {
             return request.getResponse();

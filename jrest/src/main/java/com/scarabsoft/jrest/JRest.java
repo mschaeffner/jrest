@@ -31,7 +31,7 @@ public final class JRest {
 
     private void assertIsInterface(Class<?> clazz) {
         if (!clazz.isInterface()) {
-            throw new RuntimeException("Can only create service out of an interface");
+            throw new RuntimeException("JRest can only used with interfaces");
         }
     }
 

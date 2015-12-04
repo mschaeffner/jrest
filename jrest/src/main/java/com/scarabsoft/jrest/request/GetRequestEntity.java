@@ -13,34 +13,33 @@ import java.util.Collection;
 
 public class GetRequestEntity extends AbstractRequestEntity {
 
-	public GetRequestEntity(String baseUrl, //
-							Converter<?> converter, //
-							ExceptionConverter<?> exceptionConverter, //
-							Collection<HeaderEntity> headerEntities, //
-							Collection<ParamEntity> requestParameterEntities, //
-							RequestConfig requestConfig, //
-							HttpClient httpClient, Class<?> responseClazz, //
-							boolean isCollection,
-							Class<? extends Collection> collectionClazz
-							) {
-		super(baseUrl, converter, exceptionConverter, headerEntities, requestParameterEntities, requestConfig,
-				httpClient, responseClazz, isCollection,collectionClazz);
-	}
+    public GetRequestEntity(String baseUrl,
+                            Converter<?> converter,
+                            ExceptionConverter<?> exceptionConverter,
+                            Collection<HeaderEntity> headerEntities,
+                            Collection<ParamEntity> requestParameterEntities,
+                            RequestConfig requestConfig,
+                            HttpClient httpClient, Class<?> responseClazz,
+                            Class<? extends Collection> collectionClazz
+    ) {
+        super(baseUrl, converter, exceptionConverter, headerEntities, requestParameterEntities, requestConfig,
+                httpClient, responseClazz, collectionClazz);
+    }
 
-	@Override
-	protected HttpRequestBase buildRequest(String url) {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("?");
-		for (ParamEntity parameter : requestParameterEntities) {
-			builder.append(parameter.getName());
-			builder.append("=");
-			builder.append(parameter.getValue().toString());
-			builder.append(",");
-			builder.deleteCharAt(builder.length() - 1);
-			builder.append("&");
-		}
-		builder.deleteCharAt(builder.length() - 1);
-		return new HttpGet(url + builder.toString());
-	}
+    @Override
+    protected HttpRequestBase buildRequest(String url) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("?");
+        for (ParamEntity parameter : requestParameterEntities) {
+            builder.append(parameter.getName());
+            builder.append("=");
+            builder.append(parameter.getValue().toString());
+            builder.append(",");
+            builder.deleteCharAt(builder.length() - 1);
+            builder.append("&");
+        }
+        builder.deleteCharAt(builder.length() - 1);
+        return new HttpGet(url + builder.toString());
+    }
 
 }

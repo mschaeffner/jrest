@@ -1,8 +1,8 @@
 package com.scarabsoft.jrest.request;
 
 import com.scarabsoft.jrest.converter.Converter;
-import com.scarabsoft.jrest.interceptor.BodyEntity;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
+import com.scarabsoft.jrest.interceptor.BodyEntity;
 import com.scarabsoft.jrest.interceptor.HeaderEntity;
 import com.scarabsoft.jrest.interceptor.ParamEntity;
 import org.apache.http.client.HttpClient;
@@ -15,16 +15,18 @@ import java.util.Collection;
 
 public class PutRequestEntity extends PostRequestEntity {
 
-    public PutRequestEntity(String baseUrl, //
-                            Converter<?> converter, //
-                            ExceptionConverter<?> exceptionConverter, //
-                            Collection<HeaderEntity> headerEntities, //
-                            Collection<ParamEntity> requestParameterEntities, //
-                            BodyEntity bodyEntity, //
-                            RequestConfig requestConfig, //
-                            HttpClient httpClient, Class<?> responseClazz, boolean isCollection, Class<? extends Collection> collectionClazz) {
+    public PutRequestEntity(String baseUrl,
+                            Converter<?> converter,
+                            ExceptionConverter<?> exceptionConverter,
+                            Collection<HeaderEntity> headerEntities,
+                            Collection<ParamEntity> requestParameterEntities,
+                            BodyEntity bodyEntity,
+                            RequestConfig requestConfig,
+                            HttpClient httpClient,
+                            Class<?> responseClazz,
+                            Class<? extends Collection> collectionClazz) {
         super(baseUrl, converter, exceptionConverter, headerEntities, requestParameterEntities, bodyEntity,
-                requestConfig, httpClient, responseClazz, isCollection, collectionClazz);
+                requestConfig, httpClient, responseClazz, collectionClazz);
     }
 
     @Override

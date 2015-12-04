@@ -31,12 +31,11 @@ public abstract class AbstractRequestEntity implements RequestEntity {
     private RuntimeException exception;
     private Header[] responseHeader;
 
-    private boolean isCollection;
     private Class<? extends Collection> collectionClazz;
 
     public AbstractRequestEntity(String baseUrl, Converter<?> converter, ExceptionConverter<?> exceptionConverter,
                                  Collection<HeaderEntity> headerEntities, Collection<ParamEntity> requestParameterEntities,
-                                 RequestConfig requestConfig, HttpClient httpClient, Class<?> responseClazz, boolean isCollection,Class<? extends Collection> collectionClazz) {
+                                 RequestConfig requestConfig, HttpClient httpClient, Class<?> responseClazz,Class<? extends Collection> collectionClazz) {
         this.url = baseUrl;
         this.converter = converter;
         this.exceptionConverter = exceptionConverter;
@@ -45,7 +44,6 @@ public abstract class AbstractRequestEntity implements RequestEntity {
         this.requestConfig = requestConfig;
         this.httpClient = httpClient;
         this.responseClazz = responseClazz;
-        this.isCollection = isCollection;
         this.collectionClazz = collectionClazz;
     }
 
@@ -62,7 +60,7 @@ public abstract class AbstractRequestEntity implements RequestEntity {
         }
 
         if (cachedResult == null) {
-            if (isCollection) {
+            if (collectionClazz != null) {
                 cachedResult = converter.convertCollection(inputStream, collectionClazz);
             } else {
                 cachedResult = converter.convert(inputStream);
