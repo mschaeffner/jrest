@@ -3,6 +3,7 @@ package com.scarabsoft.jrest.test;
 import com.scarabsoft.jrest.JRest;
 import com.scarabsoft.jrest.annotation.Get;
 import com.scarabsoft.jrest.annotation.Mapping;
+import com.scarabsoft.jrest.annotation.Post;
 import com.scarabsoft.jrest.annotation.Put;
 import com.scarabsoft.jrest.converter.StringConverterFactory;
 import org.hamcrest.Matchers;
@@ -14,127 +15,121 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.scarabsoft.jrest.annotation.Post;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class UrlConcatenationTest {
 
-	@Mapping(url = "/v1")
-	public interface AppWithFullUrl {
-		@Get(url = "/url")
-		String GET();
+    private void assertion(String str) {
+        Assert.assertThat(str, Matchers.is("HelloWorld"));
+    }
 
-		@Post(url = "/url")
-		String POST();
+    @Test
+    public void GETjrestOnlyUrlTest() {
+        final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/url")
+                .coverterFactory(new StringConverterFactory()).build();
+        AppWithoutUrl app = jrest.create(AppWithoutUrl.class);
+        assertion(app.GET());
+    }
 
-		@Put(url = "/url")
-		String PUT();
-	}
+    @Test
+    public void GETjrestAndInterfaceUrlTest() {
+        final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/")
+                .coverterFactory(new StringConverterFactory()).build();
+        AppWithInterfaceUrlApp app = jrest.create(AppWithInterfaceUrlApp.class);
+        assertion(app.GET());
+    }
 
-	@Mapping(url = "/v1/url")
-	public interface AppWithInterfaceUrlApp {
-		@Get
-		String GET();
+    @Test
+    public void GETjrestNestedUrlTest() {
+        final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/")
+                .coverterFactory(new StringConverterFactory()).build();
+        AppWithFullUrl app = jrest.create(AppWithFullUrl.class);
+        assertion(app.GET());
+    }
 
-		@Post
-		String POST();
+    @Test
+    public void POSTjrestOnlyUrlTest() {
+        final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/url")
+                .coverterFactory(new StringConverterFactory()).build();
+        AppWithoutUrl app = jrest.create(AppWithoutUrl.class);
+        assertion(app.POST());
+    }
 
-		@Put
-		String PUT();
-	}
+    @Test
+    public void POSTjrestAndInterfaceUrlTest() {
+        final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/")
+                .coverterFactory(new StringConverterFactory()).build();
+        AppWithInterfaceUrlApp app = jrest.create(AppWithInterfaceUrlApp.class);
+        assertion(app.POST());
+    }
 
-	public interface AppWithoutUrl {
-		@Get
-		String GET();
+    @Test
+    public void POSTjrestNestedUrlTest() {
+        final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/")
+                .coverterFactory(new StringConverterFactory()).build();
+        AppWithFullUrl app = jrest.create(AppWithFullUrl.class);
+        String str = app.POST();
+        Assert.assertThat(str, Matchers.is("HelloWorld"));
+    }
 
-		@Post
-		String POST();
+    @Test
+    public void PUTjrestOnlyUrlTest() {
+        final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/url")
+                .coverterFactory(new StringConverterFactory()).build();
+        AppWithoutUrl app = jrest.create(AppWithoutUrl.class);
+        assertion(app.PUT());
+    }
 
-		@Put
-		String PUT();
-	}
+    @Test
+    public void PUTjrestAndInterfaceUrlTest() {
+        final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/")
+                .coverterFactory(new StringConverterFactory()).build();
+        AppWithInterfaceUrlApp app = jrest.create(AppWithInterfaceUrlApp.class);
+        assertion(app.PUT());
+    }
 
-	@Test
-	public void GETFreyaOnlyUrlTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/v1/url")
-				.coverterFactory(new StringConverterFactory()).build();
-		AppWithoutUrl app = freya.create(AppWithoutUrl.class);
-		String str = app.GET();
-		Assert.assertThat(str, Matchers.is("HelloWorld"));
-	}
+    @Test
+    public void PUTjrestNestedUrlTest() {
+        final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/")
+                .coverterFactory(new StringConverterFactory()).build();
+        AppWithFullUrl app = jrest.create(AppWithFullUrl.class);
+        assertion(app.PUT());
+    }
 
-	@Test
-	public void GETFreyaAndInterfaceUrlTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/")
-				.coverterFactory(new StringConverterFactory()).build();
-		AppWithInterfaceUrlApp app = freya.create(AppWithInterfaceUrlApp.class);
-		String str = app.GET();
-		Assert.assertThat(str, Matchers.is("HelloWorld"));
-	}
+    @Mapping(url = "/v1")
+    public interface AppWithFullUrl {
+        @Get(url = "/url")
+        String GET();
 
-	@Test
-	public void GETFreyaNestedUrlTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/")
-				.coverterFactory(new StringConverterFactory()).build();
-		AppWithFullUrl app = freya.create(AppWithFullUrl.class);
-		String str = app.GET();
-		Assert.assertThat(str, Matchers.is("HelloWorld"));
-	}
+        @Post(url = "/url")
+        String POST();
 
-	@Test
-	public void POSTFreyaOnlyUrlTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/v1/url")
-				.coverterFactory(new StringConverterFactory()).build();
-		AppWithoutUrl app = freya.create(AppWithoutUrl.class);
-		String str = app.POST();
-		Assert.assertThat(str, Matchers.is("HelloWorld"));
-	}
+        @Put(url = "/url")
+        String PUT();
+    }
 
-	@Test
-	public void POSTFreyaAndInterfaceUrlTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/")
-				.coverterFactory(new StringConverterFactory()).build();
-		AppWithInterfaceUrlApp app = freya.create(AppWithInterfaceUrlApp.class);
-		String str = app.POST();
-		Assert.assertThat(str, Matchers.is("HelloWorld"));
-	}
+    @Mapping(url = "/v1/url")
+    public interface AppWithInterfaceUrlApp {
+        @Get
+        String GET();
 
-	@Test
-	public void POSTFreyaNestedUrlTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/")
-				.coverterFactory(new StringConverterFactory()).build();
-		AppWithFullUrl app = freya.create(AppWithFullUrl.class);
-		String str = app.POST();
-		Assert.assertThat(str, Matchers.is("HelloWorld"));
-	}
+        @Post
+        String POST();
 
-	@Test
-	public void PUTFreyaOnlyUrlTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/v1/url")
-				.coverterFactory(new StringConverterFactory()).build();
-		AppWithoutUrl app = freya.create(AppWithoutUrl.class);
-		String str = app.PUT();
-		Assert.assertThat(str, Matchers.is("HelloWorld"));
-	}
+        @Put
+        String PUT();
+    }
 
-	@Test
-	public void PUTFreyaAndInterfaceUrlTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/")
-				.coverterFactory(new StringConverterFactory()).build();
-		AppWithInterfaceUrlApp app = freya.create(AppWithInterfaceUrlApp.class);
-		String str = app.PUT();
-		Assert.assertThat(str, Matchers.is("HelloWorld"));
-	}
+    public interface AppWithoutUrl {
+        @Get
+        String GET();
 
-	@Test
-	public void PUTFreyaNestedUrlTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/")
-				.coverterFactory(new StringConverterFactory()).build();
-		AppWithFullUrl app = freya.create(AppWithFullUrl.class);
-		String str = app.PUT();
-		Assert.assertThat(str, Matchers.is("HelloWorld"));
-	}
+        @Post
+        String POST();
+
+        @Put
+        String PUT();
+    }
 }

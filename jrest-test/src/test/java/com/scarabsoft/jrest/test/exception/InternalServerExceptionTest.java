@@ -4,7 +4,7 @@ import com.scarabsoft.jrest.JRest;
 import com.scarabsoft.jrest.annotation.Get;
 import com.scarabsoft.jrest.annotation.Mapping;
 import com.scarabsoft.jrest.converter.StringConverterFactory;
-import com.scarabsoft.jrest.test.FreyaTestApplication;
+import com.scarabsoft.jrest.test.JRestTestApplication;
 import com.scarabsoft.jrest.test.converter.SimpleExceptionConverterFactory;
 import com.scarabsoft.jrest.test.converter.SpringDefaultExceptionConverterFactory;
 import org.hamcrest.Matchers;
@@ -17,15 +17,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class InternalServerExceptionTest {
 
     @Test
     public void internalServerExceptionTest() {
-        final JRest freya = new JRest.Builder().build();
-        final ExceptionAppViaInterface app = freya.create(ExceptionAppViaInterface.class);
+        final JRest jrest = new JRest.Builder().build();
+        final ExceptionAppViaInterface app = jrest.create(ExceptionAppViaInterface.class);
         try {
             app.getException();
         } catch (SpringDefaultException e) {
@@ -35,8 +35,8 @@ public class InternalServerExceptionTest {
 
     @Test
     public void internalServerNestedExceptionTest() {
-        final JRest freya = new JRest.Builder().exceptionFactory(new SimpleExceptionConverterFactory()).build();
-        final ExceptionAppViaInterface app = freya.create(ExceptionAppViaInterface.class);
+        final JRest jrest = new JRest.Builder().exceptionFactory(new SimpleExceptionConverterFactory()).build();
+        final ExceptionAppViaInterface app = jrest.create(ExceptionAppViaInterface.class);
         try {
             app.getException();
         } catch (SpringDefaultException e) {
@@ -53,9 +53,9 @@ public class InternalServerExceptionTest {
     }
 
     @Test
-    public void internalServerExceptionFreyaTest() {
-        final JRest freya = new JRest.Builder().exceptionFactory(new SimpleExceptionConverterFactory()).build();
-        final ExceptionAppViaFreya app = freya.create(ExceptionAppViaFreya.class);
+    public void internalServerExceptionjrestTest() {
+        final JRest jrest = new JRest.Builder().exceptionFactory(new SimpleExceptionConverterFactory()).build();
+        final ExceptionAppViajrest app = jrest.create(ExceptionAppViajrest.class);
         try {
             app.getException();
         } catch (SimpleException e) {
@@ -71,7 +71,7 @@ public class InternalServerExceptionTest {
     }
 
     @Mapping(url = "http://localhost:1337/v1/error/500", converterFactory = StringConverterFactory.class)
-    interface ExceptionAppViaFreya {
+    interface ExceptionAppViajrest {
         @Get
         String getException();
     }

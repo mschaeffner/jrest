@@ -20,7 +20,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class ResponseEntityCollectionTest {
@@ -32,24 +32,24 @@ public class ResponseEntityCollectionTest {
 
     @Test
     public void GETConverterInApplicationTest() {
-        final JRest freya = new JRest.Builder().build();
-        final ApplicationWithConverterFactory app = freya.create(ApplicationWithConverterFactory.class);
+        final JRest jrest = new JRest.Builder().build();
+        final ApplicationWithConverterFactory app = jrest.create(ApplicationWithConverterFactory.class);
         test(new ArrayList<>(app.GET().getObject()));
     }
 
     @Test
     public void POSTConverterInApplicationTest() {
-        final JRest freya = new JRest.Builder().build();
+        final JRest jrest = new JRest.Builder().build();
         final ApplicationWithConverterFactory app =
-                freya.create(ApplicationWithConverterFactory.class);
+                jrest.create(ApplicationWithConverterFactory.class);
         test(new ArrayList<>(app.POST().getObject()));
     }
 
     @Test
     public void PUTConverterInApplicationTest() {
-        final JRest freya = new JRest.Builder().build();
+        final JRest jrest = new JRest.Builder().build();
         final ApplicationWithConverterFactory app =
-                freya.create(ApplicationWithConverterFactory.class);
+                jrest.create(ApplicationWithConverterFactory.class);
         List<IP> list = new ArrayList<>(app.PUT().getObject());
         Collections.sort(list, (o1, o2) -> o1.getIp().compareTo(o2.getIp()));
         test(list);

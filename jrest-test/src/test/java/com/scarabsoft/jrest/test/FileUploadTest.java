@@ -26,7 +26,7 @@ import com.scarabsoft.jrest.annotation.Put;
 import com.scarabsoft.jrest.annotation.Param;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class FileUploadTest {
@@ -53,14 +53,14 @@ public class FileUploadTest {
 
 	}
 
-	private JRest freya;
+	private JRest jrest;
 	private File file;
 	private InputStream stream;
 	private byte[] array;
 
 	@Before
 	public void setup() {
-		freya = new JRest.Builder().baseUrl("http://localhost:1337/v1/file")
+		jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/file")
 				.coverterFactory(new GsonConverterFactory()).build();
 		URL uri = ClassLoader.getSystemResource("char-willy.png");
 		try {
@@ -74,7 +74,7 @@ public class FileUploadTest {
 
 	@Test
 	public void POSTfile() {
-		UploadApp app = freya.create(UploadApp.class);
+		UploadApp app = jrest.create(UploadApp.class);
 		FileEntity fileEntity = app.POSTfile(file);
 		Assert.assertThat("application/octet-stream", Matchers.is(fileEntity.getContentType()));
 		Assert.assertThat("file", Matchers.is(fileEntity.getFilename()));
@@ -84,7 +84,7 @@ public class FileUploadTest {
 	// TODO make this test working
 	@Test(expected = RuntimeException.class)
 	public void POSTInputstream() {
-		UploadApp app = freya.create(UploadApp.class);
+		UploadApp app = jrest.create(UploadApp.class);
 		FileEntity fileEntity = app.POSTInputStream(stream);
 		Assert.assertThat("application/octet-stream", Matchers.is(fileEntity.getContentType()));
 		Assert.assertThat("file", Matchers.is(fileEntity.getFilename()));
@@ -94,7 +94,7 @@ public class FileUploadTest {
 	// TODO make this test working
 	@Test(expected = RuntimeException.class)
 	public void POSTByteArray() throws IOException {
-		UploadApp app = freya.create(UploadApp.class);
+		UploadApp app = jrest.create(UploadApp.class);
 		FileEntity fileEntity = app.POSTByteArray(array);
 		Assert.assertThat("application/octet-stream", Matchers.is(fileEntity.getContentType()));
 		Assert.assertThat("file", Matchers.is(fileEntity.getFilename()));
@@ -103,7 +103,7 @@ public class FileUploadTest {
 
 	@Test
 	public void PUTfile() {
-		UploadApp app = freya.create(UploadApp.class);
+		UploadApp app = jrest.create(UploadApp.class);
 		FileEntity fileEntity = app.PUTfile(file);
 		Assert.assertThat("application/octet-stream", Matchers.is(fileEntity.getContentType()));
 		Assert.assertThat("file", Matchers.is(fileEntity.getFilename()));
@@ -113,7 +113,7 @@ public class FileUploadTest {
 	// TODO make this test working
 	@Test(expected = RuntimeException.class)
 	public void PUTInputstream() {
-		UploadApp app = freya.create(UploadApp.class);
+		UploadApp app = jrest.create(UploadApp.class);
 		FileEntity fileEntity = app.PUTInputStream(stream);
 		Assert.assertThat("application/octet-stream", Matchers.is(fileEntity.getContentType()));
 		Assert.assertThat("file", Matchers.is(fileEntity.getFilename()));
@@ -123,7 +123,7 @@ public class FileUploadTest {
 	// TODO make this test working
 	@Test(expected = RuntimeException.class)
 	public void PUTByteArray() throws IOException {
-		UploadApp app = freya.create(UploadApp.class);
+		UploadApp app = jrest.create(UploadApp.class);
 		FileEntity fileEntity = app.PUTByteArray(array);
 		Assert.assertThat("application/octet-stream", Matchers.is(fileEntity.getContentType()));
 		Assert.assertThat("file", Matchers.is(fileEntity.getFilename()));

@@ -19,34 +19,36 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class CollectionConverterTests {
 
     private void test(List<IP> ips) {
         Assert.assertThat(ips.get(0).getIp(), Matchers.is("127.0.0.1"));
+        Assert.assertThat(ips.get(1).getIp(), Matchers.is("128.0.0.1"));
+        Assert.assertThat(ips.get(2).getIp(), Matchers.is("129.0.0.1"));
         Assert.assertThat(ips.size(), Matchers.is(3));
     }
 
     @Test
     public void GETConverterInApplicationTest() {
-        final JRest freya = new JRest.Builder().build();
-        final ApplicationWithConverterFactory app = freya.create(ApplicationWithConverterFactory.class);
+        final JRest jrest = new JRest.Builder().build();
+        final ApplicationWithConverterFactory app = jrest.create(ApplicationWithConverterFactory.class);
         test(new ArrayList<>(app.GET()));
     }
 
     @Test
     public void POSTConverterInApplicationTest() {
-        final JRest freya = new JRest.Builder().build();
-        final ApplicationWithConverterFactory app = freya.create(ApplicationWithConverterFactory.class);
+        final JRest jrest = new JRest.Builder().build();
+        final ApplicationWithConverterFactory app = jrest.create(ApplicationWithConverterFactory.class);
         test(new ArrayList<>(app.POST()));
     }
 
     @Test
     public void PUTConverterInApplicationTest() {
-        final JRest freya = new JRest.Builder().build();
-        final ApplicationWithConverterFactory app = freya.create(ApplicationWithConverterFactory.class);
+        final JRest jrest = new JRest.Builder().build();
+        final ApplicationWithConverterFactory app = jrest.create(ApplicationWithConverterFactory.class);
         List<IP> list = new ArrayList<>(app.PUT());
         Collections.sort(list, (o1, o2) -> o1.getIp().compareTo(o2.getIp()));
         test(list);

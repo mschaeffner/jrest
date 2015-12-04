@@ -20,7 +20,7 @@ import com.scarabsoft.jrest.annotation.Put;
 import com.scarabsoft.jrest.test.domain.IP;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class BodyTest {
@@ -38,23 +38,23 @@ public class BodyTest {
 
 	}
 
-	private JRest freya;
+	private JRest jrest;
 
 	@Before
 	public void before() {
-		freya = new JRest.Builder().build();
+		jrest = new JRest.Builder().build();
 	}
 
 	@Test(expected = RuntimeException.class)
 	public void GetTest() {
-		App app = freya.create(App.class);
+		App app = jrest.create(App.class);
 		final IP ip = new IP.Builder().ip("127.0.0.2").requestDate(System.currentTimeMillis()).getCountry("de").build();
 		app.GET(ip);
 	}
 
 	@Test
 	public void PostTest() {
-		App app = freya.create(App.class);
+		App app = jrest.create(App.class);
 		final IP ip = new IP.Builder().ip("127.0.0.2").requestDate(System.currentTimeMillis()).getCountry("de").build();
 		IP result = app.POST(ip);
 
@@ -66,7 +66,7 @@ public class BodyTest {
 
 	@Test
 	public void PutTest() {
-		App app = freya.create(App.class);
+		App app = jrest.create(App.class);
 		final IP ip = new IP.Builder().ip("127.0.0.2").requestDate(System.currentTimeMillis()).getCountry("de").build();
 		app.PUT(ip);
 	}

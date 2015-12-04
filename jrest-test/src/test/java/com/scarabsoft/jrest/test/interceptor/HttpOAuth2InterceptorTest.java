@@ -5,7 +5,7 @@ import com.scarabsoft.jrest.annotation.Put;
 import com.scarabsoft.jrest.converter.StringConverterFactory;
 import com.scarabsoft.jrest.interceptor.oauth2.HttpOAuth2RequestInterceptor;
 import com.scarabsoft.jrest.interceptor.oauth2.HttpOAuth2RequestInterceptorFactory;
-import com.scarabsoft.jrest.test.FreyaTestApplication;
+import com.scarabsoft.jrest.test.JRestTestApplication;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import com.scarabsoft.jrest.annotation.Post;
 import com.scarabsoft.jrest.annotation.Mapping;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class HttpOAuth2InterceptorTest {
@@ -59,8 +59,8 @@ public class HttpOAuth2InterceptorTest {
 
 	@Test
 	public void testHttpBasicInterceptor() {
-		final JRest freya = new JRest.Builder().addInterceptor(new HttpOAuth2RequestInterceptor("accesstoken")).build();
-		Application app = freya.create(Application.class);
+		final JRest jrest = new JRest.Builder().addInterceptor(new HttpOAuth2RequestInterceptor("accesstoken")).build();
+		Application app = jrest.create(Application.class);
 		assertMethod(app.GET());
 		assertMethod(app.POST());
 		assertMethod(app.PUT());
@@ -68,8 +68,8 @@ public class HttpOAuth2InterceptorTest {
 
 	@Test
 	public void testHttpBasicWithCustomInterceptor() {
-		final JRest freya = new JRest.Builder().build();
-		AnotherApplication app = freya.create(AnotherApplication.class);
+		final JRest jrest = new JRest.Builder().build();
+		AnotherApplication app = jrest.create(AnotherApplication.class);
 		assertMethod(app.GET());
 		assertMethod(app.POST());
 		assertMethod(app.PUT());

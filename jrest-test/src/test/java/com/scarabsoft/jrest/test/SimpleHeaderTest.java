@@ -21,7 +21,7 @@ import com.scarabsoft.jrest.annotation.Mapping;
 import com.scarabsoft.jrest.test.domain.UserGroup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class SimpleHeaderTest {
@@ -111,16 +111,16 @@ public class SimpleHeaderTest {
 
 	}
 
-	private JRest freya;
+	private JRest jrest;
 
 	@Before
 	public void before() {
-		freya = new JRest.Builder().build();
+		jrest = new JRest.Builder().build();
 	}
 
 	@Test
 	public void GETheaderAppTest() {
-		HeaderApp app = freya.create(HeaderApp.class);
+		HeaderApp app = jrest.create(HeaderApp.class);
 		UserGroup userGroup = app.GET();
 		Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
 		Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
@@ -132,19 +132,19 @@ public class SimpleHeaderTest {
 
 	@Test(expected = RuntimeException.class)
 	public void GETinvalidHeaderAppTest() {
-		InvalidHeaderApp app = freya.create(InvalidHeaderApp.class);
+		InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
 		app.GET();
 	}
 
 	@Test(expected = RuntimeException.class)
 	public void GETanotherInvalidHeaderAppTest() {
-		InvalidHeaderApp app = freya.create(InvalidHeaderApp.class);
+		InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
 		app.GET2("");
 	}
 
 	@Test
 	public void GETannotatedInterfaceAppTest() {
-		AnnotatedInterfaceApp app = freya.create(AnnotatedInterfaceApp.class);
+		AnnotatedInterfaceApp app = jrest.create(AnnotatedInterfaceApp.class);
 		UserGroup userGroup = app.GET();
 
 		Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
@@ -153,13 +153,13 @@ public class SimpleHeaderTest {
 
 	@Test(expected = RuntimeException.class)
 	public void GETinvalidAnnotatedInterfaceAppTest() {
-		InvalidAnnotatedInterfaceApp app = freya.create(InvalidAnnotatedInterfaceApp.class);
+		InvalidAnnotatedInterfaceApp app = jrest.create(InvalidAnnotatedInterfaceApp.class);
 		app.GET();
 	}
 
 	@Test
 	public void POSTheaderAppTest() {
-		HeaderApp app = freya.create(HeaderApp.class);
+		HeaderApp app = jrest.create(HeaderApp.class);
 		UserGroup userGroup = app.POST();
 		Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
 		Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
@@ -171,19 +171,19 @@ public class SimpleHeaderTest {
 
 	@Test(expected = RuntimeException.class)
 	public void POSTinvalidHeaderAppTest() {
-		InvalidHeaderApp app = freya.create(InvalidHeaderApp.class);
+		InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
 		app.POST();
 	}
 
 	@Test(expected = RuntimeException.class)
 	public void POSTanotherInvalidHeaderAppTest() {
-		InvalidHeaderApp app = freya.create(InvalidHeaderApp.class);
+		InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
 		app.POST2("");
 	}
 
 	@Test
 	public void POSTannotatedInterfaceAppTest() {
-		AnnotatedInterfaceApp app = freya.create(AnnotatedInterfaceApp.class);
+		AnnotatedInterfaceApp app = jrest.create(AnnotatedInterfaceApp.class);
 		UserGroup userGroup = app.POST();
 
 		Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
@@ -192,13 +192,13 @@ public class SimpleHeaderTest {
 
 	@Test(expected = RuntimeException.class)
 	public void POSTinvalidAnnotatedInterfaceAppTest() {
-		InvalidAnnotatedInterfaceApp app = freya.create(InvalidAnnotatedInterfaceApp.class);
+		InvalidAnnotatedInterfaceApp app = jrest.create(InvalidAnnotatedInterfaceApp.class);
 		app.POST();
 	}
 
 	@Test
 	public void PUTheaderAppTest() {
-		HeaderApp app = freya.create(HeaderApp.class);
+		HeaderApp app = jrest.create(HeaderApp.class);
 		UserGroup userGroup = app.PUT();
 		Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
 		Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
@@ -210,19 +210,19 @@ public class SimpleHeaderTest {
 
 	@Test(expected = RuntimeException.class)
 	public void PUTinvalidHeaderAppTest() {
-		InvalidHeaderApp app = freya.create(InvalidHeaderApp.class);
+		InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
 		app.PUT();
 	}
 
 	@Test(expected = RuntimeException.class)
 	public void PUTanotherInvalidHeaderAppTest() {
-		InvalidHeaderApp app = freya.create(InvalidHeaderApp.class);
+		InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
 		app.PUT2("");
 	}
 
 	@Test
 	public void PUTannotatedInterfaceAppTest() {
-		AnnotatedInterfaceApp app = freya.create(AnnotatedInterfaceApp.class);
+		AnnotatedInterfaceApp app = jrest.create(AnnotatedInterfaceApp.class);
 		UserGroup userGroup = app.PUT();
 
 		Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
@@ -231,7 +231,7 @@ public class SimpleHeaderTest {
 
 	@Test(expected = RuntimeException.class)
 	public void PUTinvalidAnnotatedInterfaceAppTest() {
-		InvalidAnnotatedInterfaceApp app = freya.create(InvalidAnnotatedInterfaceApp.class);
+		InvalidAnnotatedInterfaceApp app = jrest.create(InvalidAnnotatedInterfaceApp.class);
 		app.PUT();
 	}
 

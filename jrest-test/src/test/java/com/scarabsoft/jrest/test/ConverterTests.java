@@ -1,6 +1,12 @@
 package com.scarabsoft.jrest.test;
 
+import com.scarabsoft.jrest.JRest;
+import com.scarabsoft.jrest.annotation.Get;
+import com.scarabsoft.jrest.annotation.Mapping;
+import com.scarabsoft.jrest.annotation.Post;
+import com.scarabsoft.jrest.annotation.Put;
 import com.scarabsoft.jrest.converter.GsonConverterFactory;
+import com.scarabsoft.jrest.test.domain.IP;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,152 +16,103 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.scarabsoft.jrest.JRest;
-import com.scarabsoft.jrest.annotation.Get;
-import com.scarabsoft.jrest.annotation.Post;
-import com.scarabsoft.jrest.annotation.Put;
-import com.scarabsoft.jrest.annotation.Mapping;
-import com.scarabsoft.jrest.test.domain.IP;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class ConverterTests {
 
-	@Mapping(url = "http://localhost:1337/v1/simple/ip")
-	interface SimpleApplication {
-		@Get
-		IP GET();
+    @Test(expected = RuntimeException.class)
+    public void GETmissingConverterTest() {
+        final JRest jrest = new JRest.Builder().build();
+        final SimpleApplication app = jrest.create(SimpleApplication.class);
+        app.GET();
+    }
 
-		@Post
-		IP POST();
+    @Test
+    public void GETConverterInjrestTest() {
+        final JRest jrest = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
+        final SimpleApplication app = jrest.create(SimpleApplication.class);
+        assertion(app.GET());
+    }
 
-		@Put
-		IP PUT();
-	}
+    @Test
+    public void GETConverterInApplicationTest() {
+        final JRest jrest = new JRest.Builder().build();
+        final ApplicationWithConverterFactory app = jrest.create(ApplicationWithConverterFactory.class);
+        assertion(app.GET());
+    }
 
-	@Mapping(url = "http://localhost:1337/v1/simple/ip", converterFactory = GsonConverterFactory.class)
-	interface ApplicationWithConverterFactory {
-		@Get
-		IP GET();
+    @Test(expected = RuntimeException.class)
+    public void POSTmissingConverterTest() {
+        final JRest jrest = new JRest.Builder().build();
+        final SimpleApplication app = jrest.create(SimpleApplication.class);
+        app.POST();
+    }
 
-		@Post
-		IP POST();
+    @Test
+    public void POSTConverterInjrestTest() {
+        final JRest jrest = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
+        final SimpleApplication app = jrest.create(SimpleApplication.class);
+        assertion(app.POST());
+    }
 
-		@Put
-		IP PUT();
+    @Test
+    public void POSTConverterInApplicationTest() {
+        final JRest jrest = new JRest.Builder().build();
+        final ApplicationWithConverterFactory app = jrest.create(ApplicationWithConverterFactory.class);
+        assertion(app.POST());
+    }
 
-	}
+    @Test(expected = RuntimeException.class)
+    public void PUTmissingConverterTest() {
+        final JRest jrest = new JRest.Builder().build();
+        final SimpleApplication app = jrest.create(SimpleApplication.class);
+        app.PUT();
+    }
 
-	@Mapping(url = "http://localhost:1337/v1/simple/ip", converterFactory = GsonConverterFactory.class)
-	interface VoidInterface {
+    @Test
+    public void PUTConverterInjrestTest() {
+        final JRest jrest = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
+        final SimpleApplication app = jrest.create(SimpleApplication.class);
+        assertion(app.PUT());
+    }
 
-		@Get
-		void GET();
+    @Test
+    public void PUTConverterInApplicationTest() {
+        final JRest jrest = new JRest.Builder().build();
+        final ApplicationWithConverterFactory app = jrest.create(ApplicationWithConverterFactory.class);
+        assertion(app.PUT());
 
-		@Get
-		Void VGET();
+    }
 
-		@Post
-		void POST();
+    private void assertion(IP ip) {
+        Assert.assertThat(ip.getCountry(), Matchers.is("DE"));
+        Assert.assertThat(ip.getIp(), Matchers.is("127.0.0.1"));
+    }
 
-		@Post
-		Void VPOST();
+    @Mapping(url = "http://localhost:1337/v1/simple/ip")
+    interface SimpleApplication {
+        @Get
+        IP GET();
 
-		@Put
-		void PUT();
+        @Post
+        IP POST();
 
-		@Put
-		Void VPUT();
+        @Put
+        IP PUT();
+    }
 
-	}
+    @Mapping(url = "http://localhost:1337/v1/simple/ip", converterFactory = GsonConverterFactory.class)
+    interface ApplicationWithConverterFactory {
+        @Get
+        IP GET();
 
-	@Test(expected = RuntimeException.class)
-	public void GETmissingConverterTest() {
-		final JRest freya = new JRest.Builder().build();
-		final SimpleApplication app = freya.create(SimpleApplication.class);
-		app.GET();
-	}
+        @Post
+        IP POST();
 
-	@Test
-	public void GETConverterInFreyaTest() {
-		final JRest freya = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
-		final SimpleApplication app = freya.create(SimpleApplication.class);
-		final IP ip = app.GET();
-		Assert.assertThat(ip.getCountry(), Matchers.is("DE"));
-		Assert.assertThat(ip.getIp(), Matchers.is("127.0.0.1"));
-	}
+        @Put
+        IP PUT();
 
-	@Test
-	public void GETConverterInApplicationTest() {
-		final JRest freya = new JRest.Builder().build();
-		final ApplicationWithConverterFactory app = freya.create(ApplicationWithConverterFactory.class);
-		final IP ip = app.GET();
-		Assert.assertThat(ip.getCountry(), Matchers.is("DE"));
-		Assert.assertThat(ip.getIp(), Matchers.is("127.0.0.1"));
-	}
-
-	@Test(expected = RuntimeException.class)
-	public void POSTmissingConverterTest() {
-		final JRest freya = new JRest.Builder().build();
-		final SimpleApplication app = freya.create(SimpleApplication.class);
-		app.POST();
-	}
-
-	@Test
-	public void POSTConverterInFreyaTest() {
-		final JRest freya = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
-		final SimpleApplication app = freya.create(SimpleApplication.class);
-		final IP ip = app.POST();
-		Assert.assertThat(ip.getCountry(), Matchers.is("DE"));
-		Assert.assertThat(ip.getIp(), Matchers.is("127.0.0.1"));
-	}
-
-	@Test
-	public void POSTConverterInApplicationTest() {
-		final JRest freya = new JRest.Builder().build();
-		final ApplicationWithConverterFactory app = freya.create(ApplicationWithConverterFactory.class);
-		final IP ip = app.POST();
-		Assert.assertThat(ip.getCountry(), Matchers.is("DE"));
-		Assert.assertThat(ip.getIp(), Matchers.is("127.0.0.1"));
-	}
-
-	@Test(expected = RuntimeException.class)
-	public void PUTmissingConverterTest() {
-		final JRest freya = new JRest.Builder().build();
-		final SimpleApplication app = freya.create(SimpleApplication.class);
-		app.PUT();
-	}
-
-	@Test
-	public void PUTConverterInFreyaTest() {
-		final JRest freya = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
-		final SimpleApplication app = freya.create(SimpleApplication.class);
-		final IP ip = app.PUT();
-		Assert.assertThat(ip.getCountry(), Matchers.is("DE"));
-		Assert.assertThat(ip.getIp(), Matchers.is("127.0.0.1"));
-	}
-
-	@Test
-	public void PUTConverterInApplicationTest() {
-		final JRest freya = new JRest.Builder().build();
-		final ApplicationWithConverterFactory app = freya.create(ApplicationWithConverterFactory.class);
-		final IP ip = app.PUT();
-		Assert.assertThat(ip.getCountry(), Matchers.is("DE"));
-		Assert.assertThat(ip.getIp(), Matchers.is("127.0.0.1"));
-	}
-
-	@Test
-	public void voidTest() {
-		final JRest freya = new JRest.Builder().build();
-		VoidInterface app = freya.create(VoidInterface.class);
-		app.GET();
-		app.VGET();
-		app.POST();
-		app.VPOST();
-		app.PUT();
-		app.VPUT();
-	}
-
+    }
 }

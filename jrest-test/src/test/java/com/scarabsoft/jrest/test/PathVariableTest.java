@@ -19,7 +19,7 @@ import com.scarabsoft.jrest.annotation.Mapping;
 import com.scarabsoft.jrest.test.domain.UserGroup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class PathVariableTest {
@@ -49,8 +49,8 @@ public class PathVariableTest {
 
 	@Test
 	public void GETtest() {
-		JRest freya = new JRest.Builder().build();
-		Application app = freya.create(Application.class);
+		JRest jrest = new JRest.Builder().build();
+		Application app = jrest.create(Application.class);
 		UserGroup obj = app.GET(1, 2);
 		Assert.assertThat(obj.getUserId(), Matchers.is(1));
 		Assert.assertThat(obj.getGroupId(), Matchers.is(2));
@@ -62,8 +62,8 @@ public class PathVariableTest {
 
 	@Test
 	public void POSTtest() {
-		JRest freya = new JRest.Builder().build();
-		Application app = freya.create(Application.class);
+		JRest jrest = new JRest.Builder().build();
+		Application app = jrest.create(Application.class);
 		UserGroup obj = app.POST(1, 2);
 		Assert.assertThat(obj.getUserId(), Matchers.is(1));
 		Assert.assertThat(obj.getGroupId(), Matchers.is(2));
@@ -75,8 +75,8 @@ public class PathVariableTest {
 
 	@Test
 	public void PUTtest() {
-		JRest freya = new JRest.Builder().build();
-		Application app = freya.create(Application.class);
+		JRest jrest = new JRest.Builder().build();
+		Application app = jrest.create(Application.class);
 		UserGroup obj = app.PUT(1, 2);
 		Assert.assertThat(obj.getUserId(), Matchers.is(1));
 		Assert.assertThat(obj.getGroupId(), Matchers.is(2));

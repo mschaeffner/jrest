@@ -24,7 +24,7 @@ import com.scarabsoft.jrest.interceptor.domain.RequestEntity;
 import com.scarabsoft.jrest.test.domain.UserGroup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class InterceptorTest {
@@ -152,10 +152,10 @@ public class InterceptorTest {
 	@Ignore
 	@Test
 	public void appWithoutInterceptorTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
+		final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
 				.addInterceptor(new UserInterceptor("99")).addInterceptor(new GroupInterceptor("1234"))
 				.coverterFactory(new GsonConverterFactory()).build();
-		AppwithoutInterceptors app = freya.create(AppwithoutInterceptors.class);
+		AppwithoutInterceptors app = jrest.create(AppwithoutInterceptors.class);
 		assertUserGroup(app.GET());
 		assertUserGroup(app.POST());
 		assertUserGroup(app.POST());
@@ -163,9 +163,9 @@ public class InterceptorTest {
 
 	@Test
 	public void appWithInterfaceInterceptorTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
+		final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
 				.addInterceptor(new GroupInterceptor("1234")).coverterFactory(new GsonConverterFactory()).build();
-		AppWithInterfaceInterceptors app = freya.create(AppWithInterfaceInterceptors.class);
+		AppWithInterfaceInterceptors app = jrest.create(AppWithInterfaceInterceptors.class);
 		assertUserGroup(app.GET());
 		assertUserGroup(app.POST());
 		assertUserGroup(app.POST());
@@ -173,9 +173,9 @@ public class InterceptorTest {
 
 	@Test
 	public void appWithInterfaceAnotherInterceptorTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
+		final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
 				.addInterceptor(new GroupInterceptor("1234")).coverterFactory(new GsonConverterFactory()).build();
-		AppWithAnotherInterfaceInterceptor app = freya.create(AppWithAnotherInterfaceInterceptor.class);
+		AppWithAnotherInterfaceInterceptor app = jrest.create(AppWithAnotherInterfaceInterceptor.class);
 		assertUserGroup(app.GET());
 		assertUserGroup(app.POST());
 		assertUserGroup(app.POST());
@@ -183,9 +183,9 @@ public class InterceptorTest {
 
 	@Test
 	public void appWithInterfaceFullInterceptorTest() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
+		final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
 				.coverterFactory(new GsonConverterFactory()).build();
-		AppWithFullInterfaceInterceptor app = freya.create(AppWithFullInterfaceInterceptor.class);
+		AppWithFullInterfaceInterceptor app = jrest.create(AppWithFullInterfaceInterceptor.class);
 		assertUserGroup(app.GET());
 		assertUserGroup(app.POST());
 		assertUserGroup(app.POST());
@@ -193,9 +193,9 @@ public class InterceptorTest {
 
 	@Test
 	public void appMethodInterfaceInterceptor() {
-		final JRest freya = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
+		final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
 				.coverterFactory(new GsonConverterFactory()).build();
-		AppMethodInterfaceInterceptor app = freya.create(AppMethodInterfaceInterceptor.class);
+		AppMethodInterfaceInterceptor app = jrest.create(AppMethodInterfaceInterceptor.class);
 		assertUserGroup(app.GET());
 		assertUserGroup(app.POST());
 		assertUserGroup(app.POST());

@@ -19,10 +19,10 @@ import com.scarabsoft.jrest.annotation.Put;
 import com.scarabsoft.jrest.annotation.Mapping;
 import com.scarabsoft.jrest.interceptor.httpbasic.HttpBasicRequestInterceptor;
 import com.scarabsoft.jrest.interceptor.httpbasic.HttpBasicRequestInterceptorFactory;
-import com.scarabsoft.jrest.test.FreyaTestApplication;
+import com.scarabsoft.jrest.test.JRestTestApplication;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class HttpBasicInterceptorTest {
@@ -60,9 +60,9 @@ public class HttpBasicInterceptorTest {
 
 	@Test
 	public void testHttpBasicInterceptor() {
-		final JRest freya = new JRest.Builder().addInterceptor(
+		final JRest jrest = new JRest.Builder().addInterceptor(
 				new HttpBasicRequestInterceptor(new HttpApplicationCredentials("acme", "acmesecret"))).build();
-		Application app = freya.create(Application.class);
+		Application app = jrest.create(Application.class);
 		assertCredentials(app.GET());
 		assertCredentials(app.POST());
 		assertCredentials(app.PUT());
@@ -70,8 +70,8 @@ public class HttpBasicInterceptorTest {
 
 	@Test
 	public void testHttpBasicWithCustomInterceptor() {
-		final JRest freya = new JRest.Builder().build();
-		AnotherApplication app = freya.create(AnotherApplication.class);
+		final JRest jrest = new JRest.Builder().build();
+		AnotherApplication app = jrest.create(AnotherApplication.class);
 		assertCredentials(app.GET());
 		assertCredentials(app.POST());
 		assertCredentials(app.PUT());

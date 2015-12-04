@@ -21,21 +21,21 @@ import com.scarabsoft.jrest.annotation.Param;
 import com.scarabsoft.jrest.annotation.Post;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class ResponseEntityTest {
 
-	private JRest freya;
+	private JRest jrest;
 
 	private ResApp resApp;
 
 	@Before
 	public void before() {
-		freya = new JRest.Builder().baseUrl("http://localhost:1337/v1/response")
+		jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/response")
 				.coverterFactory(new GsonConverterFactory()).exceptionFactory(new StringExceptionConverterFactory())
 				.build();
-		resApp = freya.create(ResApp.class);
+		resApp = jrest.create(ResApp.class);
 	}
 
 	@Test

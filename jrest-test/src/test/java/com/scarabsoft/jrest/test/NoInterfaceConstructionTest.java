@@ -12,84 +12,44 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.scarabsoft.jrest.annotation.Post;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = FreyaTestApplication.class)
+@SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class NoInterfaceConstructionTest {
 
-	@Mapping(url = "http://localhost:1337/v1/simple/ip")
-	class SimpleApplication {
-		@Get
-		IP GET() {
-			return null;
-		}
+    @Test(expected = RuntimeException.class)
+    public void GETclassImplementationTestTest() {
+        final JRest jrest = new JRest.Builder().build();
+        final SimpleApplication app = jrest.create(SimpleApplication.class);
+        app.GET();
+    }
 
-		@Post
-		IP POST() {
-			return null;
-		}
+    @Test(expected = RuntimeException.class)
+    public void GETabstractClassImplementationTest() {
+        final JRest jrest = new JRest.Builder().build();
+        final AbstractSimpleApplication app = jrest.create(AbstractSimpleApplication.class);
+        app.GET();
+    }
 
-		@Put
-		IP PUT() {
-			return null;
-		}
-	}
+    @Mapping(url = "http://localhost:1337/v1/simple/ip")
+    class SimpleApplication {
+        @Get
+        IP GET() {
+            return null;
+        }
 
-	@Mapping(url = "http://localhost:1337/v1/simple/ip")
-	abstract class AbstractSimpleApplication {
-		@Get
-		abstract IP GET();
+        @Put
+        IP PUT() {
+            return null;
+        }
+    }
 
-		@Post
-		abstract IP POST();
+    @Mapping(url = "http://localhost:1337/v1/simple/ip")
+    abstract class AbstractSimpleApplication {
+        @Get
+        abstract IP GET();
 
-		@Put
-		abstract IP PUT();
-	}
-
-	@Test(expected = RuntimeException.class)
-	public void GETclassImplementationTestTest() {
-		final JRest freya = new JRest.Builder().build();
-		final SimpleApplication app = freya.create(SimpleApplication.class);
-		app.GET();
-	}
-
-	@Test(expected = RuntimeException.class)
-	public void GETabstractClassImplementationTest() {
-		final JRest freya = new JRest.Builder().build();
-		final AbstractSimpleApplication app = freya.create(AbstractSimpleApplication.class);
-		app.GET();
-	}
-
-	@Test(expected = RuntimeException.class)
-	public void POSTclassImplementationTestTest() {
-		final JRest freya = new JRest.Builder().build();
-		final SimpleApplication app = freya.create(SimpleApplication.class);
-		app.POST();
-	}
-
-	@Test(expected = RuntimeException.class)
-	public void POSTabstractClassImplementationTest() {
-		final JRest freya = new JRest.Builder().build();
-		final AbstractSimpleApplication app = freya.create(AbstractSimpleApplication.class);
-		app.POST();
-	}
-
-	@Test(expected = RuntimeException.class)
-	public void PUTclassImplementationTestTest() {
-		final JRest freya = new JRest.Builder().build();
-		final SimpleApplication app = freya.create(SimpleApplication.class);
-		app.PUT();
-	}
-
-	@Test(expected = RuntimeException.class)
-	public void PUTabstractClassImplementationTest() {
-		final JRest freya = new JRest.Builder().build();
-		final AbstractSimpleApplication app = freya.create(AbstractSimpleApplication.class);
-		app.PUT();
-	}
+    }
 
 }

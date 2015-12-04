@@ -14,7 +14,7 @@
 
 
     <build>
-        <finalName>scibee-freya-interceptor-cookie</finalName>
+        <finalName>scibee-jrest-interceptor-cookie</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

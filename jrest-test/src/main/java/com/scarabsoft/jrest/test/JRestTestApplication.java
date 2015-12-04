@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableAutoConfiguration
 @Configuration
 @EnableWebMvc
-public class FreyaTestApplication extends WebMvcConfigurerAdapter {
+public class JRestTestApplication extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public MultipartResolver multipartResolver() {
@@ -38,6 +38,6 @@ public class FreyaTestApplication extends WebMvcConfigurerAdapter {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(FreyaTestApplication.class, args);
+		SpringApplication.run(JRestTestApplication.class, args);
 	}
 }
