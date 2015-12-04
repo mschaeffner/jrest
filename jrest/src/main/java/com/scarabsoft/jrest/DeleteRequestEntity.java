@@ -2,7 +2,6 @@ package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
-import com.scarabsoft.jrest.interceptor.ParamEntity;
 import org.apache.http.Header;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
@@ -16,12 +15,11 @@ public class DeleteRequestEntity extends AbstractRequestEntity {
                                Converter<?> converter,
                                ExceptionConverter<?> exceptionConverter,
                                Collection<Header> headerEntities,
-                               Collection<ParamEntity> requestParameterEntities,
                                RequestConfig requestConfig,
                                HttpClient httpClient, Class<?> responseClazz,
                                Class<? extends Collection> collectionClazz
     ) {
-        super(baseUrl, converter, exceptionConverter, headerEntities, requestParameterEntities, requestConfig,
+        super(baseUrl, converter, exceptionConverter, headerEntities, null, requestConfig,
                 httpClient, responseClazz, collectionClazz);
     }
 

@@ -46,7 +46,7 @@ class RequestBuilder {
         final Collection<Header> headers = methodHandler.getHeaderEntities(method, parameters);
         headers.addAll(this.headers);
 
-        BodyEntity body = null;
+        BodyEntity body;
         try {
             body = methodHandler.getBodyEntity(converter.getBodyConverter(), method, parameters);
         } catch (UnsupportedEncodingException e) {
@@ -100,12 +100,16 @@ class RequestBuilder {
                     collectionClazz);
 
         } else if (method.getAnnotation(Delete.class) != null) {
+
+            if (requestParameterEntities.size() != 0) {
+                throw new RuntimeException("delete request is not allowed to have request parameters");
+            }
+
             result = new DeleteRequestEntity(
                     url,
                     converter,
                     exceptionConverter,
                     headers,
-                    requestParameterEntities,
                     requestConfig,
                     httpClient,
                     method.getReturnType(),

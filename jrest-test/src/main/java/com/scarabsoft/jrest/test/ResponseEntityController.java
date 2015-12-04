@@ -33,9 +33,9 @@ public class ResponseEntityController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public void DELETE(@RequestParam("userId") int userId, @RequestParam("groupId") int groupId, HttpServletResponse res)
+    public void DELETE(HttpServletResponse res)
             throws IOException {
-        handle(userId, groupId, res);
+        handle(1, 1, res);
     }
 
 
