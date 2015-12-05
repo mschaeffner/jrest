@@ -1,7 +1,6 @@
 package com.scarabsoft.jrest.test.interceptor;
 
-import com.scarabsoft.jrest.annotation.Get;
-import com.scarabsoft.jrest.annotation.Put;
+import com.scarabsoft.jrest.annotation.*;
 import com.scarabsoft.jrest.converter.StringConverterFactory;
 import com.scarabsoft.jrest.interceptor.oauth2.HttpOAuth2RequestInterceptor;
 import com.scarabsoft.jrest.interceptor.oauth2.HttpOAuth2RequestInterceptorFactory;
@@ -16,9 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.scarabsoft.jrest.JRest;
-import com.scarabsoft.jrest.annotation.Interceptor;
-import com.scarabsoft.jrest.annotation.Post;
-import com.scarabsoft.jrest.annotation.Mapping;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = JRestTestApplication.class)
@@ -36,6 +32,9 @@ public class HttpOAuth2InterceptorTest {
 
 		@Put
 		String PUT();
+
+		@Delete
+		String DELETE();
 	}
 
 	@Mapping(url = "http://localhost:1337/v1/auth/oauth2", converterFactory = StringConverterFactory.class)
@@ -49,6 +48,9 @@ public class HttpOAuth2InterceptorTest {
 
 		@Put
 		String PUT();
+
+		@Delete
+		String DELETE();
 	}
 
 	public static class MyFactory extends HttpOAuth2RequestInterceptorFactory {
@@ -61,21 +63,23 @@ public class HttpOAuth2InterceptorTest {
 	public void testHttpBasicInterceptor() {
 		final JRest jrest = new JRest.Builder().addInterceptor(new HttpOAuth2RequestInterceptor("accesstoken")).build();
 		Application app = jrest.create(Application.class);
-		assertMethod(app.GET());
-		assertMethod(app.POST());
-		assertMethod(app.PUT());
+		assertion(app.GET());
+		assertion(app.POST());
+		assertion(app.PUT());
+		assertion(app.DELETE());
 	}
 
 	@Test
 	public void testHttpBasicWithCustomInterceptor() {
 		final JRest jrest = new JRest.Builder().build();
 		AnotherApplication app = jrest.create(AnotherApplication.class);
-		assertMethod(app.GET());
-		assertMethod(app.POST());
-		assertMethod(app.PUT());
+		assertion(app.GET());
+		assertion(app.POST());
+		assertion(app.PUT());
+		assertion(app.DELETE());
 	}
 
-	private void assertMethod(String cred) {
+	private void assertion(String cred) {
 		Assert.assertThat(cred, Matchers.is("Bearer accesstoken"));
 	}
 
