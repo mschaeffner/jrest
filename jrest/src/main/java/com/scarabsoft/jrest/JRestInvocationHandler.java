@@ -2,6 +2,7 @@ package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.annotation.Interceptor;
 import com.scarabsoft.jrest.annotation.Interceptors;
+import com.scarabsoft.jrest.converter.ByteArrayConverter;
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.ConverterFactory;
 import com.scarabsoft.jrest.converter.VoidConverter;
@@ -89,7 +90,11 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
         final Converter<?> converter;
         if (method.getReturnType().equals(void.class) || method.getReturnType().equals(Void.class)) {
             converter = new VoidConverter();
-        } else {
+        }
+        else if (method.getReturnType().equals(byte[].class) || method.getReturnType().equals(Byte[].class)) {
+            converter = new ByteArrayConverter();
+        }
+    else {
             converter = converterFactory.getConverter(returnClazz);
         }
 
