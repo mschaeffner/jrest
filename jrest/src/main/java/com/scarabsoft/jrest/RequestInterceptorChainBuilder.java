@@ -15,8 +15,8 @@ final class RequestInterceptorChainBuilder {
                                           Interceptor interceptor) throws InstantiationException, IllegalAccessException {
         final RequestInterceptorChain result = exisitingChain.deepClone();
         if (interceptors != null) {
-            for (int i = 0; i < interceptors.interceptors().length; i++) {
-                final RequestInterceptorFactory interceptorFactory = interceptors.interceptors()[i].factory()
+            for (int i = 0; i < interceptors.value().length; i++) {
+                final RequestInterceptorFactory interceptorFactory = interceptors.value()[i].factory()
                         .newInstance();
                 result.addInterceptor(interceptorFactory.get());
             }

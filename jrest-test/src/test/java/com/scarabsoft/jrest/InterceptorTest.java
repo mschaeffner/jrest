@@ -1,10 +1,13 @@
 package com.scarabsoft.jrest;
 
-import com.scarabsoft.jrest.annotation.*;
+import com.scarabsoft.jrest.annotation.Get;
+import com.scarabsoft.jrest.annotation.Interceptor;
+import com.scarabsoft.jrest.annotation.Post;
+import com.scarabsoft.jrest.annotation.Put;
 import com.scarabsoft.jrest.converter.GsonConverterFactory;
+import com.scarabsoft.jrest.domain.UserGroup;
 import com.scarabsoft.jrest.interceptor.RequestInterceptor;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorFactory;
-import com.scarabsoft.jrest.domain.UserGroup;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -87,7 +90,7 @@ public class InterceptorTest {
         UserGroup PUT();
     }
 
-    @Interceptors(interceptors = {@Interceptor(factory = UserInterceptorFactory.class)})
+    @Interceptor(factory = UserInterceptorFactory.class)
     interface AppWithInterfaceInterceptors {
         @Get
         UserGroup GET();
@@ -112,7 +115,7 @@ public class InterceptorTest {
     }
 
     @Interceptor(factory = UserInterceptorFactory.class)
-    @Interceptors(interceptors = {@Interceptor(factory = GroupInterceptorFactory.class)})
+    @Interceptor(factory = GroupInterceptorFactory.class)
     interface AppWithFullInterfaceInterceptor {
         @Get
         UserGroup GET();
@@ -127,17 +130,17 @@ public class InterceptorTest {
     interface AppMethodInterfaceInterceptor {
 
         @Interceptor(factory = UserInterceptorFactory.class)
-        @Interceptors(interceptors = {@Interceptor(factory = GroupInterceptorFactory.class)})
+        @Interceptor(factory = GroupInterceptorFactory.class)
         @Get
         UserGroup GET();
 
         @Interceptor(factory = UserInterceptorFactory.class)
-        @Interceptors(interceptors = {@Interceptor(factory = GroupInterceptorFactory.class)})
+        @Interceptor(factory = GroupInterceptorFactory.class)
         @Post
         UserGroup POST();
 
-        @Interceptors(interceptors = {@Interceptor(factory = GroupInterceptorFactory.class),
-                @Interceptor(factory = UserInterceptorFactory.class)})
+        @Interceptor(factory = GroupInterceptorFactory.class)
+        @Interceptor(factory = UserInterceptorFactory.class)
         @Put
         UserGroup PUT();
     }
