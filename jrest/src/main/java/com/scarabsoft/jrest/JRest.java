@@ -48,6 +48,10 @@ public final class JRest {
                 if (!requestMapping.exceptionFactory().equals(StringExceptionConverterFactory.class)) {
                     exceptionConverterFactory = requestMapping.exceptionFactory().newInstance();
                 }
+
+                if (!requestMapping.httpClientFactory().equals(DefaultHttpClientFactory.class)) {
+                    httpClientFactory = requestMapping.httpClientFactory().newInstance();
+                }
             }
 
             if (factory == null || factory.equals(LazyConverterFactory.class)) {
@@ -56,6 +60,10 @@ public final class JRest {
 
             if (exceptionConverterFactory == null) {
                 exceptionConverterFactory = new StringExceptionConverterFactory();
+            }
+
+            if (httpClientFactory == null) {
+                httpClientFactory = new DefaultHttpClientFactory();
             }
 
             final Collection<Header> headers = AnnotationUtil.getHeaderEntities(clazz.getAnnotationsByType(com.scarabsoft.jrest.annotation.Header.class));
@@ -97,7 +105,7 @@ public final class JRest {
             return this;
         }
 
-        public Builder coverterFactory(ConverterFactory converterFactory) {
+        public Builder converterFactory(ConverterFactory converterFactory) {
             buildResult.converterFactory = converterFactory;
             return this;
         }

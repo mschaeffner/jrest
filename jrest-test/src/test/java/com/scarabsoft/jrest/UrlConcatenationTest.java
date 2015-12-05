@@ -27,7 +27,7 @@ public class UrlConcatenationTest {
     @Test
     public void GETjrestOnlyUrlTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/url")
-                .coverterFactory(new StringConverterFactory()).build();
+                .converterFactory(new StringConverterFactory()).build();
         AppWithoutUrl app = jrest.create(AppWithoutUrl.class);
         assertion(app.GET());
     }
@@ -35,7 +35,7 @@ public class UrlConcatenationTest {
     @Test
     public void GETjrestAndInterfaceUrlTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/")
-                .coverterFactory(new StringConverterFactory()).build();
+                .converterFactory(new StringConverterFactory()).build();
         AppWithInterfaceUrlApp app = jrest.create(AppWithInterfaceUrlApp.class);
         assertion(app.GET());
     }
@@ -43,7 +43,7 @@ public class UrlConcatenationTest {
     @Test
     public void GETjrestNestedUrlTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/")
-                .coverterFactory(new StringConverterFactory()).build();
+                .converterFactory(new StringConverterFactory()).build();
         AppWithFullUrl app = jrest.create(AppWithFullUrl.class);
         assertion(app.GET());
     }
@@ -51,7 +51,7 @@ public class UrlConcatenationTest {
     @Test
     public void POSTjrestOnlyUrlTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/url")
-                .coverterFactory(new StringConverterFactory()).build();
+                .converterFactory(new StringConverterFactory()).build();
         AppWithoutUrl app = jrest.create(AppWithoutUrl.class);
         assertion(app.POST());
     }
@@ -59,7 +59,7 @@ public class UrlConcatenationTest {
     @Test
     public void POSTjrestAndInterfaceUrlTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/")
-                .coverterFactory(new StringConverterFactory()).build();
+                .converterFactory(new StringConverterFactory()).build();
         AppWithInterfaceUrlApp app = jrest.create(AppWithInterfaceUrlApp.class);
         assertion(app.POST());
     }
@@ -67,7 +67,7 @@ public class UrlConcatenationTest {
     @Test
     public void POSTjrestNestedUrlTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/")
-                .coverterFactory(new StringConverterFactory()).build();
+                .converterFactory(new StringConverterFactory()).build();
         AppWithFullUrl app = jrest.create(AppWithFullUrl.class);
         String str = app.POST();
         Assert.assertThat(str, Matchers.is("HelloWorld"));
@@ -76,7 +76,7 @@ public class UrlConcatenationTest {
     @Test
     public void PUTjrestOnlyUrlTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/url")
-                .coverterFactory(new StringConverterFactory()).build();
+                .converterFactory(new StringConverterFactory()).build();
         AppWithoutUrl app = jrest.create(AppWithoutUrl.class);
         assertion(app.PUT());
     }
@@ -84,7 +84,7 @@ public class UrlConcatenationTest {
     @Test
     public void PUTjrestAndInterfaceUrlTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/")
-                .coverterFactory(new StringConverterFactory()).build();
+                .converterFactory(new StringConverterFactory()).build();
         AppWithInterfaceUrlApp app = jrest.create(AppWithInterfaceUrlApp.class);
         assertion(app.PUT());
     }
@@ -92,7 +92,7 @@ public class UrlConcatenationTest {
     @Test
     public void PUTjrestNestedUrlTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/")
-                .coverterFactory(new StringConverterFactory()).build();
+                .converterFactory(new StringConverterFactory()).build();
         AppWithFullUrl app = jrest.create(AppWithFullUrl.class);
         assertion(app.PUT());
     }

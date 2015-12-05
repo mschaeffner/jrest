@@ -20,28 +20,28 @@ public class ConverterTests {
 
     @Test
     public void GETConverterJRestTest() {
-        final JRest jrest2 = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
+        final JRest jrest2 = new JRest.Builder().converterFactory(new GsonConverterFactory()).build();
         final ApplicationWithConverterFactory app = jrest2.create(ApplicationWithConverterFactory.class);
         assertion(app.GET());
     }
 
     @Test
     public void POSTConverterJRestTest() {
-        final JRest jrest2 = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
+        final JRest jrest2 = new JRest.Builder().converterFactory(new GsonConverterFactory()).build();
         final ApplicationWithConverterFactory app = jrest2.create(ApplicationWithConverterFactory.class);
         assertion(app.POST());
     }
 
     @Test
     public void PUTTConverterJRestTest() {
-        final JRest jrest2 = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
+        final JRest jrest2 = new JRest.Builder().converterFactory(new GsonConverterFactory()).build();
         final ApplicationWithConverterFactory app = jrest2.create(ApplicationWithConverterFactory.class);
         assertion(app.PUT());
     }
 
     @Test
     public void DELETEConverterJRestTest() {
-        final JRest jrest2 = new JRest.Builder().coverterFactory(new GsonConverterFactory()).build();
+        final JRest jrest2 = new JRest.Builder().converterFactory(new GsonConverterFactory()).build();
         final ApplicationWithConverterFactory app = jrest2.create(ApplicationWithConverterFactory.class);
         assertion(app.DELETE());
     }

@@ -27,7 +27,7 @@ public class InterceptorTest {
     public void appWithoutInterceptorTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
                 .addInterceptor(new UserInterceptor("99")).addInterceptor(new GroupInterceptor("1234"))
-                .coverterFactory(new GsonConverterFactory()).build();
+                .converterFactory(new GsonConverterFactory()).build();
         AppwithoutInterceptors app = jrest.create(AppwithoutInterceptors.class);
         assertUserGroup(app.GET());
         assertUserGroup(app.POST());
@@ -37,7 +37,7 @@ public class InterceptorTest {
     @Test
     public void appWithInterfaceInterceptorTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
-                .addInterceptor(new GroupInterceptor("1234")).coverterFactory(new GsonConverterFactory()).build();
+                .addInterceptor(new GroupInterceptor("1234")).converterFactory(new GsonConverterFactory()).build();
         AppWithInterfaceInterceptors app = jrest.create(AppWithInterfaceInterceptors.class);
         assertUserGroup(app.GET());
         assertUserGroup(app.POST());
@@ -47,7 +47,7 @@ public class InterceptorTest {
     @Test
     public void appWithInterfaceAnotherInterceptorTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
-                .addInterceptor(new GroupInterceptor("1234")).coverterFactory(new GsonConverterFactory()).build();
+                .addInterceptor(new GroupInterceptor("1234")).converterFactory(new GsonConverterFactory()).build();
         AppWithAnotherInterfaceInterceptor app = jrest.create(AppWithAnotherInterfaceInterceptor.class);
         assertUserGroup(app.GET());
         assertUserGroup(app.POST());
@@ -57,7 +57,7 @@ public class InterceptorTest {
     @Test
     public void appWithInterfaceFullInterceptorTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
-                .coverterFactory(new GsonConverterFactory()).build();
+                .converterFactory(new GsonConverterFactory()).build();
         AppWithFullInterfaceInterceptor app = jrest.create(AppWithFullInterfaceInterceptor.class);
         assertUserGroup(app.GET());
         assertUserGroup(app.POST());
@@ -67,7 +67,7 @@ public class InterceptorTest {
     @Test
     public void appMethodInterfaceInterceptor() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
-                .coverterFactory(new GsonConverterFactory()).build();
+                .converterFactory(new GsonConverterFactory()).build();
         AppMethodInterfaceInterceptor app = jrest.create(AppMethodInterfaceInterceptor.class);
         assertUserGroup(app.GET());
         assertUserGroup(app.POST());

@@ -32,7 +32,7 @@ public class ResponseEntityByteArrayTest {
     public void before() {
         final JRest jrest = new JRest.Builder()
                 .baseUrl("http://localhost:1337/v1/download")
-                .coverterFactory(new GsonConverterFactory())
+                .converterFactory(new GsonConverterFactory())
                 .exceptionFactory(new StringExceptionConverterFactory())
                 .build();
         app = jrest.create(Application.class);

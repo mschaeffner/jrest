@@ -5,9 +5,7 @@ import com.scarabsoft.jrest.converter.*;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
 import org.apache.http.Header;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.InputStream;
 import java.lang.reflect.Method;
@@ -105,17 +103,11 @@ final class JRestInvocationHandler implements java.lang.reflect.InvocationHandle
                 requestConfig,
                 headers, collectionClazz);
 
-        final HttpClient httpClient;
-        if (httpClientFactory != null) {
-            httpClient = httpClientFactory.get();
-        } else {
-            httpClient = HttpClientBuilder.create().build();
-        }
 
         final AbstractRequestEntity request = builder
                 .build(method,
                         args,
-                        httpClient);
+                        httpClientFactory.get());
 
         request.execute(RequestInterceptorChainBuilder.create(
                 interceptorChain,

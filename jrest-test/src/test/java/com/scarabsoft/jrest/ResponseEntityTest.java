@@ -26,7 +26,7 @@ public class ResponseEntityTest {
     @Before
     public void before() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/response")
-                .coverterFactory(new GsonConverterFactory()).exceptionFactory(new StringExceptionConverterFactory())
+                .converterFactory(new GsonConverterFactory()).exceptionFactory(new StringExceptionConverterFactory())
                 .build();
         app = jrest.create(Application.class);
     }

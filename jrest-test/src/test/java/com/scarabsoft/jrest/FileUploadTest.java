@@ -38,7 +38,7 @@ public class FileUploadTest {
     @Before
     public void setup() {
         jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/file")
-                .coverterFactory(new GsonConverterFactory())
+                .converterFactory(new GsonConverterFactory())
                 .exceptionFactory(new StringExceptionConverterFactory())
                 .build();
         URL uri = ClassLoader.getSystemResource("char-willy.png");
