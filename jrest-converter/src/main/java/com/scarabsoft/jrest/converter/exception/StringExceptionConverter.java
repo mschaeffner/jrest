@@ -1,6 +1,6 @@
 package com.scarabsoft.jrest.converter.exception;
 
-import com.scarabsoft.jrest.util.IOUtil;
+import com.scarabsoft.jrest.util.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +9,7 @@ public class StringExceptionConverter implements ExceptionConverter<RuntimeExcep
 
     @Override
     public RuntimeException convert(InputStream stream) throws IOException {
-        final String message = IOUtil.streamToString(stream);
+        final String message = IOUtils.streamToString(stream);
         return new RuntimeException(message);
     }
 }

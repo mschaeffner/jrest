@@ -2,10 +2,7 @@ package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.annotation.Interceptor;
 import com.scarabsoft.jrest.annotation.Interceptors;
-import com.scarabsoft.jrest.converter.ByteArrayConverter;
-import com.scarabsoft.jrest.converter.Converter;
-import com.scarabsoft.jrest.converter.ConverterFactory;
-import com.scarabsoft.jrest.converter.VoidConverter;
+import com.scarabsoft.jrest.converter.*;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
 import com.scarabsoft.jrest.interceptor.ResponseEntity;
@@ -13,6 +10,7 @@ import org.apache.http.Header;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClientBuilder;
 
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
@@ -90,11 +88,11 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
         final Converter<?> converter;
         if (method.getReturnType().equals(void.class) || method.getReturnType().equals(Void.class)) {
             converter = new VoidConverter();
-        }
-        else if (method.getReturnType().equals(byte[].class) || method.getReturnType().equals(Byte[].class)) {
+        } else if (method.getReturnType().equals(byte[].class) || method.getReturnType().equals(Byte[].class)) {
             converter = new ByteArrayConverter();
-        }
-    else {
+        } else if (method.getReturnType().equals(InputStream.class)) {
+            converter = new InputStreamConverter();
+        } else {
             converter = converterFactory.getConverter(returnClazz);
         }
 
