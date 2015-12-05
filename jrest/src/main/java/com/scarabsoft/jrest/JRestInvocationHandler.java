@@ -86,11 +86,11 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
 
         //intercept converter
         final Converter<?> converter;
-        if (method.getReturnType().equals(void.class) || method.getReturnType().equals(Void.class)) {
+        if (returnClazz.equals(void.class) || returnClazz.equals(Void.class)) {
             converter = new VoidConverter();
-        } else if (method.getReturnType().equals(byte[].class) || method.getReturnType().equals(Byte[].class)) {
+        } else if (returnClazz.equals(byte[].class) || returnClazz.equals(Byte[].class)) {
             converter = new ByteArrayConverter();
-        } else if (method.getReturnType().equals(InputStream.class)) {
+        } else if (returnClazz.equals(InputStream.class)) {
             converter = new InputStreamConverter();
         } else {
             converter = converterFactory.getConverter(returnClazz);

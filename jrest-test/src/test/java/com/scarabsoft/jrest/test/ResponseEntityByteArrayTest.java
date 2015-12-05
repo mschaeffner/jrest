@@ -1,11 +1,13 @@
 package com.scarabsoft.jrest.test;
 
 import com.scarabsoft.jrest.JRest;
-import com.scarabsoft.jrest.annotation.*;
+import com.scarabsoft.jrest.annotation.Delete;
+import com.scarabsoft.jrest.annotation.Get;
+import com.scarabsoft.jrest.annotation.Post;
+import com.scarabsoft.jrest.annotation.Put;
 import com.scarabsoft.jrest.converter.GsonConverterFactory;
 import com.scarabsoft.jrest.converter.exception.StringExceptionConverterFactory;
 import com.scarabsoft.jrest.interceptor.ResponseEntity;
-import com.scarabsoft.jrest.test.domain.UserGroup;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,61 +22,62 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
-public class ResponseEntityTest {
-
+public class ResponseEntityByteArrayTest {
 
     private Application app;
 
     @Before
     public void before() {
-        final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/response")
-                .coverterFactory(new GsonConverterFactory()).exceptionFactory(new StringExceptionConverterFactory())
+        final JRest jrest = new JRest.Builder()
+                .baseUrl("http://localhost:1337/v1/download")
+                .coverterFactory(new GsonConverterFactory())
+                .exceptionFactory(new StringExceptionConverterFactory())
                 .build();
         app = jrest.create(Application.class);
     }
 
     @Test
     public void GETTest() {
-        test(app.GET(1, 1));
+        assertion(app.GET());
     }
 
     @Test
     public void POSTTest() {
-        test(app.POST(1, 1));
+        assertion(app.POST());
     }
 
     @Test
     public void PUTTest() {
-        test(app.PUT(1, 1));
+        assertion(app.PUT());
     }
 
     @Test
     public void DELETETest() {
-        test(app.DELETE());
+        assertion(app.DELETE());
     }
 
-    private void test(ResponseEntity<UserGroup> res) {
-        Assert.assertThat(res.getObject().getUserId(), Matchers.is(1));
-        Assert.assertThat(res.getObject().getGroupId(), Matchers.is(1));
-        Assert.assertThat(res.getHeader("userId").get(), Matchers.is("1"));
-        Assert.assertThat(res.getHeader("groupId").get(), Matchers.is("1"));
-        Assert.assertThat(res.getHeader("Cookie").get(), Matchers.is("cookie"));
+    private void assertion(ResponseEntity<byte[]> res) {
         Assert.assertThat(res.getStatusCode(), Matchers.is(200));
+        Assert.assertThat(res.getObject().length, Matchers.is(10));
+        for (int i = 0; i < 10; i++) {
+            Assert.assertThat(res.getObject()[i], Matchers.is((byte) 1));
+        }
     }
+
 
     interface Application {
 
         @Get
-        ResponseEntity<UserGroup> GET(@Param(name = "userId") int userId, @Param(name = "groupId") int groupId);
+        ResponseEntity<byte[]> GET();
 
         @Post
-        ResponseEntity<UserGroup> POST(@Param(name = "userId") int userId, @Param(name = "groupId") int groupId);
+        ResponseEntity<byte[]> POST();
 
         @Put
-        ResponseEntity<UserGroup> PUT(@Param(name = "userId") int userId, @Param(name = "groupId") int groupId);
+        ResponseEntity<byte[]> PUT();
 
         @Delete
-        ResponseEntity<UserGroup> DELETE();
+        ResponseEntity<byte[]> DELETE();
     }
 
 }
