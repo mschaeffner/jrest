@@ -3,6 +3,7 @@ package com.scarabsoft.jrest;
 import com.scarabsoft.jrest.annotation.Interceptor;
 import com.scarabsoft.jrest.annotation.Interceptors;
 import com.scarabsoft.jrest.converter.Converter;
+import com.scarabsoft.jrest.converter.VoidConverter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
 import com.scarabsoft.jrest.interceptor.ResponseEntity;
@@ -27,7 +28,7 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
                                   Converter.ConverterFactory converterFactory,
                                   ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory,
                                   RequestInterceptorChain interceptorChain,
-                                  RequestConfig requestConfig, 
+                                  RequestConfig requestConfig,
                                   Collection<Header> headers) {
         this.baseUrl = baseUrl;
         this.converterFactory = converterFactory;
@@ -82,8 +83,17 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
             returnClazz = method.getReturnType();
         }
 
+
+        //intercept converter
+        final Converter<?> converter;
+        if (method.getReturnType().equals(void.class) || method.getReturnType().equals(Void.class)) {
+            converter = new VoidConverter();
+        } else {
+            converter = converterFactory.get(returnClazz);
+        }
+
         final RequestBuilder builder = new RequestBuilder(baseUrl,
-                converterFactory.get(returnClazz),
+                converter,
                 exceptionConverterFactory.get(),
                 requestConfig,
                 headers, collectionClazz);
