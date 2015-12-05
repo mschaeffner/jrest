@@ -1,9 +1,7 @@
 package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.annotation.Interceptor;
-import com.scarabsoft.jrest.annotation.Interceptors;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
-import com.scarabsoft.jrest.interceptor.RequestInterceptorFactory;
 
 final class RequestInterceptorChainBuilder {
 
@@ -11,18 +9,12 @@ final class RequestInterceptorChainBuilder {
         throw new RuntimeException("use static methods");
     }
 
-    static RequestInterceptorChain create(RequestInterceptorChain exisitingChain, Interceptors interceptors,
-                                          Interceptor interceptor) throws InstantiationException, IllegalAccessException {
+    static RequestInterceptorChain create(RequestInterceptorChain exisitingChain, Interceptor[] interceptors) throws InstantiationException, IllegalAccessException {
         final RequestInterceptorChain result = exisitingChain.deepClone();
         if (interceptors != null) {
-            for (int i = 0; i < interceptors.value().length; i++) {
-                final RequestInterceptorFactory interceptorFactory = interceptors.value()[i].factory()
-                        .newInstance();
-                result.addInterceptor(interceptorFactory.get());
+            for (final Interceptor interceptor : interceptors) {
+                result.addInterceptor(interceptor.factory().newInstance().get());
             }
-        }
-        if (interceptor != null) {
-            result.addInterceptor(interceptor.factory().newInstance().get());
         }
         return result;
     }
