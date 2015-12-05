@@ -16,9 +16,9 @@ final class AnnotationUtil {
     static Collection<org.apache.http.Header> getHeaderEntities(Headers headers) {
         final Collection<org.apache.http.Header> result = new LinkedList<>();
         if (headers != null) {
-            if (headers.headers() != null) {
-                for (int i = 0; i < headers.headers().length; i++) {
-                    final Header header = headers.headers()[i];
+            if (headers.value() != null) {
+                for (int i = 0; i < headers.value().length; i++) {
+                    final Header header = headers.value()[i];
                     if (header.value().equals("")) {
                         throw new RuntimeException("header " + header.key() + " needs a value");
                     }

@@ -1,6 +1,6 @@
 package com.scarabsoft.jrest;
 
-import com.scarabsoft.jrest.annotation.Header;
+import com.scarabsoft.jrest.annotation.*;
 import com.scarabsoft.jrest.converter.GsonConverterFactory;
 import com.scarabsoft.jrest.domain.UserGroup;
 import org.hamcrest.Matchers;
@@ -13,225 +13,227 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.scarabsoft.jrest.annotation.Get;
-import com.scarabsoft.jrest.annotation.Headers;
-import com.scarabsoft.jrest.annotation.Post;
-import com.scarabsoft.jrest.annotation.Put;
-import com.scarabsoft.jrest.annotation.Mapping;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class SimpleHeaderTest {
 
-	@Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
-	interface HeaderApp {
+    private JRest jrest;
 
-		@Headers(headers = { @Header(key = "userId", value = "2"), @Header(key = "groupId", value = "4") })
-		@Get
-		UserGroup GET();
+    @Before
+    public void before() {
+        jrest = new JRest.Builder().build();
+    }
 
-		@Get
-		UserGroup GET2(@Header(key = "userId") String userId, @Header(key = "groupId") int groupId);
+    @Test
+    public void GETheaderAppTest() {
+        HeaderApp app = jrest.create(HeaderApp.class);
+        UserGroup userGroup = app.GET();
+        Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
+        Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
 
-		@Headers(headers = { @Header(key = "userId", value = "2"), @Header(key = "groupId", value = "4") })
-		@Post
-		UserGroup POST();
+        userGroup = app.GET2("123", 10);
+        Assert.assertThat(userGroup.getUserId(), Matchers.is(123));
+        Assert.assertThat(userGroup.getGroupId(), Matchers.is(10));
+    }
 
-		@Put
-		UserGroup POST2(@Header(key = "userId") String userId, @Header(key = "groupId") int groupId);
+    @Test(expected = RuntimeException.class)
+    public void GETinvalidHeaderAppTest() {
+        InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
+        app.GET();
+    }
 
-		@Headers(headers = { @Header(key = "userId", value = "2"), @Header(key = "groupId", value = "4") })
-		@Put
-		UserGroup PUT();
+    @Test(expected = RuntimeException.class)
+    public void GETanotherInvalidHeaderAppTest() {
+        InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
+        app.GET2("");
+    }
 
-		@Put
-		UserGroup PUT2(@Header(key = "userId") String userId, @Header(key = "groupId") int groupId);
+    @Test
+    public void GETannotatedInterfaceAppTest() {
+        AnnotatedInterfaceApp app = jrest.create(AnnotatedInterfaceApp.class);
+        UserGroup userGroup = app.GET();
 
-	}
+        Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
+        Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
+    }
 
-	@Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
-	interface InvalidHeaderApp {
+    @Test(expected = RuntimeException.class)
+    public void GETinvalidAnnotatedInterfaceAppTest() {
+        InvalidAnnotatedInterfaceApp app = jrest.create(InvalidAnnotatedInterfaceApp.class);
+        app.GET();
+    }
 
-		@Headers(headers = { @Header(key = "userId", value = "2"), @Header(key = "groupId") })
-		@Get
-		UserGroup GET();
+    @Test
+    public void POSTheaderAppTest() {
+        HeaderApp app = jrest.create(HeaderApp.class);
+        UserGroup userGroup = app.POST();
+        Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
+        Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
 
-		@Headers(headers = { @Header(key = "userId", value = "2") })
-		@Get
-		UserGroup GET2(@Header(key = "groupId") String groupId);
+        userGroup = app.POST2("123", 10);
+        Assert.assertThat(userGroup.getUserId(), Matchers.is(123));
+        Assert.assertThat(userGroup.getGroupId(), Matchers.is(10));
+    }
 
-		@Headers(headers = { @Header(key = "userId", value = "2"), @Header(key = "groupId") })
-		@Post
-		UserGroup POST();
+    @Test(expected = RuntimeException.class)
+    public void POSTinvalidHeaderAppTest() {
+        InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
+        app.POST();
+    }
 
-		@Headers(headers = { @Header(key = "userId", value = "2") })
-		@Post
-		UserGroup POST2(@Header(key = "groupId") String groupId);
+    @Test(expected = RuntimeException.class)
+    public void POSTanotherInvalidHeaderAppTest() {
+        InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
+        app.POST2("");
+    }
 
-		@Headers(headers = { @Header(key = "userId", value = "2"), @Header(key = "groupId") })
-		@Put
-		UserGroup PUT();
+    @Test
+    public void POSTannotatedInterfaceAppTest() {
+        AnnotatedInterfaceApp app = jrest.create(AnnotatedInterfaceApp.class);
+        UserGroup userGroup = app.POST();
 
-		@Headers(headers = { @Header(key = "userId", value = "2") })
-		@Put
-		UserGroup PUT2(@Header(key = "groupId") String groupId);
+        Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
+        Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
+    }
 
-	}
+    @Test(expected = RuntimeException.class)
+    public void POSTinvalidAnnotatedInterfaceAppTest() {
+        InvalidAnnotatedInterfaceApp app = jrest.create(InvalidAnnotatedInterfaceApp.class);
+        app.POST();
+    }
 
-	@Headers(headers = { @Header(key = "userId", value = "2"), @Header(key = "groupId", value = "4") })
-	@Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
-	interface AnnotatedInterfaceApp {
+    @Test
+    public void PUTheaderAppTest() {
+        HeaderApp app = jrest.create(HeaderApp.class);
+        UserGroup userGroup = app.PUT();
+        Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
+        Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
 
-		@Get
-		UserGroup GET();
+        userGroup = app.POST2("123", 10);
+        Assert.assertThat(userGroup.getUserId(), Matchers.is(123));
+        Assert.assertThat(userGroup.getGroupId(), Matchers.is(10));
+    }
 
-		@Post
-		UserGroup POST();
+    @Test(expected = RuntimeException.class)
+    public void PUTinvalidHeaderAppTest() {
+        InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
+        app.PUT();
+    }
 
-		@Put
-		UserGroup PUT();
+    @Test(expected = RuntimeException.class)
+    public void PUTanotherInvalidHeaderAppTest() {
+        InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
+        app.PUT2("");
+    }
 
-	}
+    @Test
+    public void PUTannotatedInterfaceAppTest() {
+        AnnotatedInterfaceApp app = jrest.create(AnnotatedInterfaceApp.class);
+        UserGroup userGroup = app.PUT();
 
-	@Headers(headers = { @Header(key = "userId", value = "2"), @Header(key = "groupId") })
-	@Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
-	interface InvalidAnnotatedInterfaceApp {
+        Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
+        Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
+    }
 
-		@Get
-		UserGroup GET();
+    @Test(expected = RuntimeException.class)
+    public void PUTinvalidAnnotatedInterfaceAppTest() {
+        InvalidAnnotatedInterfaceApp app = jrest.create(InvalidAnnotatedInterfaceApp.class);
+        app.PUT();
+    }
 
-		@Post
-		UserGroup POST();
+    @Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
+    interface HeaderApp {
 
-		@Put
-		UserGroup PUT();
+        @Header(key = "userId", value = "2")
+        @Header(key = "groupId", value = "4")
+        @Get
+        UserGroup GET();
 
-	}
+        @Get
+        UserGroup GET2(@Header(key = "userId") String userId, @Header(key = "groupId") int groupId);
 
-	private JRest jrest;
+        @Header(key = "userId", value = "2")
+        @Header(key = "groupId", value = "4")
+        @Post
+        UserGroup POST();
 
-	@Before
-	public void before() {
-		jrest = new JRest.Builder().build();
-	}
+        @Put
+        UserGroup POST2(@Header(key = "userId") String userId, @Header(key = "groupId") int groupId);
 
-	@Test
-	public void GETheaderAppTest() {
-		HeaderApp app = jrest.create(HeaderApp.class);
-		UserGroup userGroup = app.GET();
-		Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
-		Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
+        @Header(key = "userId", value = "2")
+        @Header(key = "groupId", value = "4")
+        @Put
+        UserGroup PUT();
 
-		userGroup = app.GET2("123", 10);
-		Assert.assertThat(userGroup.getUserId(), Matchers.is(123));
-		Assert.assertThat(userGroup.getGroupId(), Matchers.is(10));
-	}
+        @Put
+        UserGroup PUT2(@Header(key = "userId") String userId, @Header(key = "groupId") int groupId);
 
-	@Test(expected = RuntimeException.class)
-	public void GETinvalidHeaderAppTest() {
-		InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
-		app.GET();
-	}
+    }
 
-	@Test(expected = RuntimeException.class)
-	public void GETanotherInvalidHeaderAppTest() {
-		InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
-		app.GET2("");
-	}
+    @Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
+    interface InvalidHeaderApp {
 
-	@Test
-	public void GETannotatedInterfaceAppTest() {
-		AnnotatedInterfaceApp app = jrest.create(AnnotatedInterfaceApp.class);
-		UserGroup userGroup = app.GET();
+        @Header(key = "userId", value = "2")
+        @Header(key = "groupId")
+        @Get
+        UserGroup GET();
 
-		Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
-		Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
-	}
+        @Header(key = "userId", value = "2")
+        @Get
+        UserGroup GET2(@Header(key = "groupId") String groupId);
 
-	@Test(expected = RuntimeException.class)
-	public void GETinvalidAnnotatedInterfaceAppTest() {
-		InvalidAnnotatedInterfaceApp app = jrest.create(InvalidAnnotatedInterfaceApp.class);
-		app.GET();
-	}
+        @Header(key = "userId", value = "2")
+        @Header(key = "groupId")
+        @Post
+        UserGroup POST();
 
-	@Test
-	public void POSTheaderAppTest() {
-		HeaderApp app = jrest.create(HeaderApp.class);
-		UserGroup userGroup = app.POST();
-		Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
-		Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
+        @Header(key = "userId", value = "2")
+        @Post
+        UserGroup POST2(@Header(key = "groupId") String groupId);
 
-		userGroup = app.POST2("123", 10);
-		Assert.assertThat(userGroup.getUserId(), Matchers.is(123));
-		Assert.assertThat(userGroup.getGroupId(), Matchers.is(10));
-	}
+        @Header(key = "userId", value = "2")
+        @Header(key = "groupId")
+        @Put
+        UserGroup PUT();
 
-	@Test(expected = RuntimeException.class)
-	public void POSTinvalidHeaderAppTest() {
-		InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
-		app.POST();
-	}
+        @Header(key = "userId", value = "2")
+        @Put
+        UserGroup PUT2(@Header(key = "groupId") String groupId);
 
-	@Test(expected = RuntimeException.class)
-	public void POSTanotherInvalidHeaderAppTest() {
-		InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
-		app.POST2("");
-	}
+    }
 
-	@Test
-	public void POSTannotatedInterfaceAppTest() {
-		AnnotatedInterfaceApp app = jrest.create(AnnotatedInterfaceApp.class);
-		UserGroup userGroup = app.POST();
+    @Header(key = "userId", value = "2")
+    @Header(key = "groupId", value = "4")
+    @Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
+    interface AnnotatedInterfaceApp {
 
-		Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
-		Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
-	}
+        @Get
+        UserGroup GET();
 
-	@Test(expected = RuntimeException.class)
-	public void POSTinvalidAnnotatedInterfaceAppTest() {
-		InvalidAnnotatedInterfaceApp app = jrest.create(InvalidAnnotatedInterfaceApp.class);
-		app.POST();
-	}
+        @Post
+        UserGroup POST();
 
-	@Test
-	public void PUTheaderAppTest() {
-		HeaderApp app = jrest.create(HeaderApp.class);
-		UserGroup userGroup = app.PUT();
-		Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
-		Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
+        @Put
+        UserGroup PUT();
 
-		userGroup = app.POST2("123", 10);
-		Assert.assertThat(userGroup.getUserId(), Matchers.is(123));
-		Assert.assertThat(userGroup.getGroupId(), Matchers.is(10));
-	}
+    }
 
-	@Test(expected = RuntimeException.class)
-	public void PUTinvalidHeaderAppTest() {
-		InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
-		app.PUT();
-	}
+    @Header(key = "userId", value = "2")
+    @Header(key = "groupId")
+    @Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
+    interface InvalidAnnotatedInterfaceApp {
 
-	@Test(expected = RuntimeException.class)
-	public void PUTanotherInvalidHeaderAppTest() {
-		InvalidHeaderApp app = jrest.create(InvalidHeaderApp.class);
-		app.PUT2("");
-	}
+        @Get
+        UserGroup GET();
 
-	@Test
-	public void PUTannotatedInterfaceAppTest() {
-		AnnotatedInterfaceApp app = jrest.create(AnnotatedInterfaceApp.class);
-		UserGroup userGroup = app.PUT();
+        @Post
+        UserGroup POST();
 
-		Assert.assertThat(userGroup.getUserId(), Matchers.is(2));
-		Assert.assertThat(userGroup.getGroupId(), Matchers.is(4));
-	}
+        @Put
+        UserGroup PUT();
 
-	@Test(expected = RuntimeException.class)
-	public void PUTinvalidAnnotatedInterfaceAppTest() {
-		InvalidAnnotatedInterfaceApp app = jrest.create(InvalidAnnotatedInterfaceApp.class);
-		app.PUT();
-	}
+    }
 
 }
