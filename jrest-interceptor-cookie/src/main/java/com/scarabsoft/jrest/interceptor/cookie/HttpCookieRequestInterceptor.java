@@ -1,7 +1,7 @@
 package com.scarabsoft.jrest.interceptor.cookie;
 
 import com.scarabsoft.jrest.interceptor.RequestInterceptor;
-import com.scarabsoft.jrest.interceptor.domain.RequestEntity;
+import com.scarabsoft.jrest.RequestEntity;
 
 public class HttpCookieRequestInterceptor implements RequestInterceptor {
 

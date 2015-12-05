@@ -3,7 +3,6 @@ package com.scarabsoft.jrest;
 import com.scarabsoft.jrest.annotation.Body;
 import com.scarabsoft.jrest.annotation.Get;
 import com.scarabsoft.jrest.converter.body.BodyConverter;
-import com.scarabsoft.jrest.interceptor.BodyEntity;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;

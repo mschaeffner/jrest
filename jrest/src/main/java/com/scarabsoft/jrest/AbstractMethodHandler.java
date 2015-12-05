@@ -2,8 +2,6 @@ package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.annotation.*;
 import com.scarabsoft.jrest.converter.body.BodyConverter;
-import com.scarabsoft.jrest.interceptor.BodyEntity;
-import com.scarabsoft.jrest.interceptor.ParamEntity;
 import org.apache.http.message.BasicHeader;
 
 import java.io.UnsupportedEncodingException;

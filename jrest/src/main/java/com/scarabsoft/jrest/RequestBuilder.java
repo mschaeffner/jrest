@@ -7,8 +7,6 @@ import com.scarabsoft.jrest.annotation.Put;
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.body.BodyConverter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
-import com.scarabsoft.jrest.interceptor.BodyEntity;
-import com.scarabsoft.jrest.interceptor.ParamEntity;
 import org.apache.http.Header;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;

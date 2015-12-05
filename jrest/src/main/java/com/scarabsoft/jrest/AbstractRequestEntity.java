@@ -2,11 +2,8 @@ package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
-import com.scarabsoft.jrest.interceptor.ParamEntity;
 import com.scarabsoft.jrest.interceptor.RequestInterceptor;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
-import com.scarabsoft.jrest.interceptor.ResponseEntity;
-import com.scarabsoft.jrest.interceptor.domain.RequestEntity;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;

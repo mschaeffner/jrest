@@ -1,7 +1,7 @@
 package com.scarabsoft.jrest.interceptor.oauth2;
 
 import com.scarabsoft.jrest.interceptor.RequestInterceptor;
-import com.scarabsoft.jrest.interceptor.domain.RequestEntity;
+import com.scarabsoft.jrest.RequestEntity;
 
 public class HttpOAuth2RequestInterceptor implements RequestInterceptor {
 

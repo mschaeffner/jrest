@@ -5,7 +5,6 @@ import com.scarabsoft.jrest.annotation.Interceptors;
 import com.scarabsoft.jrest.converter.*;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
-import com.scarabsoft.jrest.interceptor.ResponseEntity;
 import org.apache.http.Header;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
