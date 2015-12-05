@@ -7,7 +7,7 @@ import com.scarabsoft.jrest.converter.body.BodyConverter;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
-class GetMethodHandler extends AbstractMethodHandler {
+final class GetMethodHandler extends AbstractMethodHandler {
 
     @Override
     protected String getUrl(Method method) {

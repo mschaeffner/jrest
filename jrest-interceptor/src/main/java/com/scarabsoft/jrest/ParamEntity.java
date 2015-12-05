@@ -1,6 +1,6 @@
 package com.scarabsoft.jrest;
 
-class ParamEntity {
+final class ParamEntity {
 
     private final String name;
     private final Object value;

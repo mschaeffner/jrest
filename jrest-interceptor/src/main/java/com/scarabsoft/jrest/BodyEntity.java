@@ -1,6 +1,6 @@
 package com.scarabsoft.jrest;
 
-class BodyEntity {
+final class BodyEntity {
 
     private final byte[] bytes;
     private final String mimeType;

@@ -7,7 +7,7 @@ import org.apache.http.message.BasicHeader;
 import java.util.Collection;
 import java.util.LinkedList;
 
-class AnnotationUtil {
+final class AnnotationUtil {
 
     private AnnotationUtil() {
         throw new RuntimeException("use static methods");

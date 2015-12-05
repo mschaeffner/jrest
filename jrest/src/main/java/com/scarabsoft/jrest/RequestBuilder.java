@@ -15,7 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 
-class RequestBuilder {
+final class RequestBuilder {
 
     private final String baseUrl;
     private final Converter<?> converter;

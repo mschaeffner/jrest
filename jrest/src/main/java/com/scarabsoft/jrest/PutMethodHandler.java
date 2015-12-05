@@ -4,7 +4,7 @@ import com.scarabsoft.jrest.annotation.Put;
 
 import java.lang.reflect.Method;
 
-class PutMethodHandler extends AbstractMethodHandler {
+final class PutMethodHandler extends AbstractMethodHandler {
 
 	@Override
 	protected String getUrl(Method method) {

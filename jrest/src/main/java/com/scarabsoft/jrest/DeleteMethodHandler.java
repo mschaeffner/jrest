@@ -7,7 +7,7 @@ import com.scarabsoft.jrest.converter.body.BodyConverter;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
-class DeleteMethodHandler extends AbstractMethodHandler {
+final class DeleteMethodHandler extends AbstractMethodHandler {
     @Override
     protected String getUrl(Method method) {
         return method.getAnnotation(Delete.class).url();
