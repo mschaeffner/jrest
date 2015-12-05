@@ -27,13 +27,13 @@ class RequestBuilder {
     private final Collection<Header> headers;
     private final Class<? extends Collection> collectionClazz;
 
-    public RequestBuilder(String baseUrl,
-                          Converter<?> converter,
-                          BodyConverter bodyConverter,
-                          ExceptionConverter<?> exceptionConverter,
-                          RequestConfig requestConfig,
-                          Collection<Header> headers,
-                          Class<? extends Collection> collectionClazz) {
+    RequestBuilder(String baseUrl,
+                   Converter<?> converter,
+                   BodyConverter bodyConverter,
+                   ExceptionConverter<?> exceptionConverter,
+                   RequestConfig requestConfig,
+                   Collection<Header> headers,
+                   Class<? extends Collection> collectionClazz) {
         this.baseUrl = baseUrl;
         this.converter = converter;
         this.bodyConverter = bodyConverter;
@@ -43,7 +43,7 @@ class RequestBuilder {
         this.collectionClazz = collectionClazz;
     }
 
-    public AbstractRequestEntity build(Method method, Object[] parameters, HttpClient httpClient) {
+    AbstractRequestEntity build(Method method, Object[] parameters, HttpClient httpClient) {
         final AbstractMethodHandler methodHandler = resolveMethodHandler(method);
         final String url = methodHandler.getUrl(baseUrl, method, parameters);
         final Collection<ParamEntity> requestParameterEntities = methodHandler.getParameterEntities(method, parameters);

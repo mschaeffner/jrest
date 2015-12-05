@@ -8,14 +8,14 @@ import com.scarabsoft.jrest.interceptor.BodyEntity;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
-public class DeleteMethodHandler extends AbstractMethodHandler {
+class DeleteMethodHandler extends AbstractMethodHandler {
     @Override
     protected String getUrl(Method method) {
         return method.getAnnotation(Delete.class).url();
     }
 
     @Override
-    public BodyEntity getBodyEntity(BodyConverter converter, Method method, Object[] parameters) {
+    BodyEntity getBodyEntity(BodyConverter converter, Method method, Object[] parameters) {
         for (final Parameter parameter : method.getParameters()) {
             if (parameter.getAnnotation(Body.class) != null) {
                 throw new RuntimeException("@Body not supported for GET request");

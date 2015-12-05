@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
-public final class JRestInvocationHandler implements java.lang.reflect.InvocationHandler {
+final class JRestInvocationHandler implements java.lang.reflect.InvocationHandler {
 
     private final String baseUrl;
     private final ConverterFactory converterFactory;
@@ -26,13 +26,13 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
     private final Collection<Header> headers;
     private final HttpClientFactory httpClientFactory;
 
-    public JRestInvocationHandler(String baseUrl,
-                                  ConverterFactory converterFactory,
-                                  ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory,
-                                  RequestInterceptorChain interceptorChain,
-                                  RequestConfig requestConfig,
-                                  Collection<Header> headers,
-                                  HttpClientFactory httpClientFactory) {
+    JRestInvocationHandler(String baseUrl,
+                           ConverterFactory converterFactory,
+                           ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory,
+                           RequestInterceptorChain interceptorChain,
+                           RequestConfig requestConfig,
+                           Collection<Header> headers,
+                           HttpClientFactory httpClientFactory) {
         this.baseUrl = baseUrl;
         this.converterFactory = converterFactory;
         this.exceptionConverterFactory = exceptionConverterFactory;

@@ -10,14 +10,14 @@ import org.apache.http.client.methods.HttpRequestBase;
 
 import java.util.Collection;
 
-public class DeleteRequestEntity extends AbstractRequestEntity {
-    public DeleteRequestEntity(String baseUrl,
-                               Converter<?> converter,
-                               ExceptionConverter<?> exceptionConverter,
-                               Collection<Header> headerEntities,
-                               RequestConfig requestConfig,
-                               HttpClient httpClient, Class<?> responseClazz,
-                               Class<? extends Collection> collectionClazz
+class DeleteRequestEntity extends AbstractRequestEntity {
+    DeleteRequestEntity(String baseUrl,
+                        Converter<?> converter,
+                        ExceptionConverter<?> exceptionConverter,
+                        Collection<Header> headerEntities,
+                        RequestConfig requestConfig,
+                        HttpClient httpClient, Class<?> responseClazz,
+                        Class<? extends Collection> collectionClazz
     ) {
         super(baseUrl, converter, exceptionConverter, headerEntities, null, requestConfig,
                 httpClient, responseClazz, collectionClazz);

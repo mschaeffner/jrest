@@ -40,7 +40,7 @@ abstract class AbstractRequestEntity implements RequestEntity {
     private Object cachedResult;
     private RuntimeException exception;
 
-    public AbstractRequestEntity(String baseUrl, Converter<?> converter, ExceptionConverter<?> exceptionConverter,
+     AbstractRequestEntity(String baseUrl, Converter<?> converter, ExceptionConverter<?> exceptionConverter,
                                  Collection<Header> headers, Collection<ParamEntity> requestParameterEntities,
                                  RequestConfig requestConfig, HttpClient httpClient, Class<?> responseClazz, Class<? extends Collection> collectionClazz) {
         this.url = baseUrl;

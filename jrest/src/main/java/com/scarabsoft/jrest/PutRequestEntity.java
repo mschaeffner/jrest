@@ -15,16 +15,16 @@ import java.util.Collection;
 
 class PutRequestEntity extends PostRequestEntity {
 
-    public PutRequestEntity(String baseUrl,
-                            Converter<?> converter,
-                            ExceptionConverter<?> exceptionConverter,
-                            Collection<Header> headers,
-                            Collection<ParamEntity> requestParameterEntities,
-                            BodyEntity bodyEntity,
-                            RequestConfig requestConfig,
-                            HttpClient httpClient,
-                            Class<?> responseClazz,
-                            Class<? extends Collection> collectionClazz) {
+    PutRequestEntity(String baseUrl,
+                     Converter<?> converter,
+                     ExceptionConverter<?> exceptionConverter,
+                     Collection<Header> headers,
+                     Collection<ParamEntity> requestParameterEntities,
+                     BodyEntity bodyEntity,
+                     RequestConfig requestConfig,
+                     HttpClient httpClient,
+                     Class<?> responseClazz,
+                     Class<? extends Collection> collectionClazz) {
         super(baseUrl, converter, exceptionConverter, headers, requestParameterEntities, bodyEntity,
                 requestConfig, httpClient, responseClazz, collectionClazz);
     }

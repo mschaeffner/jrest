@@ -16,7 +16,7 @@ abstract class AbstractMethodHandler {
 
     protected abstract String getUrl(Method method);
 
-    public String getUrl(String baseUrl, Method method, Object[] parameters) {
+    String getUrl(String baseUrl, Method method, Object[] parameters) {
         String resultUrl = baseUrl + getUrl(method);
         final Parameter[] methodParameters = method.getParameters();
         for (int i = 0; i < methodParameters.length; i++) {
@@ -37,7 +37,7 @@ abstract class AbstractMethodHandler {
         return url.replace("{" + name + "}", value);
     }
 
-    public Collection<ParamEntity> getParameterEntities(Method method, Object[] parameters) {
+    Collection<ParamEntity> getParameterEntities(Method method, Object[] parameters) {
         final Collection<ParamEntity> result = new LinkedList<ParamEntity>();
         final Parameter[] methodParameters = method.getParameters();
         for (int i = 0; i < methodParameters.length; i++) {
@@ -54,7 +54,7 @@ abstract class AbstractMethodHandler {
         return result;
     }
 
-    public Collection<org.apache.http.Header> getHeaderEntities(Method method, Object[] parameters) {
+    Collection<org.apache.http.Header> getHeaderEntities(Method method, Object[] parameters) {
         final Collection<org.apache.http.Header> result = AnnotationUtil.getHeaderEntities(method.getAnnotation(Headers.class));
 
         final Parameter[] methodParameters = method.getParameters();
@@ -72,7 +72,7 @@ abstract class AbstractMethodHandler {
         return result;
     }
 
-    public BodyEntity getBodyEntity(BodyConverter bodyConverter, Method method, Object[] parameters)
+     BodyEntity getBodyEntity(BodyConverter bodyConverter, Method method, Object[] parameters)
             throws UnsupportedEncodingException {
         for (int i = 0; i < method.getParameters().length; i++) {
             Body body = method.getParameters()[i].getAnnotation(Body.class);

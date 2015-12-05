@@ -13,14 +13,14 @@ import java.util.Collection;
 
 class GetRequestEntity extends AbstractRequestEntity {
 
-    public GetRequestEntity(String baseUrl,
-                            Converter<?> converter,
-                            ExceptionConverter<?> exceptionConverter,
-                            Collection<Header> headerEntities,
-                            Collection<ParamEntity> requestParameterEntities,
-                            RequestConfig requestConfig,
-                            HttpClient httpClient, Class<?> responseClazz,
-                            Class<? extends Collection> collectionClazz
+    GetRequestEntity(String baseUrl,
+                     Converter<?> converter,
+                     ExceptionConverter<?> exceptionConverter,
+                     Collection<Header> headerEntities,
+                     Collection<ParamEntity> requestParameterEntities,
+                     RequestConfig requestConfig,
+                     HttpClient httpClient, Class<?> responseClazz,
+                     Class<? extends Collection> collectionClazz
     ) {
         super(baseUrl, converter, exceptionConverter, headerEntities, requestParameterEntities, requestConfig,
                 httpClient, responseClazz, collectionClazz);

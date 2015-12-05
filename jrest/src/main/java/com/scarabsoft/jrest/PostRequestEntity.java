@@ -23,16 +23,16 @@ class PostRequestEntity extends AbstractRequestEntity {
 
     protected final BodyEntity bodyEntity;
 
-    public PostRequestEntity(String baseUrl,
-                             Converter<?> converter,
-                             ExceptionConverter<?> exceptionConverter,
-                             Collection<Header> header,
-                             Collection<ParamEntity> requestParameterEntities,
-                             BodyEntity bodyEntity,
-                             RequestConfig requestConfig,
-                             HttpClient httpClient,
-                             Class<?> responseClazz,
-                             Class<? extends Collection> collectionClazz) {
+    PostRequestEntity(String baseUrl,
+                      Converter<?> converter,
+                      ExceptionConverter<?> exceptionConverter,
+                      Collection<Header> header,
+                      Collection<ParamEntity> requestParameterEntities,
+                      BodyEntity bodyEntity,
+                      RequestConfig requestConfig,
+                      HttpClient httpClient,
+                      Class<?> responseClazz,
+                      Class<? extends Collection> collectionClazz) {
         super(baseUrl, converter, exceptionConverter, header, requestParameterEntities, requestConfig,
                 httpClient, responseClazz, collectionClazz);
         this.bodyEntity = bodyEntity;
