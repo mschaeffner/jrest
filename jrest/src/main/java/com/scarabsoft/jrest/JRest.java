@@ -1,6 +1,5 @@
 package com.scarabsoft.jrest;
 
-import com.scarabsoft.jrest.annotation.Headers;
 import com.scarabsoft.jrest.annotation.Interceptor;
 import com.scarabsoft.jrest.annotation.Mapping;
 import com.scarabsoft.jrest.converter.ConverterFactory;
@@ -59,7 +58,7 @@ public final class JRest {
                 exceptionConverterFactory = new StringExceptionConverterFactory();
             }
 
-            final Collection<Header> headers = AnnotationUtil.getHeaderEntities(clazz.getAnnotation(Headers.class));
+            final Collection<Header> headers = AnnotationUtil.getHeaderEntities(clazz.getAnnotationsByType(com.scarabsoft.jrest.annotation.Header.class));
 
             final RequestInterceptorChain chain = RequestInterceptorChainBuilder.create(requestInterceptorChain,
                     clazz.getAnnotationsByType(Interceptor.class));

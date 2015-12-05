@@ -1,6 +1,9 @@
 package com.scarabsoft.jrest;
 
-import com.scarabsoft.jrest.annotation.*;
+import com.scarabsoft.jrest.annotation.Body;
+import com.scarabsoft.jrest.annotation.Header;
+import com.scarabsoft.jrest.annotation.Param;
+import com.scarabsoft.jrest.annotation.Path;
 import com.scarabsoft.jrest.converter.body.BodyConverter;
 import org.apache.http.message.BasicHeader;
 
@@ -53,7 +56,7 @@ abstract class AbstractMethodHandler {
     }
 
     Collection<org.apache.http.Header> getHeaderEntities(Method method, Object[] parameters) {
-        final Collection<org.apache.http.Header> result = AnnotationUtil.getHeaderEntities(method.getAnnotation(Headers.class));
+        final Collection<org.apache.http.Header> result = AnnotationUtil.getHeaderEntities(method.getAnnotationsByType(Header.class));
 
         final Parameter[] methodParameters = method.getParameters();
         for (int i = 0; i < methodParameters.length; i++) {
@@ -70,7 +73,7 @@ abstract class AbstractMethodHandler {
         return result;
     }
 
-     BodyEntity getBodyEntity(BodyConverter bodyConverter, Method method, Object[] parameters)
+    BodyEntity getBodyEntity(BodyConverter bodyConverter, Method method, Object[] parameters)
             throws UnsupportedEncodingException {
         for (int i = 0; i < method.getParameters().length; i++) {
             Body body = method.getParameters()[i].getAnnotation(Body.class);
