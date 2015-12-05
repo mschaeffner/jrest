@@ -47,9 +47,9 @@ class PostRequestEntity extends AbstractRequestEntity {
             if (requestParameter.getValue() instanceof File) {
                 builder.addBinaryBody(requestParameter.getName(), (File) requestParameter.getValue());
             } else if (requestParameter.getValue() instanceof InputStream) {
-                throw new RuntimeException("not supported yet.");
+                builder.addBinaryBody(requestParameter.getName(), (InputStream) requestParameter.getValue(), ContentType.APPLICATION_OCTET_STREAM, requestParameter.getFilename());
             } else if (requestParameter.getValue() instanceof Byte[] || requestParameter.getValue() instanceof byte[]) {
-                throw new RuntimeException("not supported yet.");
+                builder.addBinaryBody(requestParameter.getName(), (byte[]) requestParameter.getValue(), ContentType.APPLICATION_OCTET_STREAM, requestParameter.getFilename());
             } else {
                 builder.addTextBody(requestParameter.getName(), String.valueOf(requestParameter.getValue()));
             }

@@ -47,7 +47,7 @@ abstract class AbstractMethodHandler {
                 if (requestParam.name().equals("")) {
                     throw new RuntimeException("name of RequestParam is missing");
                 } else {
-                    result.add(new ParamEntity(requestParam.name(), parameters[i]));
+                    result.add(new ParamEntity(requestParam.name(), parameters[i], requestParam.filename()));
                 }
             }
         }
