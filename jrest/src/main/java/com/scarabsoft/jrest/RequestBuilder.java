@@ -5,6 +5,7 @@ import com.scarabsoft.jrest.annotation.Get;
 import com.scarabsoft.jrest.annotation.Post;
 import com.scarabsoft.jrest.annotation.Put;
 import com.scarabsoft.jrest.converter.Converter;
+import com.scarabsoft.jrest.converter.body.BodyConverter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.BodyEntity;
 import com.scarabsoft.jrest.interceptor.ParamEntity;
@@ -20,6 +21,7 @@ class RequestBuilder {
 
     private final String baseUrl;
     private final Converter<?> converter;
+    private final BodyConverter bodyConverter;
     private final ExceptionConverter<?> exceptionConverter;
     private final RequestConfig requestConfig;
     private final Collection<Header> headers;
@@ -27,12 +29,14 @@ class RequestBuilder {
 
     public RequestBuilder(String baseUrl,
                           Converter<?> converter,
+                          BodyConverter bodyConverter,
                           ExceptionConverter<?> exceptionConverter,
                           RequestConfig requestConfig,
                           Collection<Header> headers,
                           Class<? extends Collection> collectionClazz) {
         this.baseUrl = baseUrl;
         this.converter = converter;
+        this.bodyConverter = bodyConverter;
         this.exceptionConverter = exceptionConverter;
         this.requestConfig = requestConfig;
         this.headers = headers;
@@ -48,7 +52,7 @@ class RequestBuilder {
 
         BodyEntity body;
         try {
-            body = methodHandler.getBodyEntity(converter.getBodyConverter(), method, parameters);
+            body = methodHandler.getBodyEntity(bodyConverter, method, parameters);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("could not convert object to byte[]");
         }

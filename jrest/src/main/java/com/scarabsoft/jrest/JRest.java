@@ -5,6 +5,7 @@ import com.scarabsoft.jrest.annotation.Interceptor;
 import com.scarabsoft.jrest.annotation.Interceptors;
 import com.scarabsoft.jrest.annotation.Mapping;
 import com.scarabsoft.jrest.converter.Converter;
+import com.scarabsoft.jrest.converter.ConverterFactory;
 import com.scarabsoft.jrest.converter.LazyConverterFactory;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.converter.exception.StringExceptionConverterFactory;
@@ -19,7 +20,7 @@ import java.util.Collection;
 public final class JRest {
 
     private String baseUrl;
-    private Converter.ConverterFactory converterFactory;
+    private ConverterFactory converterFactory;
     private ExceptionConverter.ExceptionConverterFactory exceptionFactory;
     private RequestConfig requestConfig;
     private RequestInterceptorChain requestInterceptorChain = new RequestInterceptorChain();
@@ -39,7 +40,7 @@ public final class JRest {
         try {
             String baseUrl = (this.baseUrl != null) ? this.baseUrl : "";
             ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory = this.exceptionFactory;
-            Converter.ConverterFactory factory = this.converterFactory;
+            ConverterFactory factory = this.converterFactory;
             final Mapping requestMapping = clazz.getAnnotation(Mapping.class);
             if (requestMapping != null) {
                 baseUrl += requestMapping.url();
@@ -92,7 +93,7 @@ public final class JRest {
             return this;
         }
 
-        public Builder coverterFactory(Converter.ConverterFactory converterFactory) {
+        public Builder coverterFactory(ConverterFactory converterFactory) {
             buildResult.converterFactory = converterFactory;
             return this;
         }

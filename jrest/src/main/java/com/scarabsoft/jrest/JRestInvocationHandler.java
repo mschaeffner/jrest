@@ -3,6 +3,7 @@ package com.scarabsoft.jrest;
 import com.scarabsoft.jrest.annotation.Interceptor;
 import com.scarabsoft.jrest.annotation.Interceptors;
 import com.scarabsoft.jrest.converter.Converter;
+import com.scarabsoft.jrest.converter.ConverterFactory;
 import com.scarabsoft.jrest.converter.VoidConverter;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
@@ -18,14 +19,14 @@ import java.util.*;
 public final class JRestInvocationHandler implements java.lang.reflect.InvocationHandler {
 
     private final String baseUrl;
-    private final Converter.ConverterFactory converterFactory;
+    private final ConverterFactory converterFactory;
     private final ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory;
     private final RequestInterceptorChain interceptorChain;
     private final RequestConfig requestConfig;
     private final Collection<Header> headers;
 
     public JRestInvocationHandler(String baseUrl,
-                                  Converter.ConverterFactory converterFactory,
+                                  ConverterFactory converterFactory,
                                   ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory,
                                   RequestInterceptorChain interceptorChain,
                                   RequestConfig requestConfig,
@@ -38,7 +39,7 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
         this.headers = headers;
     }
 
-    // TODO request entities should not get interceptions out of annotation -->
+    // TODO request entities should not getConverter interceptions out of annotation -->
     // create a more general interceptoro chain
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -89,11 +90,12 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
         if (method.getReturnType().equals(void.class) || method.getReturnType().equals(Void.class)) {
             converter = new VoidConverter();
         } else {
-            converter = converterFactory.get(returnClazz);
+            converter = converterFactory.getConverter(returnClazz);
         }
 
         final RequestBuilder builder = new RequestBuilder(baseUrl,
                 converter,
+                converterFactory.getBodyConverter(),
                 exceptionConverterFactory.get(),
                 requestConfig,
                 headers, collectionClazz);

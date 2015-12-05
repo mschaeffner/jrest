@@ -6,7 +6,6 @@ import com.google.gson.stream.JsonReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
@@ -50,20 +49,5 @@ public class GsonConverter<T> implements Converter<T> {
             e.printStackTrace();
         }
         return data;
-    }
-
-    @Override
-    public BodyConverter getBodyConverter() {
-        return new BodyConverter() {
-            @Override
-            public byte[] toBody(Object obj) throws UnsupportedEncodingException {
-                return new Gson().toJson(obj).getBytes("UTF-8");
-            }
-
-            @Override
-            public String getMimetype() {
-                return "application/json";
-            }
-        };
     }
 }
