@@ -23,11 +23,11 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
     private final RequestConfig requestConfig;
     private final Collection<Header> headers;
 
-    public JRestInvocationHandler(String baseUrl, //
-                                  Converter.ConverterFactory converterFactory, //
-                                  ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory, //
-                                  RequestInterceptorChain interceptorChain, //
-                                  RequestConfig requestConfig, //
+    public JRestInvocationHandler(String baseUrl,
+                                  Converter.ConverterFactory converterFactory,
+                                  ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory,
+                                  RequestInterceptorChain interceptorChain,
+                                  RequestConfig requestConfig, 
                                   Collection<Header> headers) {
         this.baseUrl = baseUrl;
         this.converterFactory = converterFactory;

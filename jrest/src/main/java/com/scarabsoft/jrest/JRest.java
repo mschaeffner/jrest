@@ -64,13 +64,13 @@ public final class JRest {
             final RequestInterceptorChain chain = RequestInterceptorChainBuilder.create(requestInterceptorChain,
                     clazz.getAnnotation(Interceptors.class), clazz.getAnnotation(Interceptor.class));
 
-            return (T) Proxy.newProxyInstance(clazz.getClassLoader(), //
-                    new Class<?>[]{clazz},//
-                    new JRestInvocationHandler(baseUrl,//
-                            factory, //
-                            exceptionConverterFactory,//
-                            chain,//
-                            requestConfig,//
+            return (T) Proxy.newProxyInstance(clazz.getClassLoader(),
+                    new Class<?>[]{clazz},
+                    new JRestInvocationHandler(baseUrl,
+                            factory,
+                            exceptionConverterFactory,
+                            chain,
+                            requestConfig,
                             headerEntities));
 
         } catch (InstantiationException | IllegalAccessException e) {
