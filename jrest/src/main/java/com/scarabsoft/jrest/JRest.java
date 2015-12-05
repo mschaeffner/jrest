@@ -7,7 +7,7 @@ import com.scarabsoft.jrest.annotation.Mapping;
 import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.LazyConverterFactory;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
-import com.scarabsoft.jrest.converter.exception.LazyExceptionConverterFactory;
+import com.scarabsoft.jrest.converter.exception.StringExceptionConverterFactory;
 import com.scarabsoft.jrest.interceptor.RequestInterceptor;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
 import org.apache.http.Header;
@@ -46,7 +46,7 @@ public final class JRest {
                 if (!requestMapping.converterFactory().equals(LazyConverterFactory.class)) {
                     factory = requestMapping.converterFactory().newInstance();
                 }
-                if (!requestMapping.exceptionFactory().equals(LazyExceptionConverterFactory.class)) {
+                if (!requestMapping.exceptionFactory().equals(StringExceptionConverterFactory.class)) {
                     exceptionConverterFactory = requestMapping.exceptionFactory().newInstance();
                 }
             }
@@ -56,7 +56,7 @@ public final class JRest {
             }
 
             if (exceptionConverterFactory == null) {
-                exceptionConverterFactory = new LazyExceptionConverterFactory();
+                exceptionConverterFactory = new StringExceptionConverterFactory();
             }
 
             final Collection<Header> headerEntities = AnnotationUtil.getHeaderEntities(clazz.getAnnotation(Headers.class));
