@@ -18,6 +18,8 @@ import org.apache.http.message.BasicHeader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 abstract class AbstractRequestEntity implements RequestEntity {
 
@@ -126,12 +128,12 @@ abstract class AbstractRequestEntity implements RequestEntity {
 
     @Override
     public ResponseEntity<Object> getResponse() throws IOException {
-        final ResponseEntity<Object> result = new ResponseEntity<>(httpStatusCode, getResult());
+        final Map<String, String> headerMap = new HashMap<>();
         if (responseHeader != null) {
             for (Header header : responseHeader) {
-                result.addHeader(header.getName(), header.getValue());
+                headerMap.put(header.getName(), header.getValue());
             }
         }
-        return result;
+        return new ResponseEntity<>(httpStatusCode, getResult(),headerMap);
     }
 }

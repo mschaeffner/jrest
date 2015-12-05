@@ -1,18 +1,18 @@
 package com.scarabsoft.jrest.interceptor;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class ResponseEntity<T> {
 
     private final int statusCode;
-    private final Map<String, String> headerMap = new HashMap<>();
+    private final Map<String, String> headerMap;
     private final T object;
 
-    public ResponseEntity(int statusCode, T object) {
+    public ResponseEntity(int statusCode, T object, Map<String, String> headerMap) {
         this.statusCode = statusCode;
         this.object = object;
+        this.headerMap = headerMap;
     }
 
     public T getObject() {
@@ -25,11 +25,6 @@ public class ResponseEntity<T> {
 
     public Optional<String> getHeader(String key) {
         return Optional.ofNullable(headerMap.get(key));
-    }
-
-    //TODO remove this method!
-    public void addHeader(String key, String value) {
-        headerMap.put(key, value);
     }
 
 }
