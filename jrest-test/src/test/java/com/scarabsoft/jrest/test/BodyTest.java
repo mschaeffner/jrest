@@ -14,31 +14,28 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-//TODO fix this test
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
 public class BodyTest {
 
-    private JRest jrest;
+    private App app;
 
     @Before
     public void before() {
-        jrest = new JRest.Builder().build();
+        final JRest jrest = new JRest.Builder().build();
+        app = jrest.create(App.class);
     }
 
     @Test(expected = RuntimeException.class)
     public void GetTest() {
-        App app = jrest.create(App.class);
         final IP ip = new IP.Builder().ip("127.0.0.2").requestDate(System.currentTimeMillis()).getCountry("de").build();
         app.GET(ip);
     }
 
     @Test(expected = RuntimeException.class)
     public void DeleteTest() {
-        App app = jrest.create(App.class);
         final IP ip = new IP.Builder().ip("127.0.0.2").requestDate(System.currentTimeMillis()).getCountry("de").build();
         app.DELETE(ip);
     }
@@ -46,7 +43,6 @@ public class BodyTest {
 
     @Test
     public void PostTest() {
-        App app = jrest.create(App.class);
         final IP ip = new IP.Builder().ip("127.0.0.2").requestDate(System.currentTimeMillis()).getCountry("de").build();
         IP result = app.POST(ip);
 
@@ -58,7 +54,6 @@ public class BodyTest {
 
     @Test
     public void PutTest() {
-        App app = jrest.create(App.class);
         final IP ip = new IP.Builder().ip("127.0.0.2").requestDate(System.currentTimeMillis()).getCountry("de").build();
         app.PUT(ip);
     }

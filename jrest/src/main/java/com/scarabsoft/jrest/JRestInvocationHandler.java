@@ -7,6 +7,7 @@ import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
 import com.scarabsoft.jrest.interceptor.ResponseEntity;
 import org.apache.http.Header;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClientBuilder;
 
@@ -23,19 +24,22 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
     private final RequestInterceptorChain interceptorChain;
     private final RequestConfig requestConfig;
     private final Collection<Header> headers;
+    private final HttpClientFactory httpClientFactory;
 
     public JRestInvocationHandler(String baseUrl,
                                   ConverterFactory converterFactory,
                                   ExceptionConverter.ExceptionConverterFactory exceptionConverterFactory,
                                   RequestInterceptorChain interceptorChain,
                                   RequestConfig requestConfig,
-                                  Collection<Header> headers) {
+                                  Collection<Header> headers,
+                                  HttpClientFactory httpClientFactory) {
         this.baseUrl = baseUrl;
         this.converterFactory = converterFactory;
         this.exceptionConverterFactory = exceptionConverterFactory;
         this.interceptorChain = interceptorChain;
         this.requestConfig = requestConfig;
         this.headers = headers;
+        this.httpClientFactory = httpClientFactory;
     }
 
     // TODO request entities should not getConverter interceptions out of annotation -->
@@ -102,11 +106,24 @@ public final class JRestInvocationHandler implements java.lang.reflect.Invocatio
                 exceptionConverterFactory.get(),
                 requestConfig,
                 headers, collectionClazz);
-        final AbstractRequestEntity request = builder.build(method, args, HttpClientBuilder.create().build());
+
+        final HttpClient httpClient;
+        if (httpClientFactory != null) {
+            httpClient = httpClientFactory.get();
+        } else {
+            httpClient = HttpClientBuilder.create().build();
+        }
+
+        final AbstractRequestEntity request = builder
+                .build(method,
+                        args,
+                        httpClient);
+
         request.execute(RequestInterceptorChainBuilder.create(
                 interceptorChain,
                 method.getAnnotation(Interceptors.class),
                 method.getAnnotation(Interceptor.class)));
+
         if (request.getResponseClazz().equals(ResponseEntity.class)) {
             return request.getResponse();
         }

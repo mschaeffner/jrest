@@ -4,7 +4,6 @@ import com.scarabsoft.jrest.annotation.Headers;
 import com.scarabsoft.jrest.annotation.Interceptor;
 import com.scarabsoft.jrest.annotation.Interceptors;
 import com.scarabsoft.jrest.annotation.Mapping;
-import com.scarabsoft.jrest.converter.Converter;
 import com.scarabsoft.jrest.converter.ConverterFactory;
 import com.scarabsoft.jrest.converter.LazyConverterFactory;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
@@ -24,6 +23,7 @@ public final class JRest {
     private ExceptionConverter.ExceptionConverterFactory exceptionFactory;
     private RequestConfig requestConfig;
     private RequestInterceptorChain requestInterceptorChain = new RequestInterceptorChain();
+    private HttpClientFactory httpClientFactory;
 
     private JRest() {
     }
@@ -60,7 +60,7 @@ public final class JRest {
                 exceptionConverterFactory = new StringExceptionConverterFactory();
             }
 
-            final Collection<Header> headerEntities = AnnotationUtil.getHeaderEntities(clazz.getAnnotation(Headers.class));
+            final Collection<Header> headers = AnnotationUtil.getHeaderEntities(clazz.getAnnotation(Headers.class));
 
             final RequestInterceptorChain chain = RequestInterceptorChainBuilder.create(requestInterceptorChain,
                     clazz.getAnnotation(Interceptors.class), clazz.getAnnotation(Interceptor.class));
@@ -72,7 +72,8 @@ public final class JRest {
                             exceptionConverterFactory,
                             chain,
                             requestConfig,
-                            headerEntities));
+                            headers,
+                            httpClientFactory));
 
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
@@ -85,6 +86,11 @@ public final class JRest {
 
         public Builder baseUrl(String baseUrl) {
             buildResult.baseUrl = baseUrl;
+            return this;
+        }
+
+        public Builder httpClientFactory(HttpClientFactory factory) {
+            buildResult.httpClientFactory = factory;
             return this;
         }
 
