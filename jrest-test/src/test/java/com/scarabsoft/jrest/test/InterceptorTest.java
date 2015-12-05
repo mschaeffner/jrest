@@ -9,7 +9,6 @@ import com.scarabsoft.jrest.interceptor.domain.RequestEntity;
 import com.scarabsoft.jrest.test.domain.UserGroup;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
@@ -23,7 +22,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @IntegrationTest("server.port:1337")
 public class InterceptorTest {
 
-    @Ignore
     @Test
     public void appWithoutInterceptorTest() {
         final JRest jrest = new JRest.Builder().baseUrl("http://localhost:1337/v1/header/simple")
