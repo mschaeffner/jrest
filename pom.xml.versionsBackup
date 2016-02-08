@@ -1,60 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-
     <modelVersion>4.0.0</modelVersion>
-    <name>jrest</name>
     <groupId>com.scarabsoft</groupId>
-    <artifactId>jrest</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <description>empty</description>
+    <artifactId>jrest-parent-pom</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-    <packaging>jar</packaging>
+    <name>jrest-parent-pom</name>
 
-    <dependencies>
+    <modules>
+        <module>jrest-converter</module>
+        <module>jrest-converter-gson</module>
+        <module>jrest-interceptor</module>
+        <module>jrest-interceptor-cookie</module>
+        <module>jrest-interceptor-oauth2</module>
+        <module>jrest-interceptor-httpbasic</module>
+        <module>jrest</module>
+        <module>jrest-test</module>
+    </modules>
 
-        
-        <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-            <version>4.4.1</version>
-        </dependency>
-        <dependency>
-        	<groupId>com.scarabsoft</groupId>
-        	<artifactId>jrest-converter</artifactId>
-        	<version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-        	<groupId>com.scarabsoft</groupId>
-        	<artifactId>jrest-interceptor</artifactId>
-        	<version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <build>
-        <finalName>jrest</finalName>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
 
+        <!-- To define the plugin version in your parent POM -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <!-- To use the plugin goals in your POM or parent POM -->
+        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
@@ -112,7 +102,8 @@
                     <goals>deploy</goals>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
-
 </project>
+
