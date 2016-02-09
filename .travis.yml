@@ -4,3 +4,5 @@ jdk:
   - oraclejdk8
 
 sudo: required
+
+install: mvn install -DskipTests=true -Dgpg.skip=true
