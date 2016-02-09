@@ -6,7 +6,7 @@
     <name>jrest-converter-gson</name>
     <groupId>com.scarabsoft</groupId>
     <artifactId>jrest-converter-gson</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <description>empty</description>
 
     <packaging>jar</packaging>
@@ -22,7 +22,7 @@
         <dependency>
         	<groupId>com.scarabsoft</groupId>
         	<artifactId>jrest-converter</artifactId>
-        	<version>1.0-SNAPSHOT</version>
+        	<version>1.0.0</version>
         </dependency>
     </dependencies>
 

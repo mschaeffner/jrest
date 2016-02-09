@@ -6,7 +6,7 @@
 	<name>jrest-interceptor-httpbasic</name>
 	<groupId>com.scarabsoft</groupId>
 	<artifactId>jrest-interceptor-httpbasic</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<description>empty</description>
 
 	<packaging>jar</packaging>
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>com.scarabsoft</groupId>
 			<artifactId>jrest-interceptor</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>

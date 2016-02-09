@@ -11,6 +11,10 @@
     <description>JREST for simple REST API calls</description>
     <url>http://scarabsoft.com/jrest</url>
 
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>

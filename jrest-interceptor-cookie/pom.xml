@@ -6,11 +6,10 @@
     <name>jrest-interceptor-cookie</name>
     <groupId>com.scarabsoft</groupId>
     <artifactId>jrest-interceptor-cookie</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <description>empty</description>
 
     <packaging>jar</packaging>
-
 
 
     <build>
@@ -86,10 +85,10 @@
     </build>
 
     <dependencies>
-    	<dependency>
-    		<groupId>com.scarabsoft</groupId>
-    		<artifactId>jrest-interceptor</artifactId>
-    		<version>1.0-SNAPSHOT</version>
-    	</dependency>
+        <dependency>
+            <groupId>com.scarabsoft</groupId>
+            <artifactId>jrest-interceptor</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>
