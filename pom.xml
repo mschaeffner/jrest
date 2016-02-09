@@ -8,6 +8,31 @@
     <packaging>pom</packaging>
 
     <name>jrest-parent-pom</name>
+    <description>JREST for simple REST API calls</description>
+    <url>http://scarabsoft.com/jrest</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+
+    <organization>
+        <name>scarabsoft</name>
+        <url>http://scarabsoft.com/jrest</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <email>admin@scarabsoft.com</email>
+            <name>Dominique Dymke</name>
+        </developer>
+    </developers>
+
 
     <modules>
         <module>jrest-converter</module>
@@ -19,6 +44,7 @@
         <module>jrest</module>
         <module>jrest-test</module>
     </modules>
+
 
     <distributionManagement>
         <snapshotRepository>
@@ -49,6 +75,21 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>2.8.2</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -105,5 +146,13 @@
 
         </plugins>
     </build>
+
+    <scm>
+        <url>https://github.com/scarabsoft/jrest</url>
+        <connection>scm:git:git@github.com:scarabsoft/jrest.git</connection>
+        <developerConnection>scm:git:git@github.com:scarabsoft/jrest.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
 </project>
 
