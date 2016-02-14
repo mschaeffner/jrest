@@ -23,7 +23,7 @@ class PutRequestEntity extends PostRequestEntity {
                      HttpClient httpClient,
                      Class<?> responseClazz,
                      Class<? extends Collection> collectionClazz) {
-        super(baseUrl, converter, exceptionConverter, headers, requestParameterEntities, bodyEntity,
+        super(baseUrl, converter, exceptionConverter, headers,true, requestParameterEntities, bodyEntity,
                 requestConfig, httpClient, responseClazz, collectionClazz);
     }
 

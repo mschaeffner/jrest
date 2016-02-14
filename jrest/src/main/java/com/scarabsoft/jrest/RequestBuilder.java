@@ -80,6 +80,7 @@ final class RequestBuilder {
                     converter,
                     exceptionConverter,
                     headers,
+                    ((PostMethodHandler)methodHandler).isMultipart(method),
                     requestParameterEntities,
                     body,
                     requestConfig,

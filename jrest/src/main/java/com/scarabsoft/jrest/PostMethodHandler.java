@@ -11,4 +11,7 @@ final class PostMethodHandler extends AbstractMethodHandler {
         return method.getAnnotation(Post.class).url();
     }
 
+    public boolean isMultipart(Method method) {
+        return method.getAnnotation(Post.class).multipart();
+    }
 }

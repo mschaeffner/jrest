@@ -1,9 +1,6 @@
 package com.scarabsoft.jrest;
 
-import com.scarabsoft.jrest.annotation.Body;
-import com.scarabsoft.jrest.annotation.Header;
-import com.scarabsoft.jrest.annotation.Param;
-import com.scarabsoft.jrest.annotation.Path;
+import com.scarabsoft.jrest.annotation.*;
 import com.scarabsoft.jrest.converter.body.BodyConverter;
 import org.apache.http.message.BasicHeader;
 

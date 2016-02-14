@@ -17,7 +17,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @SpringApplicationConfiguration(classes = JRestTestApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:1337")
-public class RequestParamTest {
+public class MultiPartRequestParamTest {
 
     private Application app;
 

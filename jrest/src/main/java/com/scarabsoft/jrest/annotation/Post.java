@@ -11,4 +11,6 @@ public @interface Post {
 
 	String url() default "";
 
+	boolean multipart() default true;
+
 }
