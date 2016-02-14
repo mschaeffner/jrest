@@ -5,4 +5,4 @@ jdk:
 
 sudo: required
 
-install: mvn install -DskipTests=true -Dgpg.skip=true
+install: mvn install -P test -Dgpg.skip=true
