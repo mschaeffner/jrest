@@ -54,7 +54,7 @@ class PostRequestEntity extends AbstractRequestEntity {
         }
         return builder.build();
     }
-
+    
     @Override
     protected HttpRequestBase buildRequest(String url) {
         final HttpPost result = new HttpPost(url);

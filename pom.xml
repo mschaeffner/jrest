@@ -152,7 +152,7 @@
         </profile>
 
         <profile>
-            <id>test</id>
+            <id>dev</id>
             <modules>
                 <module>jrest-test</module>
                 <module>jrest-converter</module>
