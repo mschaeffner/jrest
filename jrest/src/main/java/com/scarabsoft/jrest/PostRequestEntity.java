@@ -52,7 +52,7 @@ class PostRequestEntity extends AbstractRequestEntity {
         final MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         for (ParamEntity requestParameter : requestParameterEntities) {
             if (requestParameter.getValue() instanceof File) {
-                builder.addBinaryBody(requestParameter.getName(), (File) requestParameter.getValue());
+                builder.addBinaryBody(requestParameter.getName(), (File) requestParameter.getValue(),ContentType.create(requestParameter.getContentType()), requestParameter.getFilename());
             } else if (requestParameter.getValue() instanceof InputStream) {
                 builder.addBinaryBody(requestParameter.getName(), (InputStream) requestParameter.getValue(),ContentType.create(requestParameter.getContentType()),requestParameter.getFilename());
             } else if (requestParameter.getValue() instanceof Byte[] || requestParameter.getValue() instanceof byte[]) {

@@ -55,7 +55,7 @@ public class FileUploadTest {
     public void POSTfile() {
         UploadApp app = jrest.create(UploadApp.class);
         FileEntity fileEntity = app.POSTfile(file);
-        Assert.assertThat(fileEntity.getContentType(), Matchers.is("application/octet-stream"));
+        Assert.assertThat(fileEntity.getContentType(), Matchers.is("image/png"));
         Assert.assertThat(fileEntity.getFilename(), Matchers.is("file"));
         Assert.assertThat(fileEntity.getFilesize(), Matchers.is(206087L));
     }
@@ -64,7 +64,7 @@ public class FileUploadTest {
     public void POSTInputstream() {
         UploadApp app = jrest.create(UploadApp.class);
         FileEntity fileEntity = app.POSTInputStream(stream);
-        Assert.assertThat(fileEntity.getContentType(), Matchers.is("application/octet-stream"));
+        Assert.assertThat(fileEntity.getContentType(), Matchers.is("image/png"));
         Assert.assertThat(fileEntity.getFilename(), Matchers.is("file"));
         Assert.assertThat(fileEntity.getFilesize(), Matchers.is(206087L));
     }
@@ -73,7 +73,7 @@ public class FileUploadTest {
     public void POSTByteArray() throws IOException {
         UploadApp app = jrest.create(UploadApp.class);
         FileEntity fileEntity = app.POSTByteArray(array);
-        Assert.assertThat(fileEntity.getContentType(), Matchers.is("application/octet-stream"));
+        Assert.assertThat(fileEntity.getContentType(), Matchers.is("image/png"));
         Assert.assertThat(fileEntity.getFilename(), Matchers.is("file"));
         Assert.assertThat(fileEntity.getFilesize(), Matchers.is(206087L));
     }
@@ -82,7 +82,7 @@ public class FileUploadTest {
     public void PUTfile() {
         UploadApp app = jrest.create(UploadApp.class);
         FileEntity fileEntity = app.PUTfile(file);
-        Assert.assertThat(fileEntity.getContentType(), Matchers.is("application/octet-stream"));
+        Assert.assertThat(fileEntity.getContentType(), Matchers.is("image/png"));
         Assert.assertThat(fileEntity.getFilename(), Matchers.is("file"));
         Assert.assertThat(fileEntity.getFilesize(), Matchers.is(206087L));
     }
@@ -91,7 +91,7 @@ public class FileUploadTest {
     public void PUTInputstream() {
         UploadApp app = jrest.create(UploadApp.class);
         FileEntity fileEntity = app.PUTInputStream(stream);
-        Assert.assertThat(fileEntity.getContentType(), Matchers.is("application/octet-stream"));
+        Assert.assertThat(fileEntity.getContentType(), Matchers.is("image/png"));
         Assert.assertThat(fileEntity.getFilename(), Matchers.is("file"));
         Assert.assertThat(fileEntity.getFilesize(), Matchers.is(206087L));
     }
@@ -100,7 +100,7 @@ public class FileUploadTest {
     public void PUTByteArray() throws IOException {
         UploadApp app = jrest.create(UploadApp.class);
         FileEntity fileEntity = app.PUTByteArray(array);
-        Assert.assertThat(fileEntity.getContentType(), Matchers.is("application/octet-stream"));
+        Assert.assertThat(fileEntity.getContentType(), Matchers.is("image/jpg"));
         Assert.assertThat(fileEntity.getFilename(), Matchers.is("file"));
         Assert.assertThat(fileEntity.getFilesize(), Matchers.is(206087L));
     }
@@ -109,22 +109,22 @@ public class FileUploadTest {
     interface UploadApp {
 
         @Post
-        FileEntity POSTfile(@Param(name = "file") File f);
+        FileEntity POSTfile(@Param(name = "file",contentType = "image/png") File f);
 
         @Post
-        FileEntity POSTInputStream(@Param(name = "file") InputStream stream);
+        FileEntity POSTInputStream(@Param(name = "file", contentType = "image/png") InputStream stream);
 
         @Post
-        FileEntity POSTByteArray(@Param(name = "file") byte[] array);
+        FileEntity POSTByteArray(@Param(name = "file", contentType = "image/png") byte[] array);
 
         @Put
-        FileEntity PUTfile(@Param(name = "file") File f);
+        FileEntity PUTfile(@Param(name = "file" , contentType = "image/png") File f);
 
         @Put
-        FileEntity PUTInputStream(@Param(name = "file") InputStream stream);
+        FileEntity PUTInputStream(@Param(name = "file", contentType = "image/png") InputStream stream);
 
         @Put
-        FileEntity PUTByteArray(@Param(name = "file") byte[] array);
+        FileEntity PUTByteArray(@Param(name = "file", contentType = "image/jpg") byte[] array);
 
     }
 }
