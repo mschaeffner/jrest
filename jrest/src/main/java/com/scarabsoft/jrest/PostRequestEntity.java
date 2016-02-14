@@ -54,9 +54,9 @@ class PostRequestEntity extends AbstractRequestEntity {
             if (requestParameter.getValue() instanceof File) {
                 builder.addBinaryBody(requestParameter.getName(), (File) requestParameter.getValue());
             } else if (requestParameter.getValue() instanceof InputStream) {
-                builder.addBinaryBody(requestParameter.getName(), (InputStream) requestParameter.getValue(), ContentType.APPLICATION_OCTET_STREAM, requestParameter.getFilename());
+                builder.addBinaryBody(requestParameter.getName(), (InputStream) requestParameter.getValue(),ContentType.create(requestParameter.getContentType()),requestParameter.getFilename());
             } else if (requestParameter.getValue() instanceof Byte[] || requestParameter.getValue() instanceof byte[]) {
-                builder.addBinaryBody(requestParameter.getName(), (byte[]) requestParameter.getValue(), ContentType.APPLICATION_OCTET_STREAM, requestParameter.getFilename());
+                builder.addBinaryBody(requestParameter.getName(), (byte[]) requestParameter.getValue(), ContentType.create(requestParameter.getContentType()), requestParameter.getFilename());
             } else {
                 builder.addTextBody(requestParameter.getName(), String.valueOf(requestParameter.getValue()));
             }

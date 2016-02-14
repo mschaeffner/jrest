@@ -13,4 +13,6 @@ public @interface Param {
 
     String filename() default "";
 
+    String contentType() default "application/octet-stream";
+
 }

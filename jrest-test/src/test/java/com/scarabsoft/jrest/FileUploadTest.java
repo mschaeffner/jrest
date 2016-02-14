@@ -55,54 +55,54 @@ public class FileUploadTest {
     public void POSTfile() {
         UploadApp app = jrest.create(UploadApp.class);
         FileEntity fileEntity = app.POSTfile(file);
-        Assert.assertThat("application/octet-stream", Matchers.is(fileEntity.getContentType()));
-        Assert.assertThat("file", Matchers.is(fileEntity.getFilename()));
-        Assert.assertThat(206087L, Matchers.is(fileEntity.getFilesize()));
+        Assert.assertThat(fileEntity.getContentType(), Matchers.is("application/octet-stream"));
+        Assert.assertThat(fileEntity.getFilename(), Matchers.is("file"));
+        Assert.assertThat(fileEntity.getFilesize(), Matchers.is(206087L));
     }
 
     @Test
     public void POSTInputstream() {
         UploadApp app = jrest.create(UploadApp.class);
         FileEntity fileEntity = app.POSTInputStream(stream);
-        Assert.assertThat("application/octet-stream", Matchers.is(fileEntity.getContentType()));
-        Assert.assertThat("file", Matchers.is(fileEntity.getFilename()));
-        Assert.assertThat(206087L, Matchers.is(fileEntity.getFilesize()));
+        Assert.assertThat(fileEntity.getContentType(), Matchers.is("application/octet-stream"));
+        Assert.assertThat(fileEntity.getFilename(), Matchers.is("file"));
+        Assert.assertThat(fileEntity.getFilesize(), Matchers.is(206087L));
     }
 
     @Test
     public void POSTByteArray() throws IOException {
         UploadApp app = jrest.create(UploadApp.class);
         FileEntity fileEntity = app.POSTByteArray(array);
-        Assert.assertThat("application/octet-stream", Matchers.is(fileEntity.getContentType()));
-        Assert.assertThat("file", Matchers.is(fileEntity.getFilename()));
-        Assert.assertThat(206087L, Matchers.is(fileEntity.getFilesize()));
+        Assert.assertThat(fileEntity.getContentType(), Matchers.is("application/octet-stream"));
+        Assert.assertThat(fileEntity.getFilename(), Matchers.is("file"));
+        Assert.assertThat(fileEntity.getFilesize(), Matchers.is(206087L));
     }
 
     @Test
     public void PUTfile() {
         UploadApp app = jrest.create(UploadApp.class);
         FileEntity fileEntity = app.PUTfile(file);
-        Assert.assertThat("application/octet-stream", Matchers.is(fileEntity.getContentType()));
-        Assert.assertThat("file", Matchers.is(fileEntity.getFilename()));
-        Assert.assertThat(206087L, Matchers.is(fileEntity.getFilesize()));
+        Assert.assertThat(fileEntity.getContentType(), Matchers.is("application/octet-stream"));
+        Assert.assertThat(fileEntity.getFilename(), Matchers.is("file"));
+        Assert.assertThat(fileEntity.getFilesize(), Matchers.is(206087L));
     }
 
     @Test
     public void PUTInputstream() {
         UploadApp app = jrest.create(UploadApp.class);
         FileEntity fileEntity = app.PUTInputStream(stream);
-        Assert.assertThat("application/octet-stream", Matchers.is(fileEntity.getContentType()));
-        Assert.assertThat("file", Matchers.is(fileEntity.getFilename()));
-        Assert.assertThat(206087L, Matchers.is(fileEntity.getFilesize()));
+        Assert.assertThat(fileEntity.getContentType(), Matchers.is("application/octet-stream"));
+        Assert.assertThat(fileEntity.getFilename(), Matchers.is("file"));
+        Assert.assertThat(fileEntity.getFilesize(), Matchers.is(206087L));
     }
 
     @Test
     public void PUTByteArray() throws IOException {
         UploadApp app = jrest.create(UploadApp.class);
         FileEntity fileEntity = app.PUTByteArray(array);
-        Assert.assertThat("application/octet-stream", Matchers.is(fileEntity.getContentType()));
-        Assert.assertThat("file", Matchers.is(fileEntity.getFilename()));
-        Assert.assertThat(206087L, Matchers.is(fileEntity.getFilesize()));
+        Assert.assertThat(fileEntity.getContentType(), Matchers.is("application/octet-stream"));
+        Assert.assertThat(fileEntity.getFilename(), Matchers.is("file"));
+        Assert.assertThat(fileEntity.getFilesize(), Matchers.is(206087L));
     }
 
 
