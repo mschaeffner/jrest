@@ -95,6 +95,7 @@ final class RequestBuilder {
                     converter,
                     exceptionConverter,
                     headers,
+                    ((PutMethodHandler)methodHandler).isMultipart(method),
                     requestParameterEntities,
                     body,
                     requestConfig,

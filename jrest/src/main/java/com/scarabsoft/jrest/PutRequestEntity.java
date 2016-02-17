@@ -17,13 +17,14 @@ class PutRequestEntity extends PostRequestEntity {
                      Converter<?> converter,
                      ExceptionConverter<?> exceptionConverter,
                      Collection<Header> headers,
+                     boolean isMultipart,
                      Collection<ParamEntity> requestParameterEntities,
                      BodyEntity bodyEntity,
                      RequestConfig requestConfig,
                      HttpClient httpClient,
                      Class<?> responseClazz,
                      Class<? extends Collection> collectionClazz) {
-        super(baseUrl, converter, exceptionConverter, headers,true, requestParameterEntities, bodyEntity,
+        super(baseUrl, converter, exceptionConverter, headers,isMultipart, requestParameterEntities, bodyEntity,
                 requestConfig, httpClient, responseClazz, collectionClazz);
     }
 

@@ -11,4 +11,6 @@ public @interface Put {
 
 	String url() default "";
 
+	boolean multipart() default true;
+
 }
