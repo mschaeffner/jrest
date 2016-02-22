@@ -66,9 +66,9 @@ class PostRequestEntity extends AbstractRequestEntity {
 
     protected  HttpEntity basicEntity() throws UnsupportedEncodingException {
         final List<NameValuePair> nameValuePairs = new LinkedList<>();
-        requestParameterEntities.forEach(r->{
-            nameValuePairs.add(new BasicNameValuePair(r.getName(), String.valueOf(r.getValue())));
-        });
+        for(ParamEntity requestParameter: requestParameterEntities) {
+            nameValuePairs.add(new BasicNameValuePair(requestParameter.getName(), String.valueOf(requestParameter.getValue())));
+        }
         return new UrlEncodedFormEntity(nameValuePairs);
     }
 

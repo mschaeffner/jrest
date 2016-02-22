@@ -27,7 +27,9 @@ public final class RequestInterceptorChain implements Iterable<RequestIntercepto
 
     public RequestInterceptorChain deepClone() {
         final RequestInterceptorChain result = new RequestInterceptorChain();
-        this.interceptors.forEach(result::addInterceptor);
+        for(RequestInterceptor interceptor: interceptors){
+            result.addInterceptor(interceptor);
+        }
         return result;
     }
 

@@ -52,8 +52,13 @@ public class ResponseEntityCollectionTest {
     @Test
     public void PUTConverterInApplicationTest() {
         List<IP> list = new ArrayList<>(app.PUT().getObject());
-        Collections.sort(list, (o1, o2) -> o1.getIp().compareTo(o2.getIp()));
-        test(list);
+        Collections.sort(list, new Comparator<IP>() {
+            @Override
+            public int compare(IP o1, IP o2) {
+                return o1.getIp().compareTo(o2.getIp());
+            }
+        });
+
     }
 
     @Mapping(url = "http://localhost:1337/v1/collection/ip", converterFactory = GsonConverterFactory.class)

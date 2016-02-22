@@ -13,7 +13,7 @@ public class GsonConverter<T> implements Converter<T> {
 
     private final TypeAdapter<T> typeAdapter;
 
-    Type type;
+    private final Type type;
 
     public GsonConverter(TypeAdapter<T> typeAdapter, Type type) {
         this.typeAdapter = typeAdapter;
@@ -38,7 +38,7 @@ public class GsonConverter<T> implements Converter<T> {
             JsonArray rootArray = parse.getAsJsonArray();
             for (JsonElement json : rootArray) {
                 try {
-                    data.add(new Gson().fromJson(json, type));
+                    data.add((T)new Gson().fromJson(json, type));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

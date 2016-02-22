@@ -146,24 +146,31 @@ public class SimpleHeaderTest {
     @Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
     interface HeaderApp {
 
-        @Header(key = "userId", value = "2")
-        @Header(key = "groupId", value = "4")
+
+        @Headers(value = {
+                @Header(key = "userId", value = "2"),
+                @Header(key = "groupId", value = "4")
+        })
         @Get
         UserGroup GET();
 
         @Get
         UserGroup GET2(@Header(key = "userId") String userId, @Header(key = "groupId") int groupId);
 
-        @Header(key = "userId", value = "2")
-        @Header(key = "groupId", value = "4")
+        @Headers({
+                @Header(key = "userId", value = "2"),
+                @Header(key = "groupId", value = "4")
+        })
         @Post
         UserGroup POST();
 
         @Put
         UserGroup POST2(@Header(key = "userId") String userId, @Header(key = "groupId") int groupId);
 
-        @Header(key = "userId", value = "2")
-        @Header(key = "groupId", value = "4")
+        @Headers({
+                @Header(key = "userId", value = "2"),
+                @Header(key = "groupId", value = "4")
+        })
         @Put
         UserGroup PUT();
 
@@ -175,8 +182,10 @@ public class SimpleHeaderTest {
     @Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
     interface InvalidHeaderApp {
 
-        @Header(key = "userId", value = "2")
-        @Header(key = "groupId")
+        @Headers({
+                @Header(key = "userId", value = "2"),
+                @Header(key = "groupId")
+        })
         @Get
         UserGroup GET();
 
@@ -184,8 +193,10 @@ public class SimpleHeaderTest {
         @Get
         UserGroup GET2(@Header(key = "groupId") String groupId);
 
-        @Header(key = "userId", value = "2")
-        @Header(key = "groupId")
+        @Headers({
+                @Header(key = "userId", value = "2"),
+                @Header(key = "groupId")
+        })
         @Post
         UserGroup POST();
 
@@ -193,8 +204,10 @@ public class SimpleHeaderTest {
         @Post
         UserGroup POST2(@Header(key = "groupId") String groupId);
 
-        @Header(key = "userId", value = "2")
-        @Header(key = "groupId")
+        @Headers({
+                @Header(key = "userId", value = "2"),
+                @Header(key = "groupId")
+        })
         @Put
         UserGroup PUT();
 
@@ -204,8 +217,10 @@ public class SimpleHeaderTest {
 
     }
 
-    @Header(key = "userId", value = "2")
-    @Header(key = "groupId", value = "4")
+    @Headers({
+            @Header(key = "userId", value = "2"),
+            @Header(key = "groupId", value = "4")
+    })
     @Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
     interface AnnotatedInterfaceApp {
 
@@ -220,8 +235,10 @@ public class SimpleHeaderTest {
 
     }
 
-    @Header(key = "userId", value = "2")
-    @Header(key = "groupId")
+    @Headers({
+            @Header(key = "userId", value = "2"),
+            @Header(key = "groupId")
+    })
     @Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
     interface InvalidAnnotatedInterfaceApp {
 

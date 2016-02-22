@@ -8,8 +8,6 @@ public interface Converter<T> {
 
     T convert(InputStream stream) throws IOException;
 
-    default Collection<T> convertCollection(InputStream inputStream, Class<? extends Collection> collectionClazz) throws IOException {
-        throw new RuntimeException("not implemented yet");
-    }
+     Collection<T> convertCollection(InputStream inputStream, Class<? extends Collection> collectionClazz) throws IOException;
 
 }

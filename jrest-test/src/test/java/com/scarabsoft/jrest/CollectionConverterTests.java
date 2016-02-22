@@ -49,7 +49,12 @@ public class CollectionConverterTests {
     @Test
     public void PUTConverterInApplicationTest() {
         List<IP> list = new ArrayList<>(app.PUT());
-        Collections.sort(list, (o1, o2) -> o1.getIp().compareTo(o2.getIp()));
+        Collections.sort(list, new Comparator<IP>() {
+            @Override
+            public int compare(IP o1, IP o2) {
+                return o1.getIp().compareTo(o2.getIp());
+            }
+        });
         test(list);
     }
 
