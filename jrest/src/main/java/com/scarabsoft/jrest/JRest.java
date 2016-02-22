@@ -1,6 +1,8 @@
 package com.scarabsoft.jrest;
 
+import com.scarabsoft.jrest.annotation.Headers;
 import com.scarabsoft.jrest.annotation.Interceptor;
+import com.scarabsoft.jrest.annotation.Interceptors;
 import com.scarabsoft.jrest.annotation.Mapping;
 import com.scarabsoft.jrest.converter.ConverterFactory;
 import com.scarabsoft.jrest.converter.LazyConverterFactory;
@@ -13,6 +15,8 @@ import org.apache.http.client.config.RequestConfig;
 
 import java.lang.reflect.Proxy;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 public final class JRest {
 
@@ -66,10 +70,22 @@ public final class JRest {
                 httpClientFactory = new DefaultHttpClientFactory();
             }
 
-            final Collection<Header> headers = AnnotationUtil.getHeaderEntities(clazz.getAnnotationsByType(com.scarabsoft.jrest.annotation.Header.class));
+            final Collection<Header> headers = AnnotationUtil.getHeaderEntities(clazz.getAnnotation(Headers.class));
 
-            final RequestInterceptorChain chain = RequestInterceptorChainBuilder.create(requestInterceptorChain,
-                    clazz.getAnnotationsByType(Interceptor.class));
+            List<Interceptor> interceptorList = new LinkedList<>();
+            Interceptors interceptorsAnotation = clazz.getAnnotation(Interceptors.class);
+            if (interceptorsAnotation != null) {
+                for (Interceptor in : interceptorsAnotation.value()) {
+                    interceptorList.add(in);
+                }
+            }
+
+            Interceptor interceptor = clazz.getAnnotation(Interceptor.class);
+            if (interceptor != null) {
+                interceptorList.add(interceptor);
+            }
+
+            final RequestInterceptorChain chain = RequestInterceptorChainBuilder.create(requestInterceptorChain, interceptorList);
 
             return (T) Proxy.newProxyInstance(clazz.getClassLoader(),
                     new Class<?>[]{clazz},

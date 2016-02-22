@@ -1,6 +1,7 @@
 package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.annotation.Header;
+import com.scarabsoft.jrest.annotation.Headers;
 import org.apache.http.message.BasicHeader;
 
 import java.util.Collection;
@@ -24,5 +25,13 @@ final class AnnotationUtil {
         }
         return result;
     }
+
+    static Collection<org.apache.http.Header> getHeaderEntities(Headers headers) {
+        if(headers == null){
+            return new LinkedList<>();
+        }
+        return getHeaderEntities(headers.value());
+    }
+
 
 }
