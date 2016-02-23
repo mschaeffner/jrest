@@ -12,7 +12,9 @@ import com.scarabsoft.jrest.interceptor.RequestInterceptor;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
 import org.apache.http.Header;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.message.BasicHeader;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Proxy;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -70,7 +72,26 @@ public final class JRest {
                 httpClientFactory = new DefaultHttpClientFactory();
             }
 
-            final Collection<Header> headers = AnnotationUtil.getHeaderEntities(clazz.getAnnotation(Headers.class));
+            final Collection<Header> headers = new LinkedList<>(); //AnnotationUtil.getHeaderEntities(clazz.getAnnotation(Headers.class));
+
+            for (Annotation annotation : clazz.getAnnotations()) {
+                if (annotation instanceof Headers == false) {
+                    continue;
+                }
+
+                Headers headersAnnotation = (Headers) annotation;
+
+                for (com.scarabsoft.jrest.annotation.Header header : headersAnnotation.value()) {
+
+                    if (header.value().equals("")) {
+                        throw new RuntimeException("header " + header.key() + " needs a value");
+                    }
+                    headers.add(new BasicHeader(header.key(), header.value()));
+
+                }
+
+            }
+
 
             List<Interceptor> interceptorList = new LinkedList<>();
             Interceptors interceptorsAnotation = clazz.getAnnotation(Interceptors.class);
