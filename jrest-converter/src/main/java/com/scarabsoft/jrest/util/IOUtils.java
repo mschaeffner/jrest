@@ -1,7 +1,6 @@
 package com.scarabsoft.jrest.util;
 
 import java.io.*;
-import java.util.stream.Collectors;
 
 public class IOUtils {
 
@@ -10,9 +9,17 @@ public class IOUtils {
     }
 
     public static String streamToString(InputStream in) {
-        return new BufferedReader(new InputStreamReader(in))
-                .lines()
-                .collect(Collectors.joining());
+        final StringBuilder builder = new StringBuilder();
+        String line;
+        BufferedReader reader =  new BufferedReader(new InputStreamReader(in));
+        try {
+            while ((line = reader.readLine()) != null){
+                builder.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return builder.toString();
     }
 
     public static byte[] convert(InputStream is) throws IOException {

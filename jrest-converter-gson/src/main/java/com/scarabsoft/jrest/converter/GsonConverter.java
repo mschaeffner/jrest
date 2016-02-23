@@ -20,6 +20,7 @@ public class GsonConverter<T> implements Converter<T> {
         this.type = type;
     }
 
+
     @Override
     public T convert(InputStream inputStream) throws IOException {
         if (typeAdapter == null) {
