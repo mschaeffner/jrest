@@ -26,10 +26,10 @@ abstract class AbstractMethodHandler {
                 continue;
             }
             final Path pathVariable = (Path) annotation;
-            if (pathVariable.name().equals("")) {
-                throw new RuntimeException("name of Pathvariable is missing");
+            if (pathVariable.value().equals("")) {
+                throw new RuntimeException("value of Pathvariable is missing");
             } else {
-                resultUrl = replaceUrl(resultUrl, pathVariable.name(), String.valueOf(parameters[counter++]));
+                resultUrl = replaceUrl(resultUrl, pathVariable.value(), String.valueOf(parameters[counter++]));
             }
         }
         return resultUrl;
@@ -52,7 +52,7 @@ abstract class AbstractMethodHandler {
 
             final Param requestParam = (Param) annotation;
             if (requestParam.value().equals("")) {
-                throw new RuntimeException("name of RequestParam is missing");
+                throw new RuntimeException("value of RequestParam is missing");
             } else {
                 result.add(new ParamEntity(requestParam.value(), parameters[counter++], requestParam.filename(), requestParam.contentType()));
             }

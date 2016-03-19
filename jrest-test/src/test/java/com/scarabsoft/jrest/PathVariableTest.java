@@ -59,25 +59,25 @@ public class PathVariableTest {
     interface Application {
 
         @Get("/path/{userId}/{groupId}")
-        UserGroup GET(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
+        UserGroup GET(@Path(value = "userId") int userId, @Path(value = "groupId") int groupId);
 
         @Get("/path/4/5")
         UserGroup GETWithout();
 
         @Post("/path/{userId}/{groupId}")
-        UserGroup POST(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
+        UserGroup POST(@Path(value = "userId") int userId, @Path(value = "groupId") int groupId);
 
         @Post("/path/4/5")
         UserGroup POSTWithout();
 
         @Put("/path/{userId}/{groupId}")
-        UserGroup PUT(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
+        UserGroup PUT(@Path(value = "userId") int userId, @Path(value = "groupId") int groupId);
 
         @Put("/path/4/5")
         UserGroup PUTWithout();
 
         @Delete("/path/{userId}/{groupId}")
-        UserGroup DELETE(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
+        UserGroup DELETE(@Path(value = "userId") int userId, @Path(value = "groupId") int groupId);
 
         @Delete("/path/4/5")
         UserGroup DELETEWithout();
