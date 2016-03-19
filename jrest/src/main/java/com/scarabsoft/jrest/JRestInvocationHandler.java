@@ -39,53 +39,16 @@ final class JRestInvocationHandler implements java.lang.reflect.InvocationHandle
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-
-        final Class<?> returnClazz;
-
-        Class<? extends Collection> collectionClazz = null;
-
-        if (method.getReturnType().equals(ResponseEntity.class)) {
-            ParameterizedType genericType = (ParameterizedType) method.getGenericReturnType();
-            if (genericType.getActualTypeArguments()[0] instanceof ParameterizedType) {
-                ParameterizedType collectionType = (ParameterizedType) genericType.getActualTypeArguments()[0];
-                if (collectionType.getRawType().equals(Collection.class)) {
-                    returnClazz = (Class<?>) collectionType.getActualTypeArguments()[0];
-                    collectionClazz = LinkedList.class;
-                } else if (collectionType.getRawType().equals(List.class)) {
-                    returnClazz = (Class<?>) collectionType.getActualTypeArguments()[0];
-                    collectionClazz = LinkedList.class;
-                } else if (collectionType.getRawType().equals(Set.class)) {
-                    returnClazz = (Class<?>) collectionType.getActualTypeArguments()[0];
-                    collectionClazz = HashSet.class;
-                } else {
-                    returnClazz = (Class<?>) genericType.getActualTypeArguments()[0];
-                }
-            } else {
-                returnClazz = (Class<?>) genericType.getActualTypeArguments()[0];
-            }
-        } else if (method.getReturnType().isAssignableFrom(Collection.class)) {
-            final ParameterizedType genericType = (ParameterizedType) method.getGenericReturnType();
-            returnClazz = (Class<?>) genericType.getActualTypeArguments()[0];
-            collectionClazz = LinkedList.class;
-        } else if (method.getReturnType().isAssignableFrom(List.class)) {
-            final ParameterizedType genericType = (ParameterizedType) method.getGenericReturnType();
-            returnClazz = (Class<?>) genericType.getActualTypeArguments()[0];
-            collectionClazz = LinkedList.class;
-        } else if (method.getReturnType().isAssignableFrom(Set.class)) {
-            final ParameterizedType genericType = (ParameterizedType) method.getGenericReturnType();
-            returnClazz = (Class<?>) genericType.getActualTypeArguments()[0];
-            collectionClazz = HashSet.class;
-        } else {
-            returnClazz = method.getReturnType();
-        }
-
+        final Class<? extends Collection> collectionClazz = resolveCollectionClazz(method);
+        final Class<?> returnClazz = resolveReturnClazz(method, collectionClazz);
 
         final RequestBuilder builder = new RequestBuilder(baseUrl,
                 resolveConverter(returnClazz),
                 converterFactory.getBodyConverter(),
                 exceptionConverterFactory.get(),
                 requestConfig,
-                headers, collectionClazz);
+                headers,
+                collectionClazz);
 
 
         final AbstractRequestEntity request = builder
@@ -118,4 +81,61 @@ final class JRestInvocationHandler implements java.lang.reflect.InvocationHandle
 
         return converterFactory.getConverter(returnClazz);
     }
+
+    private Class<? extends Collection> resolveCollectionClazz(Method method) {
+        if (method.getReturnType().equals(ResponseEntity.class)) {
+            final ParameterizedType genericType = (ParameterizedType) method.getGenericReturnType();
+            if (genericType.getActualTypeArguments()[0] instanceof ParameterizedType) {
+                final ParameterizedType collectionType = (ParameterizedType) genericType.getActualTypeArguments()[0];
+
+                if (collectionType.getRawType().equals(Collection.class)) {
+                    return LinkedList.class;
+                }
+
+                if (collectionType.getRawType().equals(List.class)) {
+                    return LinkedList.class;
+                }
+
+                if (collectionType.getRawType().equals(Set.class)) {
+                    return HashSet.class;
+                }
+            }
+        }
+
+        if (method.getReturnType().isAssignableFrom(Collection.class)) {
+            return LinkedList.class;
+        }
+
+        if (method.getReturnType().isAssignableFrom(List.class)) {
+            return LinkedList.class;
+        }
+
+        if (method.getReturnType().isAssignableFrom(Set.class)) {
+            return HashSet.class;
+        }
+        return null;
+    }
+
+    private Class<?> resolveReturnClazz(Method method, Class<?> collectionClazz) {
+        if (method.getReturnType().equals(ResponseEntity.class)) {
+            final ParameterizedType genericType = (ParameterizedType) method.getGenericReturnType();
+            if (genericType.getActualTypeArguments()[0] instanceof ParameterizedType) {
+                final ParameterizedType collectionType = (ParameterizedType) genericType.getActualTypeArguments()[0];
+
+                if (collectionClazz == null) {
+                    return (Class<?>) genericType.getActualTypeArguments()[0];
+                }
+
+                return (Class<?>) collectionType.getActualTypeArguments()[0];
+            }
+            return (Class<?>) genericType.getActualTypeArguments()[0];
+        }
+
+        if (collectionClazz == null) {
+            return method.getReturnType();
+        }
+        final ParameterizedType genericType = (ParameterizedType) method.getGenericReturnType();
+        return (Class<?>) genericType.getActualTypeArguments()[0];
+    }
 }
+
