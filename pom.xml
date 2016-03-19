@@ -48,6 +48,7 @@
                 <module>jrest-interceptor-oauth2</module>
                 <module>jrest-interceptor-httpbasic</module>
                 <module>jrest</module>
+                <module>jrest-android</module>
             </modules>
 
             <build>
@@ -162,6 +163,7 @@
                 <module>jrest-interceptor-oauth2</module>
                 <module>jrest-interceptor-httpbasic</module>
                 <module>jrest</module>
+                <module>jrest-android</module>
             </modules>
 
             <build>
@@ -170,8 +172,8 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>3.0</version>
                         <configuration>
-                            <source>1.8</source>
-                            <target>1.8</target>
+                            <source>1.7</source>
+                            <target>1.7</target>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -200,4 +202,3 @@
     </scm>
 
 </project>
-
