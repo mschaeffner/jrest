@@ -54,7 +54,7 @@ public class ByteArrayConverterTests {
         }
     }
 
-    @Mapping(url = "http://localhost:1337/v1/download", converterFactory = GsonConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/download", converterFactory = GsonConverterFactory.class)
     interface App {
         @Get
         byte[] GET();

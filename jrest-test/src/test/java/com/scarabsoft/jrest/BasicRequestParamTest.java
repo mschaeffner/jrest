@@ -37,11 +37,11 @@ public class BasicRequestParamTest {
         assertion(app.POST(1, 2));
     }
 
-    @Mapping(url = "http://localhost:1337/v1", converterFactory = GsonConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1", converterFactory = GsonConverterFactory.class)
     interface Application {
 
-        @Post(url = "/param", multipart = false)
-        UserGroup POST(@Param(name = "userId") int userId,
-                       @Param(name = "groupId") int groupId);
+        @Post(value = "/param", multipart = false)
+        UserGroup POST(@Param("userId") int userId,
+                       @Param("groupId") int groupId);
     }
 }

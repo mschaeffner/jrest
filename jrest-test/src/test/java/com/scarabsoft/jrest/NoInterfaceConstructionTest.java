@@ -30,7 +30,7 @@ public class NoInterfaceConstructionTest {
         app.GET();
     }
 
-    @Mapping(url = "http://localhost:1337/v1/simple/ip")
+    @Mapping("http://localhost:1337/v1/simple/ip")
     class SimpleApplication {
         @Get
         IP GET() {
@@ -38,7 +38,7 @@ public class NoInterfaceConstructionTest {
         }
     }
 
-    @Mapping(url = "http://localhost:1337/v1/simple/ip")
+    @Mapping("http://localhost:1337/v1/simple/ip")
     abstract class AbstractSimpleApplication {
         @Get
         abstract IP GET();

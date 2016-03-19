@@ -61,20 +61,20 @@ public class HttpClientFactoryTest {
         Assert.assertThat(responseEntity.getHeader("user-agent").get(), Matchers.is("Hallo1234"));
     }
 
-    @Mapping(url = "http://localhost:1337/v1/useragent", converterFactory = GsonConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/useragent", converterFactory = GsonConverterFactory.class)
     interface App {
         @Get
         ResponseEntity<Void> GET();
 
     }
 
-    @Mapping(url = "http://localhost:1337/v1/useragent", converterFactory = GsonConverterFactory.class, httpClientFactory = Factory.class)
+    @Mapping(value = "http://localhost:1337/v1/useragent", converterFactory = GsonConverterFactory.class, httpClientFactory = Factory.class)
     interface AnnotatedApp {
         @Get
         ResponseEntity<Void> GET();
     }
 
-    @Mapping(url = "http://localhost:1337/v1/useragent", converterFactory = GsonConverterFactory.class, httpClientFactory = CurrentFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/useragent", converterFactory = GsonConverterFactory.class, httpClientFactory = CurrentFactory.class)
     interface NestedApp {
         @Get
         ResponseEntity<Void> GET();

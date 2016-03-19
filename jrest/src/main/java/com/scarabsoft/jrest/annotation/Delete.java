@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Delete {
 
-    String url() default "";
+    String value() default "";
 
 }

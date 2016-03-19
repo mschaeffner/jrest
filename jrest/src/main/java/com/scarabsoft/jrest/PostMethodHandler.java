@@ -8,7 +8,7 @@ final class PostMethodHandler extends AbstractMethodHandler {
 
     @Override
     protected String getUrl(Method method) {
-        return method.getAnnotation(Post.class).url();
+        return method.getAnnotation(Post.class).value();
     }
 
     public boolean isMultipart(Method method) {

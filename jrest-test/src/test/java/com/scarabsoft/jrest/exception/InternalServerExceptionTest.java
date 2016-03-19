@@ -117,7 +117,7 @@ public class InternalServerExceptionTest {
     }
 
 
-    @Mapping(url = "http://localhost:1337/v1/error/500", converterFactory = StringConverterFactory.class, exceptionFactory = SpringDefaultExceptionConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/error/500", converterFactory = StringConverterFactory.class, exceptionFactory = SpringDefaultExceptionConverterFactory.class)
     interface ExceptionAppViaInterface {
         @Get
         void GET();
@@ -133,7 +133,7 @@ public class InternalServerExceptionTest {
 
     }
 
-    @Mapping(url = "http://localhost:1337/v1/error/500", converterFactory = StringConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/error/500", converterFactory = StringConverterFactory.class)
     interface ExceptionAppViaNested {
         @Get
         void GET();

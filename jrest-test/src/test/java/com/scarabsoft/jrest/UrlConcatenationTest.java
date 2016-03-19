@@ -97,19 +97,19 @@ public class UrlConcatenationTest {
         assertion(app.PUT());
     }
 
-    @Mapping(url = "/v1")
+    @Mapping("/v1")
     public interface AppWithFullUrl {
-        @Get(url = "/url")
+        @Get("/url")
         String GET();
 
-        @Post(url = "/url")
+        @Post("/url")
         String POST();
 
-        @Put(url = "/url")
+        @Put("/url")
         String PUT();
     }
 
-    @Mapping(url = "/v1/url")
+    @Mapping("/v1/url")
     public interface AppWithInterfaceUrlApp {
         @Get
         String GET();

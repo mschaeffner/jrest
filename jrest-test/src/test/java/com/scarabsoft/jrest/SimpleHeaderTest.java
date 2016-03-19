@@ -143,7 +143,7 @@ public class SimpleHeaderTest {
         app.PUT();
     }
 
-    @Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
     interface HeaderApp {
 
 
@@ -179,7 +179,7 @@ public class SimpleHeaderTest {
 
     }
 
-    @Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
     interface InvalidHeaderApp {
 
         @Headers({
@@ -221,7 +221,7 @@ public class SimpleHeaderTest {
             @Header(key = "userId", value = "2"),
             @Header(key = "groupId", value = "4")
     })
-    @Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
     interface AnnotatedInterfaceApp {
 
         @Get
@@ -239,7 +239,7 @@ public class SimpleHeaderTest {
             @Header(key = "userId", value = "2"),
             @Header(key = "groupId")
     })
-    @Mapping(url = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/header/simple", converterFactory = GsonConverterFactory.class)
     interface InvalidAnnotatedInterfaceApp {
 
         @Get

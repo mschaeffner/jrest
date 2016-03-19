@@ -53,22 +53,22 @@ public class MultiPartRequestParamTest {
         app.DELETE(1, 2);
     }
 
-    @Mapping(url = "http://localhost:1337/v1", converterFactory = GsonConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1", converterFactory = GsonConverterFactory.class)
     interface Application {
-        @Get(url = "/param")
-        UserGroup GET(@Param(name = "userId") int userId,
-                      @Param(name = "groupId") int groupId);
+        @Get("/param")
+        UserGroup GET(@Param("userId") int userId,
+                      @Param("groupId") int groupId);
 
-        @Post(url = "/param")
-        UserGroup POST(@Param(name = "userId") int userId,
-                       @Param(name = "groupId") int groupId);
+        @Post("/param")
+        UserGroup POST(@Param("userId") int userId,
+                       @Param("groupId") int groupId);
 
-        @Put(url = "/param")
-        UserGroup PUT(@Param(name = "userId") int userId,
-                      @Param(name = "groupId") int groupId);
+        @Put("/param")
+        UserGroup PUT(@Param("userId") int userId,
+                      @Param("groupId") int groupId);
 
-        @Delete(url = "/param")
-        UserGroup DELETE(@Param(name = "userId") int userId,
-                         @Param(name = "groupId") int groupId);
+        @Delete("/param")
+        UserGroup DELETE(@Param("userId") int userId,
+                         @Param("groupId") int groupId);
     }
 }

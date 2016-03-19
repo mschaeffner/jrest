@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Mapping {
 
-    String url() default "";
+    String value() default "";
 
     Class<? extends ConverterFactory> converterFactory() default LazyConverterFactory.class;
 

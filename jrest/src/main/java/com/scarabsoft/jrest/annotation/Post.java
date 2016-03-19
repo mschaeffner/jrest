@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Post {
 
-	String url() default "";
+	String value() default "";
 
 	boolean multipart() default true;
 

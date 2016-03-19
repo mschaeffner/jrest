@@ -63,13 +63,13 @@ public class ResponseEntityTest {
     interface Application {
 
         @Get
-        ResponseEntity<UserGroup> GET(@Param(name = "userId") int userId, @Param(name = "groupId") int groupId);
+        ResponseEntity<UserGroup> GET(@Param("userId") int userId, @Param("groupId") int groupId);
 
         @Post
-        ResponseEntity<UserGroup> POST(@Param(name = "userId") int userId, @Param(name = "groupId") int groupId);
+        ResponseEntity<UserGroup> POST(@Param("userId") int userId, @Param("groupId") int groupId);
 
         @Put
-        ResponseEntity<UserGroup> PUT(@Param(name = "userId") int userId, @Param(name = "groupId") int groupId);
+        ResponseEntity<UserGroup> PUT(@Param("userId") int userId, @Param("groupId") int groupId);
 
         @Delete
         ResponseEntity<UserGroup> DELETE();

@@ -87,7 +87,7 @@ public class InterceptorTest {
         UserGroup PUT();
     }
 
-    @Interceptor(factory = UserInterceptorFactory.class)
+    @Interceptor(value = UserInterceptorFactory.class)
     interface AppWithInterfaceInterceptors {
         @Get
         UserGroup GET();
@@ -99,7 +99,7 @@ public class InterceptorTest {
         UserGroup PUT();
     }
 
-    @Interceptor(factory = UserInterceptorFactory.class)
+    @Interceptor(value = UserInterceptorFactory.class)
     interface AppWithAnotherInterfaceInterceptor {
         @Get
         UserGroup GET();
@@ -112,8 +112,8 @@ public class InterceptorTest {
     }
 
     @Interceptors({
-            @Interceptor(factory = UserInterceptorFactory.class),
-            @Interceptor(factory = GroupInterceptorFactory.class)
+            @Interceptor(value = UserInterceptorFactory.class),
+            @Interceptor(value = GroupInterceptorFactory.class)
     })
     interface AppWithFullInterfaceInterceptor {
         @Get
@@ -129,22 +129,22 @@ public class InterceptorTest {
     interface AppMethodInterfaceInterceptor {
 
         @Interceptors({
-                @Interceptor(factory = UserInterceptorFactory.class),
-                @Interceptor(factory = GroupInterceptorFactory.class)
+                @Interceptor(UserInterceptorFactory.class),
+                @Interceptor(GroupInterceptorFactory.class)
         })
         @Get
         UserGroup GET();
 
         @Interceptors({
-                @Interceptor(factory = UserInterceptorFactory.class),
-                @Interceptor(factory = GroupInterceptorFactory.class)
+                @Interceptor(UserInterceptorFactory.class),
+                @Interceptor(GroupInterceptorFactory.class)
         })
         @Post
         UserGroup POST();
 
         @Interceptors({
-                @Interceptor(factory = GroupInterceptorFactory.class),
-                @Interceptor(factory = UserInterceptorFactory.class)
+                @Interceptor(GroupInterceptorFactory.class),
+                @Interceptor(UserInterceptorFactory.class)
         })
         @Put
         UserGroup PUT();

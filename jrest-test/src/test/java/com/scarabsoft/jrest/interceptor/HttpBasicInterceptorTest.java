@@ -48,7 +48,7 @@ public class HttpBasicInterceptorTest {
         Assert.assertThat(cred.getConsumerSecret(), Matchers.is("acmesecret"));
     }
 
-    @Mapping(url = "http://localhost:1337/v1/auth/basic", converterFactory = GsonConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/auth/basic", converterFactory = GsonConverterFactory.class)
     interface Application {
         @Get
         HttpApplicationCredentials GET();
@@ -63,8 +63,8 @@ public class HttpBasicInterceptorTest {
         HttpApplicationCredentials DELETE();
     }
 
-    @Mapping(url = "http://localhost:1337/v1/auth/basic", converterFactory = GsonConverterFactory.class)
-    @Interceptor(factory = MyFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/auth/basic", converterFactory = GsonConverterFactory.class)
+    @Interceptor(value = MyFactory.class)
     interface AnotherApplication {
         @Get
         HttpApplicationCredentials GET();

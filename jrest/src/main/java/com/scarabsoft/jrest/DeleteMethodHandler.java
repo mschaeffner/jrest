@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 final class DeleteMethodHandler extends AbstractMethodHandler {
     @Override
     protected String getUrl(Method method) {
-        return method.getAnnotation(Delete.class).url();
+        return method.getAnnotation(Delete.class).value();
     }
 
     @Override

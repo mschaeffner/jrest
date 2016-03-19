@@ -51,10 +51,10 @@ abstract class AbstractMethodHandler {
             }
 
             final Param requestParam = (Param) annotation;
-            if (requestParam.name().equals("")) {
+            if (requestParam.value().equals("")) {
                 throw new RuntimeException("name of RequestParam is missing");
             } else {
-                result.add(new ParamEntity(requestParam.name(), parameters[counter++], requestParam.filename(), requestParam.contentType()));
+                result.add(new ParamEntity(requestParam.value(), parameters[counter++], requestParam.filename(), requestParam.contentType()));
             }
         }
 

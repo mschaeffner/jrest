@@ -15,7 +15,7 @@ final class RequestInterceptorChainBuilder {
         final RequestInterceptorChain result = exisitingChain.deepClone();
         if (interceptors != null) {
             for (final Interceptor interceptor : interceptors) {
-                result.addInterceptor(interceptor.factory().newInstance().get());
+                result.addInterceptor(interceptor.value().newInstance().get());
             }
         }
         return result;

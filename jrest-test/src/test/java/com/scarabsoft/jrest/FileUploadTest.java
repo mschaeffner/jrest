@@ -109,22 +109,22 @@ public class FileUploadTest {
     interface UploadApp {
 
         @Post
-        FileEntity POSTfile(@Param(name = "file",contentType = "image/png") File f);
+        FileEntity POSTfile(@Param(value = "file",contentType = "image/png") File f);
 
         @Post
-        FileEntity POSTInputStream(@Param(name = "file", contentType = "image/png") InputStream stream);
+        FileEntity POSTInputStream(@Param(value = "file", contentType = "image/png") InputStream stream);
 
         @Post
-        FileEntity POSTByteArray(@Param(name = "file", contentType = "image/png") byte[] array);
+        FileEntity POSTByteArray(@Param(value = "file", contentType = "image/png") byte[] array);
 
         @Put
-        FileEntity PUTfile(@Param(name = "file" , contentType = "image/png") File f);
+        FileEntity PUTfile(@Param(value = "file" , contentType = "image/png") File f);
 
         @Put
-        FileEntity PUTInputStream(@Param(name = "file", contentType = "image/png") InputStream stream);
+        FileEntity PUTInputStream(@Param(value = "file", contentType = "image/png") InputStream stream);
 
         @Put
-        FileEntity PUTByteArray(@Param(name = "file", contentType = "image/jpg") byte[] array);
+        FileEntity PUTByteArray(@Param(value = "file", contentType = "image/jpg") byte[] array);
 
     }
 }

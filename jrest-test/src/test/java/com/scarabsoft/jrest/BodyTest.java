@@ -57,7 +57,7 @@ public class BodyTest {
         app.PUT(ip);
     }
 
-    @Mapping(url = "http://localhost:1337/v1/body", converterFactory = GsonConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/body", converterFactory = GsonConverterFactory.class)
     interface App {
         @Get
         IP GET(@Body IP ip);

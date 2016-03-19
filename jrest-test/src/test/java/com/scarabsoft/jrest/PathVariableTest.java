@@ -55,31 +55,31 @@ public class PathVariableTest {
         Assert.assertThat(ug2.getGroupId(), Matchers.is(5));
     }
 
-    @Mapping(url = "http://localhost:1337/v1", converterFactory = GsonConverterFactory.class)
-    static interface Application {
+    @Mapping(value = "http://localhost:1337/v1", converterFactory = GsonConverterFactory.class)
+    interface Application {
 
-        @Get(url = "/path/{userId}/{groupId}")
+        @Get("/path/{userId}/{groupId}")
         UserGroup GET(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
 
-        @Get(url = "/path/4/5")
+        @Get("/path/4/5")
         UserGroup GETWithout();
 
-        @Post(url = "/path/{userId}/{groupId}")
+        @Post("/path/{userId}/{groupId}")
         UserGroup POST(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
 
-        @Post(url = "/path/4/5")
+        @Post("/path/4/5")
         UserGroup POSTWithout();
 
-        @Put(url = "/path/{userId}/{groupId}")
+        @Put("/path/{userId}/{groupId}")
         UserGroup PUT(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
 
-        @Put(url = "/path/4/5")
+        @Put("/path/4/5")
         UserGroup PUTWithout();
 
-        @Delete(url = "/path/{userId}/{groupId}")
+        @Delete("/path/{userId}/{groupId}")
         UserGroup DELETE(@Path(name = "userId") int userId, @Path(name = "groupId") int groupId);
 
-        @Delete(url = "/path/4/5")
+        @Delete("/path/4/5")
         UserGroup DELETEWithout();
 
     }

@@ -107,7 +107,7 @@ public class ConverterTests {
         Assert.assertThat(ip.getIp(), Matchers.is("127.0.0.1"));
     }
 
-    @Mapping(url = "http://localhost:1337/v1/simple/ip")
+    @Mapping("http://localhost:1337/v1/simple/ip")
     interface SimpleApplication {
         @Get
         IP GET();
@@ -122,7 +122,7 @@ public class ConverterTests {
         IP DELETE();
     }
 
-    @Mapping(url = "http://localhost:1337/v1/simple/ip", converterFactory = GsonConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/simple/ip", converterFactory = GsonConverterFactory.class)
     interface ApplicationWithConverterFactory {
         @Get
         IP GET();

@@ -47,7 +47,7 @@ public final class JRest {
             ConverterFactory factory = this.converterFactory;
             final Mapping requestMapping = clazz.getAnnotation(Mapping.class);
             if (requestMapping != null) {
-                baseUrl += requestMapping.url();
+                baseUrl += requestMapping.value();
                 if (!requestMapping.converterFactory().equals(LazyConverterFactory.class)) {
                     factory = requestMapping.converterFactory().newInstance();
                 }

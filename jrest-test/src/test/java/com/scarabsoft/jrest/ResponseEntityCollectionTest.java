@@ -61,7 +61,7 @@ public class ResponseEntityCollectionTest {
 
     }
 
-    @Mapping(url = "http://localhost:1337/v1/collection/ip", converterFactory = GsonConverterFactory.class)
+    @Mapping(value = "http://localhost:1337/v1/collection/ip", converterFactory = GsonConverterFactory.class)
     interface ApplicationWithConverterFactory {
 
         @Get

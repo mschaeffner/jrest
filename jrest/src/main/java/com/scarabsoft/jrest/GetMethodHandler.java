@@ -9,7 +9,7 @@ final class GetMethodHandler extends AbstractMethodHandler {
 
     @Override
     protected String getUrl(Method method) {
-        return method.getAnnotation(Get.class).url();
+        return method.getAnnotation(Get.class).value();
     }
 
     @Override

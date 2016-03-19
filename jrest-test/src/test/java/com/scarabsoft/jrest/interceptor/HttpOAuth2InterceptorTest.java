@@ -22,7 +22,7 @@ import com.scarabsoft.jrest.JRest;
 @IntegrationTest("server.port:1337")
 public class HttpOAuth2InterceptorTest {
 
-	@Mapping(url = "http://localhost:1337/v1/auth/oauth2", converterFactory = StringConverterFactory.class)
+	@Mapping(value = "http://localhost:1337/v1/auth/oauth2", converterFactory = StringConverterFactory.class)
 	interface Application {
 		@Get
 		String GET();
@@ -37,8 +37,8 @@ public class HttpOAuth2InterceptorTest {
 		String DELETE();
 	}
 
-	@Mapping(url = "http://localhost:1337/v1/auth/oauth2", converterFactory = StringConverterFactory.class)
-	@Interceptor(factory = MyFactory.class)
+	@Mapping(value = "http://localhost:1337/v1/auth/oauth2", converterFactory = StringConverterFactory.class)
+	@Interceptor(MyFactory.class)
 	interface AnotherApplication {
 		@Get
 		String GET();

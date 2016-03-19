@@ -9,6 +9,6 @@ import java.lang.annotation.*;
 @Repeatable(value = Interceptors.class)
 public @interface Interceptor {
 
-    Class<? extends RequestInterceptorFactory> factory();
+    Class<? extends RequestInterceptorFactory> value();
 
 }
