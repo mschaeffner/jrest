@@ -80,20 +80,8 @@ final class JRestInvocationHandler implements java.lang.reflect.InvocationHandle
         }
 
 
-        //intercept converter
-        final Converter<?> converter;
-        if (returnClazz.equals(void.class) || returnClazz.equals(Void.class)) {
-            converter = new VoidConverter();
-        } else if (returnClazz.equals(byte[].class) || returnClazz.equals(Byte[].class)) {
-            converter = new ByteArrayConverter();
-        } else if (returnClazz.equals(InputStream.class)) {
-            converter = new InputStreamConverter();
-        } else {
-            converter = converterFactory.getConverter(returnClazz);
-        }
-
         final RequestBuilder builder = new RequestBuilder(baseUrl,
-                converter,
+                resolveConverter(returnClazz),
                 converterFactory.getBodyConverter(),
                 exceptionConverterFactory.get(),
                 requestConfig,
@@ -113,5 +101,21 @@ final class JRestInvocationHandler implements java.lang.reflect.InvocationHandle
             return request.getResponse();
         }
         return request.getResult();
+    }
+
+    private Converter<?> resolveConverter(Class<?> returnClazz) {
+        if (returnClazz.equals(void.class) || returnClazz.equals(Void.class)) {
+            return new VoidConverter();
+        }
+
+        if (returnClazz.equals(byte[].class) || returnClazz.equals(Byte[].class)) {
+            return new ByteArrayConverter();
+        }
+
+        if (returnClazz.equals(InputStream.class)) {
+            return new InputStreamConverter();
+        }
+
+        return converterFactory.getConverter(returnClazz);
     }
 }
