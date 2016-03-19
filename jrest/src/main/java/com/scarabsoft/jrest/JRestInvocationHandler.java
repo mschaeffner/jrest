@@ -37,12 +37,9 @@ final class JRestInvocationHandler implements java.lang.reflect.InvocationHandle
         this.httpClientFactory = httpClientFactory;
     }
 
-    // TODO request entities should not getConverter interceptions out of annotation -->
-    // create a more general interceptoro chain
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
-        final boolean isCollection;
         final Class<?> returnClazz;
 
         Class<? extends Collection> collectionClazz = null;
