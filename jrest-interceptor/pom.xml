@@ -12,7 +12,6 @@
     <modelVersion>4.0.0</modelVersion>
     <name>jrest-interceptor</name>
     <artifactId>jrest-interceptor</artifactId>
-    <version>1.0.0</version>
     <description>empty</description>
 
     <packaging>jar</packaging>

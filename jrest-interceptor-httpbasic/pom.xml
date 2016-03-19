@@ -13,7 +13,6 @@
 	<name>jrest-interceptor-httpbasic</name>
 
 	<artifactId>jrest-interceptor-httpbasic</artifactId>
-	<version>1.0.0</version>
 	<description>empty</description>
 
 	<packaging>jar</packaging>

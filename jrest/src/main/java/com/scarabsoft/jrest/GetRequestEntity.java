@@ -19,8 +19,7 @@ class GetRequestEntity extends AbstractRequestEntity {
                      Collection<ParamEntity> requestParameterEntities,
                      RequestConfig requestConfig,
                      HttpClient httpClient, Class<?> responseClazz,
-                     Class<? extends Collection> collectionClazz
-    ) {
+                     Class<? extends Collection> collectionClazz) {
         super(baseUrl, converter, exceptionConverter, headerEntities, requestParameterEntities, requestConfig,
                 httpClient, responseClazz, collectionClazz);
     }

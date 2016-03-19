@@ -12,7 +12,6 @@
     <name>jrest-converter-gson</name>
 
     <artifactId>jrest-converter-gson</artifactId>
-    <version>1.0.0</version>
     <description>empty</description>
 
     <packaging>jar</packaging>

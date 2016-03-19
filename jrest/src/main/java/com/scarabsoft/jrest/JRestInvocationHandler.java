@@ -1,5 +1,7 @@
 package com.scarabsoft.jrest;
 
+import com.scarabsoft.jrest.annotation.Interceptor;
+import com.scarabsoft.jrest.annotation.Interceptors;
 import com.scarabsoft.jrest.converter.*;
 import com.scarabsoft.jrest.converter.exception.ExceptionConverter;
 import com.scarabsoft.jrest.interceptor.RequestInterceptorChain;
@@ -58,7 +60,7 @@ final class JRestInvocationHandler implements java.lang.reflect.InvocationHandle
 
         request.execute(RequestInterceptorChainBuilder.create(
                 interceptorChain,
-                Util.getInterceptors(method)));
+                Util.getInterceptors(method.getAnnotation(Interceptors.class), method.getAnnotation(Interceptor.class))));
 
         if (request.getResponseClazz().equals(ResponseEntity.class)) {
             return request.getResponse();

@@ -13,7 +13,6 @@
     <name>jrest-converter</name>
 
     <artifactId>jrest-converter</artifactId>
-    <version>1.0.0</version>
     <description>empty</description>
 
     <packaging>jar</packaging>
