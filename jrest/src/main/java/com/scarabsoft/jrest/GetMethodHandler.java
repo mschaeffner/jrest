@@ -15,7 +15,7 @@ final class GetMethodHandler extends AbstractMethodHandler {
     }
 
     @Override
-    public BodyEntity getBodyEntity(BodyConverter converter, Method method, Object[] parameters) {
+    protected BodyEntity getBodyEntity(BodyConverter converter, Method method, Object[] parameters) {
         for (Annotation annotation : method.getAnnotations()) {
             if (annotation instanceof Body) {
                 throw new RuntimeException("@Body not supported for GET request");

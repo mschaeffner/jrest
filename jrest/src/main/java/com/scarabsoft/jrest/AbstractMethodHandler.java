@@ -7,6 +7,7 @@ import org.apache.http.message.BasicHeader;
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +16,7 @@ abstract class AbstractMethodHandler {
 
     protected abstract String getUrl(Method method);
 
-    String getUrl(String baseUrl, Method method, Object[] parameters) {
+    protected String getUrl(String baseUrl, Method method, Object[] parameters) {
         String resultUrl = baseUrl + getUrl(method);
 
         int counter = 0;
@@ -39,7 +40,7 @@ abstract class AbstractMethodHandler {
         return url.replace("{" + name + "}", value);
     }
 
-    Collection<ParamEntity> getParameterEntities(Method method, Object[] parameters) {
+    protected Collection<ParamEntity> getParameterEntities(Method method, Object[] parameters) {
         final Collection<ParamEntity> result = new LinkedList<ParamEntity>();
 
         List<Annotation> annotations = Util.getAnnotations(method.getParameterAnnotations());
@@ -61,46 +62,30 @@ abstract class AbstractMethodHandler {
         return result;
     }
 
-    Collection<org.apache.http.Header> getHeaderEntities(Method method, Object[] parameters) {
+    protected Collection<org.apache.http.Header> getHeaderEntities(Method method, Object[] parameters) {
         final Collection<org.apache.http.Header> result = new LinkedList<>();
-
-
-
         for (Annotation annotation : method.getAnnotations()) {
             if (annotation instanceof Headers == false) {
                 continue;
             }
             final Headers headers = (Headers) annotation;
             for (Header header : headers.value()) {
-
-//                final String value = String.valueOf(parameters[temp + counter]);
                 if (header.value().equals("")) {
                     throw new RuntimeException("header " + header.key() + " needs a value");
                 }
                 result.add(new BasicHeader(header.key(), header.value()));
             }
-
-
         }
 
+        result.addAll(resolveHeader(Arrays.asList(method.getAnnotations()), parameters));
+        result.addAll(resolveHeader(Util.getAnnotations(method.getParameterAnnotations()), parameters));
+        return result;
+    }
+
+    private List<BasicHeader> resolveHeader(List<Annotation> annotations, final Object[] parameters) {
+
+        final List<BasicHeader> result = new LinkedList<>();
         int counter = 0;
-
-        for (Annotation annotation : method.getAnnotations()) {
-            if (annotation instanceof Header == false) {
-                counter++;
-                continue;
-            }
-            final Header header = (Header) annotation;
-            final String value = String.valueOf(parameters[counter++]);
-            if (value.equals("")) {
-                throw new RuntimeException("header " + header.key() + " needs a value");
-            }
-            result.add(new BasicHeader(header.key(), value));
-        }
-
-
-        List<Annotation> annotations = Util.getAnnotations(method.getParameterAnnotations());
-        counter = 0;
         for (Annotation annotation : annotations) {
             if (annotation instanceof Header == false) {
                 counter++;
@@ -114,11 +99,10 @@ abstract class AbstractMethodHandler {
             }
             result.add(new BasicHeader(header.key(), value));
         }
-
         return result;
     }
 
-    BodyEntity getBodyEntity(BodyConverter bodyConverter, Method method, Object[] parameters)
+    protected BodyEntity getBodyEntity(BodyConverter bodyConverter, Method method, Object[] parameters)
             throws UnsupportedEncodingException {
 
         int counter = 0;
