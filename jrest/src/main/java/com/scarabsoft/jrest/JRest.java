@@ -32,6 +32,10 @@ public final class JRest {
     private JRest() {
     }
 
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
     private void assertIsInterface(Class<?> clazz) {
         if (!clazz.isInterface()) {
             throw new RuntimeException("JRest can only be used with interfaces");
@@ -72,17 +76,14 @@ public final class JRest {
                 httpClientFactory = new DefaultHttpClientFactory();
             }
 
-            final Collection<Header> headers = new LinkedList<>(); //AnnotationUtil.getHeaderEntities(clazz.getAnnotation(Headers.class));
-
+            final Collection<Header> headers = new LinkedList<>();
             for (Annotation annotation : clazz.getAnnotations()) {
                 if (annotation instanceof Headers == false) {
                     continue;
                 }
 
                 Headers headersAnnotation = (Headers) annotation;
-
                 for (com.scarabsoft.jrest.annotation.Header header : headersAnnotation.value()) {
-
                     if (header.value().equals("")) {
                         throw new RuntimeException("header " + header.key() + " needs a value");
                     }
@@ -92,8 +93,7 @@ public final class JRest {
 
             }
 
-
-            List<Interceptor> interceptorList = new LinkedList<>();
+            final List<Interceptor> interceptorList = new LinkedList<>();
             Interceptors interceptorsAnotation = clazz.getAnnotation(Interceptors.class);
             if (interceptorsAnotation != null) {
                 for (Interceptor in : interceptorsAnotation.value()) {
