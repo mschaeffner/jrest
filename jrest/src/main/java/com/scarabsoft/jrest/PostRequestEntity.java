@@ -69,7 +69,7 @@ class PostRequestEntity extends AbstractRequestEntity {
         for(ParamEntity requestParameter: requestParameterEntities) {
             nameValuePairs.add(new BasicNameValuePair(requestParameter.getName(), String.valueOf(requestParameter.getValue())));
         }
-        return new UrlEncodedFormEntity(nameValuePairs);
+        return new UrlEncodedFormEntity(nameValuePairs,"UTF-8");
     }
 
     protected HttpEntity getHttpEntitiy() throws UnsupportedEncodingException {

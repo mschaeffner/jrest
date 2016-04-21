@@ -49,12 +49,12 @@
         <dependency>
             <groupId>com.scarabsoft</groupId>
             <artifactId>jrest</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.scarabsoft</groupId>
             <artifactId>jrest-converter-gson</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -69,12 +69,12 @@
         <dependency>
             <groupId>com.scarabsoft</groupId>
             <artifactId>jrest-interceptor-oauth2</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.scarabsoft</groupId>
             <artifactId>jrest-interceptor-httpbasic</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
 
         <dependency>

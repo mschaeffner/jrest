@@ -71,4 +71,9 @@ public class MultiPartRequestParamTest {
         UserGroup DELETE(@Param("userId") int userId,
                          @Param("groupId") int groupId);
     }
+    @Mapping(value = "http://localhost:1337/v1", converterFactory = GsonConverterFactory.class)
+    interface UTF8_APP{
+
+    }
+
 }

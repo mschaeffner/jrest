@@ -23,7 +23,7 @@ public class BodyTest {
 
     @Before
     public void before() {
-        final JRest jrest = new JRest.Builder().build();
+        final JRest jrest = JRest.newBuilder().build();
         app = jrest.create(App.class);
     }
 
