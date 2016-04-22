@@ -32,7 +32,7 @@ public class GsonConverter<T> implements Converter<T> {
     @Override
     public Collection<T> convertCollection(InputStream inputStream, Class<? extends Collection> collectionClazz) throws IOException {
         JsonParser parser = new JsonParser();
-        JsonElement parse = parser.parse(new JsonReader(new InputStreamReader(inputStream)));
+        JsonElement parse = parser.parse(new JsonReader(new InputStreamReader(inputStream,"UTF-8")));
         Collection<T> data = null;
         try {
             data = collectionClazz.newInstance();

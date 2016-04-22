@@ -11,7 +11,12 @@ public class IOUtils {
     public static String streamToString(InputStream in) {
         final StringBuilder builder = new StringBuilder();
         String line;
-        BufferedReader reader =  new BufferedReader(new InputStreamReader(in));
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(in,"UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         try {
             while ((line = reader.readLine()) != null){
                 builder.append(line);

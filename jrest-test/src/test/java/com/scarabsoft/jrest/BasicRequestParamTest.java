@@ -2,6 +2,7 @@ package com.scarabsoft.jrest;
 
 import com.scarabsoft.jrest.annotation.*;
 import com.scarabsoft.jrest.converter.GsonConverterFactory;
+import com.scarabsoft.jrest.converter.StringConverterFactory;
 import com.scarabsoft.jrest.domain.UserGroup;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -21,10 +22,13 @@ public class BasicRequestParamTest {
 
     private Application app;
 
+    private TextApplication textApplication;
+
     @Before
     public void before() {
         JRest jrest = new JRest.Builder().build();
         app = jrest.create(Application.class);
+        textApplication = jrest.create(TextApplication.class);
     }
 
     private void assertion(UserGroup obj) {
@@ -37,11 +41,42 @@ public class BasicRequestParamTest {
         assertion(app.POST(1, 2));
     }
 
+    @Test
+    public void getTextTest(){
+        String result = textApplication.GET("?öüäß,.-das");
+        Assert.assertThat(result, Matchers.is("{\"text\":\"?öüäß,.-das\"}"));
+    }
+
+    @Test
+    public void postTextTest(){
+        String result = textApplication.POST("?öüäß,.-das");
+        Assert.assertThat(result, Matchers.is("{\"text\":\"?öüäß,.-das\"}"));
+    }
+
+    @Test
+    public void putTextTest(){
+        String result = textApplication.PUT("?öüäß,.-das");
+        Assert.assertThat(result, Matchers.is("{\"text\":\"?öüäß,.-das\"}"));
+    }
+
     @Mapping(value = "http://localhost:1337/v1", converterFactory = GsonConverterFactory.class)
     interface Application {
 
         @Post(value = "/param", multipart = false)
         UserGroup POST(@Param("userId") int userId,
                        @Param("groupId") int groupId);
+    }
+
+    @Mapping(value = "http://localhost:1337/v1", converterFactory = StringConverterFactory.class)
+    interface TextApplication{
+
+        @Get("/param/text")
+        String GET(@Param("text") String text);
+
+        @Post("/param/text")
+        String POST(@Param("text") String text);
+
+        @Put("/param/text")
+        String PUT(@Param("text") String text);
     }
 }

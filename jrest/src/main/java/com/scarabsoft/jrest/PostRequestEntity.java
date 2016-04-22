@@ -14,6 +14,7 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 
 import java.io.File;
 import java.io.InputStream;
@@ -58,7 +59,7 @@ class PostRequestEntity extends AbstractRequestEntity {
             } else if (requestParameter.getValue() instanceof Byte[] || requestParameter.getValue() instanceof byte[]) {
                 builder.addBinaryBody(requestParameter.getName(), (byte[]) requestParameter.getValue(), ContentType.create(requestParameter.getContentType()), requestParameter.getFilename());
             } else {
-                builder.addTextBody(requestParameter.getName(), String.valueOf(requestParameter.getValue()));
+                builder.addTextBody(requestParameter.getName(), String.valueOf(requestParameter.getValue()),ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8));
             }
         }
         return builder.build();
